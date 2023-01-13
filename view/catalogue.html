@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Catalogue Stampee</title>
+    <meta name="author" content="Rizo, https://github.com/rizo32/stampee">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="stamp auction website">
+
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Libre+Baskerville:wght@700&family=Source+Sans+Pro:wght@400&family=Jomolhari&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+
+    <header id="haut">
+        <nav class="menu-principal-contenant">
+            <div class="menu-principal">
+                <a href="index.html" class="logo">Stampee</a>
+                <span class="recherche">
+                    <label for="recherche-principale"></label>
+                    <input type="search" id="recherche-principale" name="recherche-principale" placeholder="Recherchez par provenance, couleur..." data-recherche>
+                    <span class="point-reference"><img src="assets/img/recherche.svg" alt="loupe"></span>
+                </span>
+                <span class="filler"></span>
+                <span class="flex-horizontal icones">
+                    <a href="#"><img src="assets/img/bid-thick.webp" alt="menu du panier d'enchère"></a>
+                    <a href="#"><img src="assets/img/bookmark-orig.webp" alt="menu produits suivis"></a>
+                    <a href="#"><img src="assets/img/account.svg" alt="menu compte usagé"></a>
+                    <a href="#"><span class="langue">FR</span></a>
+                </span>
+            </div>
+        </nav>
+        <nav class="menu-secondaire-contenant">
+            <div class="menu-secondaire flex-horizontal">
+                <a href="#">Trouver une enchère</a>
+                <a href="#">Coups de coeur</a>
+                <a href="#">Enchères populaires</a>
+                <a class="optionnel-3" href="#">Derniers arrivés</a>
+                <a class="optionnel-1" href="#">Dernière chance</a>
+                <a class="optionnel-2" href="#">En solde</a>
+                <a class="optionnel-4" href="#">Sélection Noel</a>
+                <a href="#">Pour vous</a>
+            </div>
+        </nav>
+    </header>
+
+    <nav class="navigation-catalogue">
+        <div class="fil-arianne">
+            <span>Principale</span>
+            <span class="material-icons">arrow_right</span>
+            <span><a href="catalogue.html">Catalogue</a></span>
+        </div>
+        <span class="filler"></span>
+        <span class="tri">
+            <select>
+                <option>Trier par</option>
+                <option>Nom</option>
+                <option>Fin d'enchère</option>
+            </select>
+            <span class="material-icons">filter_list</span>
+        </span>
+        <!-- <img src="assets/img/grid.webp"> -->
+        <img src="assets/img/cells.webp" alt="">
+    </nav>
+
+    <main id="page-catalogue">
+        <aside class="filtre">
+            <div class="filtre-actif">
+                Appliqué : <span>Angleterre</span>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Stampee</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li><input type="checkbox" id="coup-coeur"><label for="coup-coeur">Coups de coeur du Lord Stampee</label></li>
+                    <li><input type="checkbox" id="archive"><label for="archive">Enchères archivées</label></li>
+                </ul>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Provenance</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li><input type="checkbox" id="etats-unis" name="provenance"><label for="etats-unis">États-Unis</label></li>
+                    <li><input type="checkbox" id="angleterre" name="provenance" checked><label for="angleterre">Angleterre</label></li>
+                    <li><input type="checkbox" id="afrique" name="provenance"><label for="afrique">Afrique</label></li>
+                    <li><input type="checkbox" id="asie" name="provenance"><label for="asie">Asie</label></li>
+                    <li><input type="checkbox" id="oceanie" name="provenance"><label for="oceanie">Australie et Océanie</label></li>
+                    <li><input type="checkbox" id="caraibes" name="provenance"><label for="caraibes">Caraïbes</label></li>
+                    <li><input type="checkbox" id="europe" name="provenance"><label for="europe">Europe</label></li>
+                    <li><input type="checkbox" id="canada" name="provenance"><label for="canada">Canada</label></li>
+                    <li><input type="checkbox" id="amerique-sud" name="provenance"><label for="amerique-sud">Amérique du Sud</label></li>
+                    <li><input type="checkbox" id="amerique-centrale" name="provenance"><label for="amerique-centrale">Amérique Centrale</label></li>
+                    <li><input type="checkbox" id="moyen-orient" name="provenance"><label for="moyen-orient">Moyen-Orient</label></li>
+                </ul>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Condition</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li><input type="checkbox" id="parfaite" name="condition"><label for="parfaite">Parfaite</label></li>
+                    <li><input type="checkbox" id="excellente" name="condition"><label for="excellente">Excellente</label></li>
+                    <li><input type="checkbox" id="bonne" name="condition"><label for="bonne">Bonne</label></li>
+                    <li><input type="checkbox" id="moyenne" name="condition"><label for="moyenne">Moyenne</label></li>
+                    <li><input type="checkbox" id="endommage" name="condition"><label for="endommage">Endommagé</label></li>
+                    <li><input type="checkbox" id="envoi-historique" name="condition"><label for="envoi-historique">Envoi historique</label></li>
+                    <li><input type="checkbox" id="premier-jour" name="condition"><label for="premier-jour">Premier jour</label></li>
+                </ul>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Type</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li><input type="checkbox" id="edition-generale" name="type"><label for="edition-generale">Édition générale</label></li>
+                    <li><input type="checkbox" id="officiel" name="type"><label for="officiel">Officiel</label></li>
+                    <li><input type="checkbox" id="envoi-postal" name="type"><label for="envoi-postal">Envoi postal</label></li>
+                </ul>
+            </div>
+            <div class="categorie-filtre flex-vertical">
+                <header class="flex-horizontal">
+                    <h5>Couleur</h5>
+                    <span class="material-icons">arrow_drop_down</span>
+                </header>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Prix</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>   
+                <div class="flex-horizontal">
+                    $<input type="number" placeholder="Min">- $<input type="number" placeholder="Max">
+                </div>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Évaluation</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li><input type="checkbox" id="100" name="evaluation"><label for="100">100 (Gem)</label></li>
+                    <li><input type="checkbox" id="98" name="evaluation"><label for="98">98 (Superbe)</label></li>
+                    <li><input type="checkbox" id="95" name="evaluation"><label for="95">95 (XF/Superbe)</label></li>
+                    <li><input type="checkbox" id="90" name="evaluation"><label for="90">90 (XF)</label></li>
+                    <li><input type="checkbox" id="80" name="evaluation"><label for="80">80 (VF/XF)</label></li>
+                    <li><input type="checkbox" id="75" name="evaluation"><label for="75">75 (F/VF)</label></li>
+                    <li><input type="checkbox" id="70" name="evaluation"><label for="70">70 (Fine)</label></li>
+                    <li><input type="checkbox" id="65" name="evaluation"><label for="65">65-</label></li>
+                    <li><input type="checkbox" id="non-evalue" name="evaluation"><label for="non-evalue">Non évalué</label></li>
+                </ul>
+            </div>
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Prix spécial</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li><input type="checkbox" id="special" name="prix-special"><label for="special">En spécial</label></li>
+                    <li><input type="checkbox" id="rabais25" name="prix-special"><label for="rabais25">25% de rabais et plus</label></li>
+                    <li><input type="checkbox" id="rabais50" name="prix-special"><label for="rabais50">50% de rabais et plus</label></li>
+
+                </ul>    
+            </div>
+
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5><label for="annee-emission-min">Année d'émission</label></h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>   
+                <div class="flex-horizontal">
+                    <input type="number" placeholder="Min" id="annee-emission-min" name="annee-emission-min">-<input type="number" placeholder="Max" id="annee-emission-max" name="annee-emission-max">
+                </div>
+            </div>
+
+            <div class="categorie-filtre flex-vertical ouvert">
+                <header class="flex-horizontal">
+                    <h5>Mis en vente</h5>
+                    <span class="material-icons">arrow_drop_up</span>
+                </header>
+                <ul>
+                    <li>Aujourd'hui</li>
+                    <li>Dernière semaine</li>
+                    <li>Dernier mois</li>
+                </ul>    
+            </div>
+            <div class="categorie-filtre flex-vertical">
+                <header class="flex-horizontal">
+                    <h5>Certifié</h5>
+                    <span class="material-icons">arrow_drop_down</span>
+                </header>
+            </div>
+            <div class="categorie-filtre flex-vertical">
+                <header class="flex-horizontal">
+                    <h5>Format</h5>
+                    <span class="material-icons">arrow_drop_down</span>
+                </header>
+            </div>
+
+            <div class="categorie-filtre flex-vertical">
+                <header class="flex-horizontal">
+                    <h5>Alignement</h5>
+                    <span class="material-icons">arrow_drop_down</span>
+                </header>
+            </div>
+        </aside>
+        <section class="catalogue">
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-rouge.webp" alt="timbre rouge">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>GREAT BRITAIN 116 MINT FVF OG HR</h5>
+                    </header>
+                    <span class="prix">$159.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <span class="point-reference"><span class="coup-coeur"></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
+                    </header>
+                    <span class="prix">$210.78</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>Great Britain #67 Plate 17 F-VF Used</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small><span class="alerte">4:12:09</span> | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SG429 N45(1) 1924 1/= BISTRE-</h5>
+                    </header>
+                    <span class="prix">$47.12</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>Great Britain 1864</h5>
+                    </header>
+                    <span class="prix">$18.80</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <span class="point-reference"><span class="coup-coeur"></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small><span class="alerte">1:15:42</span> | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-noir.webp" alt="timbre noir">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-rouge.webp" alt="timbre rouge">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small><span class="alerte">1:45:12</span> | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$175.00</span>
+                    <small>3j 4h | 0 mise</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span class="coup-coeur"></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span class="coup-coeur"></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME...</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <span class="point-reference"><span class="coup-coeur"></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-noir.webp" alt="timbre noir">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <span class="point-reference"><span></span></span>
+                    </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                    <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                    <span class="point-reference"><span></span></span>
+                </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                    <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                    <span class="point-reference"><span></span></span>
+                </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                    <img class="produit" src="assets/img/timbre-noir.webp" alt="timbre noir">
+                    <span class="point-reference"><span></span></span>
+                </div>
+                    <header>
+                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+            <a href="page-produit.html">
+
+                <article class="carte-produit flex-vertical">
+                    <div class="image-contenant">
+                        <span class="point-reference"><span class="watchlist"></span></span>
+                    <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                    <span class="point-reference"><span></span></span>
+                </div>
+                    <header>
+                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
+                    </header>
+                    <span class="prix">$188.87</span>
+                    <small>1j 4h | 23 mises</small>
+                </article>
+            </a>
+        </section>
+    </main>
+    <nav class="navigation-pages-catalogue">
+        <div class="items-par-page">
+            <span>Items par page</span>
+            <span>24</span>
+            <span>48</span>
+            <span>96</span>
+        </div>
+        <div class="pages">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span><input type="text" placeholder="" id="catalogue-page" name="page-catalogue"><label for="catalogue-page">_</label></span>
+            <span>Suivant></span>
+            <span>Fin</span>
+        </div>
+    </nav>
+    <footer class="flex-vertical">
+        <div class="retour-haut-contenant">
+            <div class="retour-haut flex-horizontal">
+                <p><a class="vrai-retour-haut" href="#haut">Retour en haut</a></p>
+                <h5 class="appel-action-footer">Vous avez entendu parler de notre <a class="infolettre" href="#">fameuse infolettre?</a></h5>
+            </div>
+        </div>
+        <div class="footer-contenant">
+            <nav class="flex-horizontal">
+                <section class="flex-vertical">
+                    <div>
+                        <h4 class="titre-footer">À propos de Lord Reginald Stampee III</h4>
+                        <ul>
+                            <li>La philatélie, c'est la vie</li>
+                            <li>La biographie du Lord</li>
+                            <li>Historique familial</li>
+                        </ul>
+                    </div>
+                    <div class="filler"></div>
+                    <div class="logo-contenant">
+                        <a class="logo" href="index.html">Stampee</a>
+                    </div>
+
+                </section>
+
+                <section class="flex-vertical">
+                    <h4 class="titre-footer">Actualités</h4>
+                    <ul>
+                        <li>Nos timbres</li>
+                        <li>Nos enchères</li>
+                        <li>Le Bridge</li>
+                    </ul>
+                </section>
+
+                <section class="flex-vertical">
+                    <h4 class="titre-footer">Support</h4>
+                    <ul>
+                        <li>Aide</li>
+                        <li>Livraison</li>
+                        <li>Contactez-nous</li>
+                    </ul>
+                    <div class="filler"></div>
+
+                    <a class="aide" href="#">Besoin d'aide?</a>
+
+
+                </section>
+
+            </nav>
+
+            
+        </div>
+        <div class="barre-bas-contenant">
+            <div class="barre-bas flex-horizontal">
+                <div class="termes">
+                    <span>&copy; Stampee Inc</span>
+                    <span>Termes et conditions</span>
+                    <span>Politique de vie privée</span>
+                </div>
+                
+                <div class="medias-sociaux">
+                    <img src="assets/img/facebook.webp" alt="logo-facebook">
+                    <img src="assets/img/twitter.webp" alt="logo-twitter">
+                </div>
+            </div>        
+        </div>
+
+    </footer>
+</body>
+</html>

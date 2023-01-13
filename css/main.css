@@ -1,0 +1,116 @@
+@import "carrousel.css";
+@import "carte-produit.css";
+@import "composante-contenu-sur-image.css";
+@import "composante-fond-perdu.css";
+@import "classes-utilitaires.css";
+@import "filtre.css";
+@import "footer.css";
+@import "navigation-principale.css";
+@import "navigation-secondaire.css";
+@import "page-catalogue.css";
+@import "page-produit.css";
+@import "typographie.css";
+@import "variables.css";
+
+
+
+    /************************************\
+   |********* Régles par défaut *********|
+   \************************************/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    object-fit: contain;
+}
+
+
+	 
+    /************************************\
+   |********** Rythme vertical **********|
+   \************************************/
+
+/* Rythme vertical contenants */
+body>*+* {
+    margin-top: 80px;
+}
+
+
+/* Rythme vertical titres */
+h1 {
+    margin-bottom: 2rem;
+}
+h2 {
+    margin-bottom: 1.5rem;
+}
+h3 {
+    margin-bottom: 1rem;
+}
+h4 {
+    margin-bottom: 0.5rem;
+}
+h5 {
+    margin-bottom: 0.25rem;
+}
+
+/* Line heights */
+body {
+    line-height: 1.5625;
+}
+h1, h2, h3, h4, h5 {
+    line-height: 1.25;
+}
+p, li {
+    line-height: 1.75rem;
+}
+
+	 
+  
+    /********************************\
+   |********** Composition **********|
+   \********************************/
+
+body {
+    margin: 0 auto;
+}
+
+main{
+    max-width: 1400px; /* 5 colonnes de catalogue */
+    display: flex;
+    padding-right: var(--padding-normal);
+    padding-left: var(--padding-normal);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+main aside {
+    display: flex;
+    flex-direction: column;
+}
+
+p, small { 
+    max-width: 85ch;
+}
+
+
+	 
+    /****************************\
+   |********** Couleur **********|
+   \****************************/
+
+body {
+    background: linear-gradient(white 40%, var(--gris-tres-clair)60%, var(--gris-clair) 80%);
+}

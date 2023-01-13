@@ -1,0 +1,156 @@
+.carte-produit {
+    align-items: center;
+    width: clamp(200px, 100%, 400px);
+    /* height absolue pour assurer un alignement des cartes peu importe la quantité de contenu */
+    height: 340px;
+    background-color: white;
+    border-radius: var(--rayon-de-bordure-normal);
+    box-shadow: 1px 0 var(--bordure),
+                -1px -1px var(--bordure),
+                0 1px 1px var(--ombre);
+    gap: 12px;
+}
+
+.carte-produit * {
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.carte-produit header {
+    display: flex;
+    align-items: center;
+    height: 65px;
+}
+
+.carte-produit>*:not(.image-contenant) {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.carte-produit .image-contenant {
+    display: flex;
+    justify-content: space-between;
+    height: 180px;
+    width: 100%;
+    background-color: var(--gris-clair);
+    border-radius: var(--rayon-de-bordure-normal) var(--rayon-de-bordure-normal) 0 0;
+}
+
+/* Ajout d'une marge en bas de la carte */
+.carte-produit>*:last-child {
+    margin-bottom: 12px;
+}
+
+/* Longueur du titre max 3 lignes */
+.carte-produit h5 {
+/* prend la même verticalité si 1 seule ligne */
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.carte-produit img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    margin-top: 0;
+}
+  
+
+    /*** Coups de coeur ***/
+.carte-produit .coup-coeur,
+.carte-produit .watchlist {
+    /* Pour contrecarrer le fait que contenant = 0px */
+    max-width: none;
+    max-height: none;
+    position: absolute;
+    top: 5px;
+}
+
+.carte-produit .coup-coeur {
+/* Pour contrecarrer le fait que contenant = 0px */
+    height: 45px;
+    min-width: 45px;
+    right: 5px;
+    background: url(../img/IconeWishlistHeart.svg) center center no-repeat;
+}
+
+.carte-produit .watchlist {
+    /* Pour être la même taille que coups de coeurs lors du hover */
+    height: calc(45px * 1.005);
+    min-width: calc(45px * 1.005);
+    left: 5px;
+    opacity: 0;
+    z-index: 1;
+
+    background: url(../img/bookmark.webp) center center no-repeat;
+    background-size: contain;
+}
+
+
+	 
+
+    /******************************\
+   |********** ANIMATION **********|
+   \******************************/
+
+   /*** Cartes produit ***/
+
+.carte-produit {
+    cursor: pointer;
+    transition: var(--transition-lente);
+    transition-timing-function: ease-out;
+}
+.carte-produit:hover{
+    box-shadow: 1px 0 var(--bordure), -1px -1px var(--bordure), 0 2px 2px var(--ombre);
+    transform: scale(1.005);
+}
+
+.carte-produit .prix {
+    font-family: 'Libre Baskerville', serif;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+
+    /*** Images ***/
+    
+.carte-produit .image-contenant{
+    transition: var(--transition-lente);
+    transition-timing-function: ease-out;
+}
+.carte-produit:hover .image-contenant{
+    background-color: #ffffff;
+}
+
+.carte-produit:hover img{
+    filter: saturate(105%);
+}
+
+.carte-produit:hover .watchlist {
+    opacity: 1;
+}
+
+.carte-produit .watchlist {
+    transition: var(--transition-lente);
+    transition-timing-function: ease-out;
+}
+
+/* Nouvelle couleur = bleu-clair hsl(224, 60%, 40%) */
+.carte-produit .watchlist:hover {
+    background: url(../img/bookmark-active.webp) center center no-repeat;
+    background-size: contain;
+}
+
+    /*** Coups de coeur ***/
+
+.carte-produit .coup-coeur {
+    transition: var(--transition-lente);
+    transition-timing-function: ease-out;
+}
+.carte-produit:hover .coup-coeur{
+/* Pour mieux voir le timbre sous-jacent */
+    opacity: 0.9;
+}

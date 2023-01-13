@@ -1,0 +1,100 @@
+.carrousel-contenant {
+    position: relative;
+}
+.carrousel-contenant>.flex-horizontal {
+    position: absolute;
+  /* J'enlève un pixel pour éviter le scroll bar */
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    /* Pour pouvoir cliquer les images sous-jacentes */
+    pointer-events: none;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.carrousel-contenant .fleche {
+    height: 120px;
+    line-height: 120px;
+    position: relative;
+    z-index: 1;
+}
+
+.carrousel-contenant .fleche {
+    color: var(--bleu-x-clair);
+    font-size: 50px;
+    transition-duration: var(--transition-reguliere);
+    transition-timing-function: ease-out;
+    /* Pour contrecarrer 'pointer-events: none' du parent */
+    pointer-events: auto;
+    cursor: pointer;
+    left: 0;
+    text-shadow: 
+                -1px -1px 0px var(--bordure-fonce),
+                0px -1px 0px var(--bordure-fonce),
+                1px -1px 0px var(--bordure-fonce),
+                -1px  0px 0px var(--bordure-fonce),
+                1px  0px 0px var(--bordure-fonce),
+                -1px  1px 0px var(--bordure-fonce),
+                0px  1px 0px var(--bordure-fonce),
+                1px  1px 0px var(--bordure-fonce),
+                0 1px 2px var(--ombre);
+}
+
+.carrousel-contenant:hover .fleche {
+    color: var(--bleu-tres-clair);
+    text-shadow: 
+                -1px -1px 0px var(--bordure-tres-fonce),
+                0px -1px 0px var(--bordure-tres-fonce),
+                1px -1px 0px var(--bordure-tres-fonce),
+                -1px  0px 0px var(--bordure-tres-fonce),
+                1px  0px 0px var(--bordure-tres-fonce),
+                -1px  1px 0px var(--bordure-tres-fonce),
+                0px  1px 0px var(--bordure-tres-fonce),
+                1px  1px 0px var(--bordure-tres-fonce),
+                0 1px 2px var(--ombre);
+}
+
+.carrousel-contenant .fleche:hover {
+    left: 8px;
+    font-size: 55px;
+    text-shadow: 
+    -1px -1px 0px black,
+    0px -1px 0px black,
+    1px -1px 0px black,
+    -1px  0px 0px black,
+    1px  0px 0px black,
+    -1px  1px 0px black,
+    0px  1px 0px black,
+    1px  1px 0px black,
+     0 2px 2px var(--ombre);
+    color: var(--bleu-clair);
+}
+
+.carrousel{
+    display: grid;
+    grid-template-columns : repeat(5, minmax(200px, 1fr));
+    gap:16px;
+    height: fit-content;
+}
+
+.carrousel a{
+    height: fit-content;
+}
+
+article.recommendations:has(.carrousel) {
+    height: fit-content;
+    width: 100%;
+    box-sizing: border-box;
+    /* pour désactiver border-box avec max-width
+    (12 vw correspond au padding) */
+    max-width: calc(1400px + 12vw);
+   
+    overflow-x: hidden;
+    /* Un 'quick fix' parce que overflow-x hidden
+     rend overflow-y 'auto' même si défini 
+     comme visible */
+    padding-bottom: 10px;
+    margin-bottom: -10px;
+}

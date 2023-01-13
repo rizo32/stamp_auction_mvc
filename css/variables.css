@@ -1,0 +1,54 @@
+:root {
+
+    /*** RYTHME ***/
+    --separation-tres-courte: 10px;
+    --separation-courte: 20px;
+    --separation-moyenne: 40px;
+    --separation-large: 80px;
+    --separation-tres-large: 100px;
+
+
+    /*** COULEURS ***/
+        /* Theme : bleu */
+    --bleu-x-clair:hsl(224, 60%, 80%);
+    --bleu-tres-clair-sature:hsl(224, 100%, 65%);
+    --bleu-tres-clair:hsl(224, 65%, 55%);
+    --bleu-clair:#2949a3;
+    --bleu:hsl(224, 60%, 30%);
+    --bleu-fonce:hsl(224, 60%, 15%);
+    --bleu-tres-fonce:hsl(224, 60%, 10%);
+        /* Avertissement : rouge */
+    --rouge-fonce: hsl(0, 100%, 35%);
+    --rouge: hsl(0, 100%, 45%);
+        /* Neutre (bleuté) */   
+    --gris-x-fonce: hsl(224, 0%, 30%);
+    --gris-tres-fonce: hsl(224, 0%, 50%);
+    --gris-fonce: hsl(224, 0%, 70%);
+    --gris: hsl(224, 0%, 80%);
+    --gris-clair:hsl(224, 30%, 95%);
+    --gris-tres-clair:hsl(224, 30%, 97%);
+    --gris-tres-clair-sature:hsl(224, 80%, 97%);
+
+        /* Neutre (bleuté) */
+    --ombre: hsla(224, 50%, 0%, 0.4);
+    --bordure: hsl(224, 0%, 85%);
+    --bordure-fonce: hsl(224, 0%, 60%);
+    --bordure-tres-fonce: hsl(224, 0%, 40%);
+
+    
+    /*** TYPOGRAPHIE ***/
+    --base-font-size: 16px;
+    --ratio-echelle-typographique: 1.1;
+    
+    /*** ANIMATION ***/
+    --transition-rapide: 0.1s;
+    --transition-reguliere: 0.15s;
+    --transition-lente: 0.2s;
+
+    /*** AUTRE ***/
+    --rayon-de-bordure-normal: 3px;
+    --rayon-bordure-courbe: 6px;
+    --rayon-bordure-bouton: 9px;
+
+    --padding-normal: max(10px, 6vw);
+}

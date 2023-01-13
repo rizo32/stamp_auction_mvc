@@ -1,0 +1,147 @@
+.fond-perdu-contenant {
+    background-color: var(--bleu-fonce);
+    color: white;
+    width: 100%;
+    height: 300px;
+    /* augmenter séparation vertical */
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+/* Les pages qui ont des éléments à fond-perdu ne peuvent avoir de largeur max... */
+main:has(.fond-perdu){
+    max-width: none;
+    padding-right: inherit;
+    padding-left: inherit;
+    align-items: center;
+    gap: 80px;
+}
+
+/* ...À la place ce sont les éléments enfants qui ont la longueur max
+   ... sauf les éléments à fond perdu comme telles, évidemment */
+main:has(.fond-perdu)>*:not(.fond-perdu-contenant) {
+    max-width: calc(1400px + 2 * var(--padding-normal));
+    padding-right: var(--padding-normal);
+    padding-left: var(--padding-normal);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+/* Pour supplanter le style de la page de base */
+main>.fond-perdu-contenant{
+    max-width: inherit;
+    padding-right: inherit;
+    padding-left: inherit;
+}
+
+.fond-perdu {
+    gap: min(80px, 3vw);
+    padding-left: min(40px, 3vw);
+    padding-right: min(40px, 3vw);
+    width: min(95vw, 1400px);
+}
+
+.fond-perdu>* {
+    width: 30%;
+    align-items: center;
+}
+
+.fond-perdu h3,
+.fond-perdu small {
+    max-width: 40ch;
+    text-align: center;
+}
+
+.fond-perdu h3 {
+    margin-bottom: 1.5rem;
+}
+
+.fond-perdu img {
+    height: 300px;
+    object-fit: cover;
+    object-position: 50% 15%;
+    transform: scaleX(-1);
+    filter: grayscale(60%);
+    width: 100%;
+}
+
+	 
+  
+    /************************************\
+   |**** Spécificité: BANNIÈRE-TITRE ****|
+   \************************************/
+
+main:has(.banniere-titre){
+    margin-top: 0; /* Pour coller la banière au dessus de la page */
+}
+
+.fond-perdu-contenant.banniere-titre{
+    height: 600px;
+    margin-top: 0;
+    background-color: var(--bleu-tres-fonce);
+}
+
+.banniere-titre .fond-perdu {
+    gap: inherit;
+    margin-top: 0;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.banniere-titre .fond-perdu>* {
+    width: inherit;
+    align-items: center;
+}
+
+/* Pour faire sortir le texte */
+.banniere-titre img {
+    height: 100%;
+    transform: inherit;
+    filter:
+            blur(3px)
+            sepia(70%)
+            contrast(80%)
+            saturate(200%)
+            brightness(45%)
+            ;
+    object-fit: cover;
+}
+
+@media only screen and (min-width: 1700px){
+    .banniere-titre img {
+        object-fit: contain;
+    }
+}
+
+.banniere-titre .fond-perdu h1 {
+    font-size: 88px;
+    text-shadow:
+                rgba(0, 0, 0, 20%) 0px 1px 1px,
+                rgba(0, 0, 0, 20%) 0px 1px 1px,
+                rgba(0, 0, 0, 20%) 0px 1px 1px,
+                rgba(0, 0, 0, 20%) 0px 1px 1px,
+                rgba(0, 0, 0, 20%) 0px 1px 1px,
+                rgba(0, 0, 0, 20%) 0px 1px 1px;
+    color: white;
+    font-weight: 500;
+    letter-spacing: -1px;
+}
+
+.banniere-titre input[type="search"]{
+    width: clamp(200px, 50vw, 600px);
+    font-size: 21px;
+}
+
+
+.banniere-titre input[type="search"]:focus {
+    border: 2px solid var(--bleu-tres-clair);
+}
+
+.banniere-titre .recherche img {
+    height: 30px;
+    filter: inherit;
+}

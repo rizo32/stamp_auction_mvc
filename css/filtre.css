@@ -1,0 +1,83 @@
+.filtre{
+    position: relative;
+    top: calc(-20px - 1.75rem); /* Pour monter le filtre actif au delà du main */
+    gap: 20px;
+}
+
+
+    /*** filtre actif ***/
+
+.filtre .filtre-actif {
+    display: block;
+    position: relative;
+    left: 16px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.filtre .filtre-actif span {
+    color: var(--bleu-clair);
+}
+
+.filtre .filtre-actif span:hover {
+    cursor: pointer;
+}
+
+
+    /*** categorie-filtre ***/
+
+.filtre .categorie-filtre  {
+    width: 170px;
+    padding: 16px;
+
+    border-radius: 4px;
+    background-color: var(--gris-tres-clair);
+    box-shadow: 1px 0 var(--bordure), -1px -1px var(--bordure), 0 1px 1px var(--ombre);
+
+    transition: var(--transition-rapide);
+    transition-timing-function: ease-out;
+}
+
+.filtre .categorie-filtre.ouvert,
+.filtre .categorie-filtre:hover {
+    background-color: white;
+}
+
+/* => contenu ***/
+
+.filtre .categorie-filtre header {
+    margin-bottom: 8px;
+    color: var(--bleu);
+}
+
+.filtre .categorie-filtre li {
+    margin-top: 3px;
+    color: var(--bleu);
+}
+
+.filtre .categorie-filtre input {
+    margin-right: 8px;
+}
+
+.filtre .categorie-filtre select {
+    height: 1.5rem;
+    padding-left: 6px;
+}
+
+.filtre .categorie-filtre input[type="number"]{
+    width: 2.5rem;
+    height: 1.5rem;
+    margin-left: 1ch;
+    text-align: center;
+}
+
+.filtre .categorie-filtre li:has(input:checked) {
+    font-weight: 700;
+}
+
+.filtre .categorie-filtre ul,
+.filtre .categorie-filtre input,
+.filtre .categorie-filtre label,
+.filtre .categorie-filtre header{
+    cursor: pointer;
+}

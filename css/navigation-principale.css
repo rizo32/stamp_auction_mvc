@@ -1,0 +1,118 @@
+.menu-principal-contenant {
+    height: 70px;
+    background-color: var(--gris-tres-clair);
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+    padding-bottom: 5px;
+}
+
+.menu-principal {
+    display: flex;
+    height: 70px;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: min(40px, 3vw);
+    margin-right: min(40px, 3vw);
+    width: min(95vw, 1400px);
+}
+
+nav .icones img {
+    height: 35px;
+    transition: var(--transition-rapide);
+    transition-timing-function: ease-out;
+}
+
+nav .icones {
+    width: 200px;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin-top: 0;
+}
+
+/* filtre -> hsl(224, 65%, 55%) (bleu-clair)
+https://codepen.io/sosuke/pen/Pjoqqp */
+nav .icones img:hover {
+    transform: scale(1.05);
+    filter: invert(20%) sepia(27%) saturate(4833%) hue-rotate(210deg) brightness(107%) contrast(86%);
+}
+
+nav .icones a {
+    margin-top: 0;
+}
+
+.langue {
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 1em;
+}
+
+.langue:hover {
+    color: var(--bleu-clair);
+}
+
+.menu-principal .logo {
+    color: black;
+    font-family: 'Jomolhari', serif;
+    font-weight: 600;
+    font-size: 24px;
+    transition: var(--transition-rapide);
+    transition-timing-function: ease-out;
+}
+
+.menu-principal .logo:hover {
+    transform: scale(1.02);
+    color: var(--bleu);
+}
+
+	 
+  
+    /******************************\
+   |********** Recherche **********|
+   \******************************/
+
+
+input[type="search"] {
+    width: clamp(200px, 50vw, 650px);
+    height: 50px;
+    border: none;
+    padding-left: 20px;
+    margin-right: clamp(10px, 5vw, 120px);
+    margin-left: clamp(10px, 5vw, 120px);
+    border: 1px solid var(--bleu);
+    border-radius: 2px;
+    font-size: 18px;
+    box-shadow: 1px 1px 1px var(--ombre) inset,
+                -1px -1px 1px var(--ombre) inset;
+}
+
+input[type="search"]:focus {
+    outline: none;
+    border: 2px solid var(--bleu-clair);
+    border-radius: 3px;
+    padding-left: 19px;
+}
+
+@media only screen and (max-width: 800px) {
+    input[type="search"],
+    .recherche img {
+        display: none;
+    }
+}
+
+.recherche {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.recherche img {
+    position: absolute;
+    right: clamp(50px, 6vw, 130px);
+    margin-top: 0;
+    width: 25px;
+    opacity: 0.6;
+    max-width: 25px;
+    max-height: 30px;
+}

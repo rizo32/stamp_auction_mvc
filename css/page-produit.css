@@ -1,0 +1,345 @@
+[id='page-produit'] .informations-principales {
+    gap: 40px;
+}
+
+  
+    /*************************************\
+   |********** Première section **********|
+   \*************************************/
+
+
+   /*** IMAGES PRODUIT */
+
+[id='page-produit'] .images-produit {
+    width: 37%;
+    gap: 20px;
+}
+
+[id='page-produit'] .informations-principales .image-contenant {
+    width: 80%;
+}
+
+[id='page-produit'] .image-contenant img {
+    max-width: 100%;
+}
+
+[id='page-produit'] .galerie {
+    gap: 10px;
+    width: 20%;
+}
+
+[id='page-produit'] .galerie img {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+[id='page-produit'] .galerie img.actif {
+    border: 3px solid var(--bleu-tres-clair);
+}
+
+
+   /*** SOMMAIRE PRODUIT */
+
+[id='page-produit'] .sommaire-produit {
+    width: 35%;
+    gap: 20px;
+}
+
+[id='page-produit'] table {
+    border-collapse: collapse;
+}
+
+[id='page-produit'] tbody tr:nth-child(odd) {
+    background-color: var(--gris-clair);
+    width: max-content;
+}
+
+td,
+th {
+    padding: 2px 10px;
+    text-align: left;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+[id='page-produit'] h1 {
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+[id='page-produit'] .information-prix {
+    border: 1px solid var(--gris);
+    padding: 0.5rem;
+}
+
+[id='page-produit'] .prix {
+    display: inline-block;
+    font-family: 'Libre Baskerville', serif;
+    text-transform: uppercase;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+
+   /*** ENCHÈRE PRODUIT */
+
+[id='page-produit'] .prix-livraison .prix {
+    margin-bottom: 10px;
+}
+
+[id='page-produit'] .enchere {
+    gap: 20px;
+    width: 28%;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 1px 0 var(--bordure), -1px -1px var(--bordure), 0 1px 1px var(--ombre);
+    border-radius: var(--rayon-de-bordure-normal);
+    box-sizing: border-box;    
+    background-color: var(--gris-clair)
+}
+
+[id='page-produit'] .prix-livraison p {
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+[id='page-produit'] .prix-livraison p:last-of-type {
+    margin-bottom: 0;
+}
+
+[id='page-produit'] .boutons-achat {
+    /* gap agrandi pour mettre emphase */
+    gap: 30px;
+}
+
+[id='page-produit'] .boutons-achat button {
+    padding: 10px 20px;
+    white-space: nowrap;
+    border-radius: var(--angle-de-bordure-normal);
+    font-size: 18px;
+    background-color: var(--bleu-fonce);
+    color: white;
+    border: 1px solid var(--bordure-fonce);
+    box-shadow:
+    inset 0 0 0 3px white,
+    inset 0 0 0 4px rgba(0, 0, 0, 0.2),
+    0 1px 1px var(--bordure-fonce);
+    transition-duration: var(--transition-rapide);
+    transition-timing-function: ease-out;
+    cursor: pointer;
+}
+
+[id='page-produit'] button:hover {
+    background-color: var(--bleu-tres-clair);
+}
+
+[id='page-produit'] button.mise-rapide {
+    background-color: var(--bleu-tres-clair);
+}
+
+[id='page-produit'] button.mise-rapide:hover {
+    background-color: var(--bleu-tres-clair-sature);
+}
+
+[id='page-produit'] .transaction {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 10px;
+}
+
+[id='page-produit'] .methodes-paiement {
+    gap: 5px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[id='page-produit'] .politique {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[id='page-produit'] .transactions-secure {
+    gap: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[id='page-produit'] .transactions-secure img {
+    height: 20px;
+    opacity: 0.6;
+}
+
+[id='page-produit'] .enchere img {
+    max-height: 30px;
+    max-width: 38px;
+}
+
+[id='page-produit'] .enchere img.paypal {
+    max-height: 20px;
+}
+
+[id='page-produit'] .politique {
+    text-align: center;
+    text-decoration: underline;
+}
+
+
+	 
+  
+    /*************************************\
+   |********** Deuxième section **********|
+   \*************************************/
+
+
+
+[id='page-produit'] .description {
+    justify-content: space-between;
+    align-items: start;
+    gap: min(80px, 5vw);
+    width: 100%;
+    box-sizing: border-box;
+    /* pour désactiver border-box avec max-width
+    (12 vw correspond au padding) */
+    max-width: calc(1400px + 12vw);
+}
+
+[id='page-produit'] .description-questions {
+    gap: 80px;
+    width: 60%;
+}
+
+
+[id='page-produit'] .questions>header {
+    justify-content: start;
+    align-items: center;
+}
+
+[id='page-produit'] .questions>header span {
+    margin-bottom: 1.5rem;
+    margin-left: 1rem;
+    border: 1px solid var(--gris-fonce);
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition-reguliere);
+    transition-timing-function: ease-out;
+    color: var(--gris-fonce);
+}
+
+[id='page-produit'] .questions>header span:hover {
+    border: 1px solid var(--gris-x-fonce);
+    /* je pourrais mettre couleur bordure pour diminuer le nombre de variables */
+    color: var(--gris-x-fonce);
+    font-size: 16px;
+}
+
+[id='page-produit'] .question p {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+[id='page-produit'] .question small {
+    font-size: 16px;
+}
+
+[id='page-produit'] .question {
+    margin-bottom: 1.5rem;
+    padding: 10px;
+    box-shadow: 1px 0 var(--bordure),
+               -1px -1px var(--bordure),
+                0 1px 1px var(--ombre);
+}
+
+[id='page-produit'] .reponse {
+    margin-bottom: 1.5rem;
+}
+
+[id='page-produit'] .reponse>p:first-child {
+    font-size: 17px;
+}
+
+[id='page-produit'] .reponse-duc>p:first-child {
+    font-weight: 700;
+}
+
+
+[id='page-produit'] .description-produit a {
+    text-decoration: underline;
+}
+
+[id='page-produit'] .description-produit p {
+    margin-top: 1rem;
+}
+
+[id='page-produit'] .questions img {
+    filter: invert(21%) sepia(48%) saturate(2513%) hue-rotate(210deg) brightness(101%) contrast(92%);
+    height: 12px;
+    margin-left: 2px;
+}
+
+[id='page-produit'] .historique-enchere {
+    width: 40%;
+}
+
+[id='page-produit'] .historique-enchere table {
+    width: 100%;
+}
+
+[id='page-produit'] .historique-enchere button {
+    background-color: inherit;
+    border: none;
+    color: black;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+[id='page-produit'] .historique-enchere button:hover span:first-child{
+    color: var(--bleu-clair);
+    text-decoration: underline;
+}
+
+[id='page-produit'] .historique-enchere button:not(:hover) span:nth-child(2) {
+    transform: translateY(-2px);
+}
+
+[id='page-produit'] .historique-enchere button span{
+    margin-left: 5px;
+    transition: var(--transition-reguliere);
+    transition-timing-function: ease-out;
+}
+
+[id='page-produit'] .fond-perdu img {
+    object-position: 0% 60%;
+    transform: translateY(-2px);
+}
+
+
+@media only screen and (max-width: 800px) {
+    [id='page-produit'] .informations-principales,
+    [id='page-produit'] .description,
+    .fond-perdu {
+        flex-direction: column;
+    }
+    [id='page-produit'] .informations-principales>*,
+    [id='page-produit'] .description>* {
+        width: 100%;
+    }
+    .fond-perdu-contenant {
+        height: auto;
+    }
+    .fond-perdu {
+        gap: 60px;
+        margin-bottom: 40px;
+    }
+    .fond-perdu h3 {
+        margin-bottom: 1rem;
+    }
+    .fond-perdu>* {
+        width: 100%;
+    }
+}

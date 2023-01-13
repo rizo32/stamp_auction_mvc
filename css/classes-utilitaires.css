@@ -1,0 +1,57 @@
+.flex-horizontal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.filler {
+    flex: 1 0 0;
+}
+
+.alerte {
+    color: var(--rouge);
+}
+
+.enonce-mission {
+    font-size: 36px;
+    text-align: left;
+}
+
+.emphase {
+    color: var(--bleu);
+}
+
+.voir-plus {
+    padding-left: 1.5ch;
+    color: var(--bleu);
+}
+
+h2:has(.voir-plus){
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Pour centrer des éléments absolue
+relativement au parent sans prendre l'espace */
+.point-reference {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 0;
+    height: 0;
+}
+
+.insecable {
+    word-wrap: initial;
+    word-break: initial;
+}
+
+.cache {
+    display: none;
+}

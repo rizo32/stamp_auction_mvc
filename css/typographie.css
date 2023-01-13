@@ -1,0 +1,66 @@
+    /****************************\
+   |********** Polices **********|
+   \****************************/
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Baskervville', serif;
+}
+
+p, small {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+	 
+  
+    /******************************************\
+   |********** Échelle typographique **********|
+   \******************************************/
+
+h1 {
+    font-size: calc(var(--base-font-size)
+    * var(--ratio-echelle-typographique)
+    * var(--ratio-echelle-typographique)
+    * var(--ratio-echelle-typographique)
+    * var(--ratio-echelle-typographique));
+    text-align: center;
+    font-weight: 900;
+}
+
+h2 {
+    font-size: calc(var(--base-font-size)
+    * var(--ratio-echelle-typographique)
+    * var(--ratio-echelle-typographique)
+    * var(--ratio-echelle-typographique));
+}
+
+h3 {
+    font-size: calc(var(--base-font-size)
+    * var(--ratio-echelle-typographique)
+    * var(--ratio-echelle-typographique));
+}
+
+h4 {
+    font-size: calc(var(--base-font-size)
+    * var(--ratio-echelle-typographique));
+    text-transform: uppercase;
+}
+
+h5 {
+    font-size: 17px;
+}
+
+p {
+    font-size: var(--base-font-size);
+}
+
+li {
+    font-size: var(--base-font-size);
+}
+
+small {
+    font-size: 15px;
+}
