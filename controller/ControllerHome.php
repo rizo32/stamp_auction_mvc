@@ -1,22 +1,21 @@
 <?php
 RequirePage::requireModel('Crud');
-RequirePage::requireModel('ModelLog');
-
+// RequirePage::requireModel('ModelLog');
 
 class ControllerHome{
 
     public function index(){
         // Chaque changement de page entraine une insertion de données dans le log
-        $log = new ModelLog;
-        $log->store();
+        // $log = new ModelLog;
+        // $log->store();
 
-      twig::render("home-index.php");
+      twig::render("home_index.php");
     }
 
     public function error(){
-        $log = new ModelLog;
-        $log->store();
+        // $log = new ModelLog;
+        // $log->store();
 
-        twig::render("home-error.php");
+        twig::render("home_error.php");
     }
 }

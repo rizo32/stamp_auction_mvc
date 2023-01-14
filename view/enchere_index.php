@@ -1,60 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Catalogue Stampee</title>
-    <meta name="author" content="Rizo, https://github.com/rizo32/stampee">
-
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="stamp auction website">
-
-    <link rel="stylesheet" href="./assets/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Libre+Baskerville:wght@700&family=Source+Sans+Pro:wght@400&family=Jomolhari&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
-
-
-    <header id="haut">
-        <nav class="menu-principal-contenant">
-            <div class="menu-principal">
-                <a href="index.html" class="logo">Stampee</a>
-                <span class="recherche">
-                    <label for="recherche-principale"></label>
-                    <input type="search" id="recherche-principale" name="recherche-principale" placeholder="Recherchez par provenance, couleur..." data-recherche>
-                    <span class="point-reference"><img src="assets/img/recherche.svg" alt="loupe"></span>
-                </span>
-                <span class="filler"></span>
-                <span class="flex-horizontal icones">
-                    <a href="#"><img src="assets/img/bid-thick.webp" alt="menu du panier d'enchère"></a>
-                    <a href="#"><img src="assets/img/bookmark-orig.webp" alt="menu produits suivis"></a>
-                    <a href="#"><img src="assets/img/account.svg" alt="menu compte usagé"></a>
-                    <a href="#"><span class="langue">FR</span></a>
-                </span>
-            </div>
-        </nav>
-        <nav class="menu-secondaire-contenant">
-            <div class="menu-secondaire flex-horizontal">
-                <a href="#">Trouver une enchère</a>
-                <a href="#">Coups de coeur</a>
-                <a href="#">Enchères populaires</a>
-                <a class="optionnel-3" href="#">Derniers arrivés</a>
-                <a class="optionnel-1" href="#">Dernière chance</a>
-                <a class="optionnel-2" href="#">En solde</a>
-                <a class="optionnel-4" href="#">Sélection Noel</a>
-                <a href="#">Pour vous</a>
-            </div>
-        </nav>
-    </header>
+    {{ include('header.php', {title: "Catalogue" }) }}
 
     <nav class="navigation-catalogue">
         <div class="fil-arianne">
-            <span>Principale</span>
+            <span><a href="{{ path }}home/index">Principale</a></span>
             <span class="material-icons">arrow_right</span>
-            <span><a href="catalogue.html">Catalogue</a></span>
+            <span><a href="{{ path }}enchere/index">Catalogue</a></span>
         </div>
         <span class="filler"></span>
         <span class="tri">
@@ -65,8 +15,8 @@
             </select>
             <span class="material-icons">filter_list</span>
         </span>
-        <!-- <img src="assets/img/grid.webp"> -->
-        <img src="assets/img/cells.webp" alt="">
+        <!-- <img src="{{ path }}img/grid.webp"> -->
+        <img src="{{ path }}img/cells.webp" alt="">
     </nav>
 
     <main id="page-catalogue">
@@ -216,12 +166,12 @@
             </div>
         </aside>
         <section class="catalogue">
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-rouge.webp" alt="timbre rouge">
+                        <img class="produit" src="{{ path }}img/timbre-rouge.webp" alt="timbre rouge">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -231,12 +181,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                         <span class="point-reference"><span class="coup-coeur"></span></span>
                     </div>
                     <header>
@@ -246,12 +196,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -261,12 +211,12 @@
                     <small><span class="alerte">4:12:09</span> | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -276,12 +226,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -291,12 +241,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -306,12 +256,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
                         <span class="point-reference"><span class="coup-coeur"></span></span>
                     </div>
                     <header>
@@ -321,12 +271,12 @@
                     <small><span class="alerte">1:15:42</span> | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-noir.webp" alt="timbre noir">
+                        <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -336,12 +286,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -351,12 +301,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-rouge.webp" alt="timbre rouge">
+                        <img class="produit" src="{{ path }}img/timbre-rouge.webp" alt="timbre rouge">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -366,12 +316,12 @@
                     <small><span class="alerte">1:45:12</span> | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -381,12 +331,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -396,12 +346,12 @@
                     <small>3j 4h | 0 mise</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -411,12 +361,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -426,12 +376,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -441,12 +391,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span class="coup-coeur"></span></span>
                     </div>
                     <header>
@@ -456,12 +406,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -471,12 +421,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span class="coup-coeur"></span></span>
                     </div>
                     <header>
@@ -486,12 +436,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -501,12 +451,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -516,12 +466,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -531,12 +481,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-vert.webp" alt="timbre vert">
+                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -546,12 +496,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -561,12 +511,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
                         <span class="point-reference"><span class="coup-coeur"></span></span>
                     </div>
                     <header>
@@ -576,12 +526,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-noir.webp" alt="timbre noir">
+                        <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -591,12 +541,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
@@ -606,12 +556,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="assets/img/timbre-bleu2.webp" alt="timbre bleu">
+                    <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
                     <span class="point-reference"><span></span></span>
                 </div>
                     <header>
@@ -621,12 +571,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="assets/img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                    <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
                     <span class="point-reference"><span></span></span>
                 </div>
                     <header>
@@ -636,12 +586,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="assets/img/timbre-noir.webp" alt="timbre noir">
+                    <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
                     <span class="point-reference"><span></span></span>
                 </div>
                     <header>
@@ -651,12 +601,12 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
-            <a href="page-produit.html">
+            <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="assets/img/timbre-requin.webp" alt="timbre requin">
+                    <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
                     <span class="point-reference"><span></span></span>
                 </div>
                     <header>
@@ -686,73 +636,5 @@
             <span>Fin</span>
         </div>
     </nav>
-    <footer class="flex-vertical">
-        <div class="retour-haut-contenant">
-            <div class="retour-haut flex-horizontal">
-                <p><a class="vrai-retour-haut" href="#haut">Retour en haut</a></p>
-                <h5 class="appel-action-footer">Vous avez entendu parler de notre <a class="infolettre" href="#">fameuse infolettre?</a></h5>
-            </div>
-        </div>
-        <div class="footer-contenant">
-            <nav class="flex-horizontal">
-                <section class="flex-vertical">
-                    <div>
-                        <h4 class="titre-footer">À propos de Lord Reginald Stampee III</h4>
-                        <ul>
-                            <li>La philatélie, c'est la vie</li>
-                            <li>La biographie du Lord</li>
-                            <li>Historique familial</li>
-                        </ul>
-                    </div>
-                    <div class="filler"></div>
-                    <div class="logo-contenant">
-                        <a class="logo" href="index.html">Stampee</a>
-                    </div>
 
-                </section>
-
-                <section class="flex-vertical">
-                    <h4 class="titre-footer">Actualités</h4>
-                    <ul>
-                        <li>Nos timbres</li>
-                        <li>Nos enchères</li>
-                        <li>Le Bridge</li>
-                    </ul>
-                </section>
-
-                <section class="flex-vertical">
-                    <h4 class="titre-footer">Support</h4>
-                    <ul>
-                        <li>Aide</li>
-                        <li>Livraison</li>
-                        <li>Contactez-nous</li>
-                    </ul>
-                    <div class="filler"></div>
-
-                    <a class="aide" href="#">Besoin d'aide?</a>
-
-
-                </section>
-
-            </nav>
-
-            
-        </div>
-        <div class="barre-bas-contenant">
-            <div class="barre-bas flex-horizontal">
-                <div class="termes">
-                    <span>&copy; Stampee Inc</span>
-                    <span>Termes et conditions</span>
-                    <span>Politique de vie privée</span>
-                </div>
-                
-                <div class="medias-sociaux">
-                    <img src="assets/img/facebook.webp" alt="logo-facebook">
-                    <img src="assets/img/twitter.webp" alt="logo-twitter">
-                </div>
-            </div>        
-        </div>
-
-    </footer>
-</body>
-</html>
+{{ include('footer.php') }}

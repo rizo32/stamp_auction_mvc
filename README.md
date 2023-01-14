@@ -1,15 +1,11 @@
-# À faire
+TO DO
+1.
 
-1. Journal Log
-1. Faire en sorte que les profs peuvent embaucher des aides-cuisiniers
-1. Complexifier la validation
+IDEAS
+1. Icons blur on focus and transform into text
 
-# ecoleMagie
+# Stampee
+Stamp auction website using vanilla php
 
-## Liens
-https://e2295331.webdev.cmaisonneuve.qc.ca/tp2ecolemagie/
-
-## Glossaire du Moldu
-### Modifier => Potion de polynectar! (potion qui modifie l’apparence)
-### Confirmer => Obliviate (sort qui fait oublier)
-### Supprimer => Avada Kedavra (sort qui tue)
+## Liens (nothing yet!)
+https://e2295331.webdev.cmaisonneuve.qc.ca/

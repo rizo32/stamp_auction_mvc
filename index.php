@@ -2,8 +2,6 @@
 
 session_start();
 
-
-
 require_once __DIR__.'/library/RequirePage.php';
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/library/Twig.php';
@@ -45,9 +43,9 @@ if($url == '/'){
     }
 }
 
-if(!isset($_COOKIE['lang'])){
-    $controller = new ControllerLangue;
-    $controller->en();
-}
+// if(!isset($_COOKIE['lang'])){
+//     $controller = new ControllerLangue;
+//     $controller->en();
+// }
 
 ?>
