@@ -1,10 +1,10 @@
 <?php
 RequirePage::requireModel('Crud');
-RequirePage::requireModel('ModelLog');
-RequirePage::requireModel('ModelEmploye');
+// RequirePage::requireModel('ModelLog');
+RequirePage::requireModel('ModelUsager');
 RequirePage::requireModel('ModelPrivilege');
 
-class ControllerEmploye{
+class ControllerUsager{
 
     // Pour afficher le registre d'employés
     public function index(){
@@ -25,13 +25,13 @@ class ControllerEmploye{
     public function create(){
         // Pour vérifier l'authentification
         CheckSession::sessionAuth();
-        $log = new ModelLog;
-        $log->store();
+        // $log = new ModelLog;
+        // $log->store();
 
         if ($_SESSION['privilegeId'] == 1 || $_SESSION['privilegeId'] == 2){
             $privilege = new ModelPrivilege;
             $selectPrivilege = $privilege->select('privilegeId');
-            twig::render('employe-create.php', ['privileges' => $selectPrivilege]);
+            twig::render('membre-create.php', ['privileges' => $selectPrivilege]);
         }else{
             requirePage::redirectPage('home/error');
         }

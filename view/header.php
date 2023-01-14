@@ -28,7 +28,13 @@
                 <span class="flex-horizontal icones">
                     <a href="#"><img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère"></a>
                     <a href="#"><img src="{{ path }}img/bookmark-orig.webp" alt="menu produits suivis"></a>
-                    <a href="#"><img src="{{ path }}img/account.svg" alt="menu compte usagé"></a>
+
+                    {% if guest %}
+                    <a href="{{ path }}membre/create"><img src="{{ path }}img/account.svg" alt="menu compte usagé"></a>
+                    {% else %}
+                    <a href="{{ path }}membre/edit"><img src="{{ path }}img/account.svg" alt="menu compte usagé"></a>
+                    {% endif %}
+
                     <a href="#"><span class="langue">FR</span></a>
                 </span>
             </div>
