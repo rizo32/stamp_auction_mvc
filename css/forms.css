@@ -1,0 +1,108 @@
+.form {
+    gap: 20px;
+    justify-content: space-evenly;
+}
+
+.form .flex-vertical {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.creation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gris-clair);
+    border-radius: var(--rayon-de-bordure-normal);
+    box-shadow: 1px 0 var(--bordure),
+                -1px -1px var(--bordure),
+                0 1px 1px var(--ombre);
+    padding: 40px;            
+}
+
+.creation h3 {
+    text-align: center;
+}
+
+.nouveau {
+    width: min(70vw, 700px);
+}
+
+.login {
+    width: min(30vw, 300px);
+}
+
+input {
+    width: 100%;
+    height: 1.1em;
+    font-size: 1.3em;
+}
+
+label {
+    padding-bottom: 5px;
+}
+
+.bouton {
+    margin-top: 20px;
+    width: fit-content;
+    height: auto;
+    padding: 5px 10px;
+    background-color: white;
+    border: 1px solid var(--bleu-fonce);
+    border-radius: var(--rayon-de-bordure-normal);
+    font-size: inherit;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bouton:hover {
+    background-color: var(--gris-clair);
+}
+
+/* faut que ça soit plus précis */
+.form .flex-horizontal {
+    gap: 20px;
+}
+
+.supprimer:hover {
+    background-color: var(--rouge-fonce);
+    color: white;
+}
+
+.error {
+    color: red;
+}
+
+.compte {
+    width: 100%;
+    background-color: var(--gris-clair);
+    border-radius: var(--rayon-de-bordure-normal);
+    box-shadow: 1px 0 var(--bordure),
+                -1px -1px var(--bordure),
+                0 1px 1px var(--ombre);
+}
+
+.compte ul {
+    background-color: white;
+    padding: 10px;
+    justify-content: start;
+    gap: 0 !important;
+}
+
+.compte li {
+    padding: 0 40px;
+}
+
+.informations {
+    padding: 40px 80px 0;
+}
+
+.deconnecte {
+    padding: 40px 80px;
+}
+
+.deconnecte *+* {
+    margin-left: 40px;
+}
