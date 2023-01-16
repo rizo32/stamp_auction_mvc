@@ -3,7 +3,7 @@
 // Connexion PDO
 abstract class Crud extends PDO {
     public function __construct(){
-        parent::__construct('mysql:host=maisonneuve; dbname=stampee_db; port=3306; charset=utf8', 'root', '');
+        parent::__construct('mysql:host=maisonneuve; dbname=stampee; port=3306; charset=utf8', 'root', '');
         // parent::__construct('mysql:host=localhost; dbname=e2295331; port=3306; charset=utf8', 'e2295331', 'a1KDLCwOPsYmOSiR37yc');
     }
 
@@ -40,10 +40,9 @@ abstract class Crud extends PDO {
     }
 
     // Pour acquérir des informations provenant d'une instance
-    public function selectIdJoin($value, $table2, $table3, $field1, $field2, $field3, $field4){
+    public function selectIdJoin($value, $table2, $field1, $field2){
         $sql = "SELECT * FROM $this->table
                          LEFT JOIN $table2 ON $field1 = $field2
-                         LEFT JOIN $table3 ON $field3 = $field4       
                 WHERE $this->primaryKey = :$this->primaryKey";
         $stmt = $this->prepare($sql);
         $stmt->bindValue(":$this->primaryKey", $value);
