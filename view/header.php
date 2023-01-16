@@ -24,16 +24,23 @@
                     <input type="search" class="recherche-principale" name="recherche-principale" placeholder="Recherchez par provenance, couleur..." data-recherche>
                     <span class="point-reference"><img src="{{ path }}img/recherche.svg" alt="icone-recherche"></span>
                 </span>
-                <span class="filler"></span>
+                <span class="filler">
+                <p>session_id: {{ session.id_membre }}</p>
+                <p>membre_id: {{ membre.id_membre }}</p>
+                <p>guest: {{ guest }}</p>
+
+                </span>
                 <span class="flex-horizontal icones">
                     <a href="#"><img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère"></a>
                     <a href="#"><img src="{{ path }}img/bookmark-orig.webp" alt="menu produits suivis"></a>
 
                     {% if guest %}
-                    <a href="{{ path }}membre/create"><img src="{{ path }}img/account.svg" alt="menu compte usagé"></a>
-                    {% else %}
-                    <a href="{{ path }}membre/edit"><img src="{{ path }}img/account.svg" alt="menu compte usagé"></a>
+                    <a href="{{ path }}membre/create">
+                        {% else %}
+                    <a href="{{ path }}membre/show">
                     {% endif %}
+                        <img src="{{ path }}img/account.svg" alt="menu compte usagé">
+                    </a>
 
                     <a href="#"><span class="langue">FR</span></a>
                 </span>
