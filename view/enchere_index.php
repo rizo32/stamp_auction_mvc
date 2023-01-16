@@ -41,12 +41,12 @@
                 </header>
                 <ul>
                     <li><input type="checkbox" id="etats-unis" name="provenance"><label for="etats-unis">États-Unis</label></li>
-                    <li><input type="checkbox" id="angleterre" name="provenance" checked><label for="angleterre">Angleterre</label></li>
+                    <li><input type="checkbox" id="angleterre" name="provenance" checked><label for="angleterre">Îles Britanniques</label></li>
                     <li><input type="checkbox" id="afrique" name="provenance"><label for="afrique">Afrique</label></li>
                     <li><input type="checkbox" id="asie" name="provenance"><label for="asie">Asie</label></li>
                     <li><input type="checkbox" id="oceanie" name="provenance"><label for="oceanie">Australie et Océanie</label></li>
                     <li><input type="checkbox" id="caraibes" name="provenance"><label for="caraibes">Caraïbes</label></li>
-                    <li><input type="checkbox" id="europe" name="provenance"><label for="europe">Europe</label></li>
+                    <li><input type="checkbox" id="europe" name="provenance"><label for="europe"> continentale</label></li>
                     <li><input type="checkbox" id="canada" name="provenance"><label for="canada">Canada</label></li>
                     <li><input type="checkbox" id="amerique-sud" name="provenance"><label for="amerique-sud">Amérique du Sud</label></li>
                     <li><input type="checkbox" id="amerique-centrale" name="provenance"><label for="amerique-centrale">Amérique Centrale</label></li>
