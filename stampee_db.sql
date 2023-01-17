@@ -137,13 +137,13 @@ ENGINE = InnoDB;
 -- Table `stampee`.`Timbre`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stampee`.`Timbre` (
-  `id_timbre` INT NOT NULL AUTO_INCREMENT,
+  `id_timbre` INT NOT NULL,
   `nom_timbre` VARCHAR(100) NOT NULL,
   `description_timbre` TEXT NULL,
   `annee_parution_timbre` YEAR NULL,
   `coup_coeur_timbre` INT NOT NULL,
   `id_provenance_timbre` INT NULL,
-  `id_etat_timbre` INT NOT NULL,
+  `id_etat_timbre` INT NULL,
   `certification_timbre` INT NOT NULL,
   `id_format_timbre` INT NULL,
   `id_evaluation_timbre` INT NULL,
@@ -269,6 +269,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `stampee`.`Image` (
   `id_image` INT NOT NULL AUTO_INCREMENT,
   `nom_image` VARCHAR(255) NULL,
+  `taille_image` INT NOT NULL,
+  `extension_image` VARCHAR(5) NOT NULL,
   `id_timbre_image` INT NOT NULL,
   PRIMARY KEY (`id_image`),
   INDEX `fk_Image_Timbre1_idx` (`id_timbre_image` ASC),

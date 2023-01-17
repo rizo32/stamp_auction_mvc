@@ -75,12 +75,13 @@
     overflow: visible;
 }
 
-.menu-secondaire a:first-child,
+.selectionne,
 .menu-secondaire a:hover {
     background-color: var(--bleu);
     color: white;
 }
-.menu-secondaire a:first-child:hover {
+
+main .selectionne:hover {
     background-color: var(--bleu-clair);
     color: white;
 }

@@ -8,7 +8,7 @@ abstract class Crud extends PDO {
     }
 
     // Pour créer un régistre
-    public function select($champ='employeId', $order='ASC'){
+    public function select($champ='id_membre', $order='ASC'){
         $sql = "SELECT * FROM $this->table ORDER BY $champ $order";
         $stmt  = $this->query($sql);
         return  $stmt->fetchAll();
@@ -53,6 +53,13 @@ abstract class Crud extends PDO {
         }else{
             header("location: ../../home/error");
         }
+    }
+
+    public function selectMax($value){
+        $sql = "SELECT max($value) FROM $this->table";
+
+        $stmt  = $this->query($sql);
+        return  $stmt->fetch();
     }
 
     // Pour créer un régistre avec (double) join
