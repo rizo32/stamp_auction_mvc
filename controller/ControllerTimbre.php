@@ -38,7 +38,19 @@ class ControllerTimbre{
 
             // $privilege = new ModelPrivilege;
             // $selectPrivilege = $privilege->select('id_privilege');
-            twig::render('timbre_create.php');
+
+
+            $timbre = new ModelTimbre;
+            $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
+    
+            // twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
+
+
+
+            twig::render('timbre_create.php', ['id_timbre' => $id_timbre]);
+
+
+    
 
 
         // }else{
@@ -103,10 +115,15 @@ class ControllerTimbre{
 
             
 
-            // $insert = $timbre->insert($_POST);
-            // requirePage::redirectPage('image/create/'.$id_timbre);
+            $insert = $timbre->insert($_POST);
+
+
+            // twig::render('image_create.php', ['id_timbre'=>$id_timbre]);
+
+            requirePage::redirectPage('image/create/'.$id_timbre);
 
     
+            // twig::render("membre-index.php", ['membres' => $select]);
 
             // $_SESSION['id_timbre'] = $_POST[];
 
@@ -164,10 +181,17 @@ class ControllerTimbre{
 
     // Pour afficher la page de modification d'employé
     public function edit(){
-        // $log = new ModelLog;
-        // $log->store();
 
-        CheckSession::sessionAuth();
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $id_timbre = end($urlArray);
+
+        $timbre = new ModelTimbre;
+        $timbre_infos = $timbre->selectId($id_timbre);
+
+
+
+
+        // CheckSession::sessionAuth();
 
         // Vérifier que les privilges sont bien respectés
         // if ($_SESSION['id_privilege_membre'] == 2){
@@ -175,9 +199,11 @@ class ControllerTimbre{
         //     $selectPrivilege = $privilege->select('id_privilege_membre');
 
 
-            $membre = new ModelMembre;
-            $selectMembre = $membre->selectId($_SESSION['id_membre']);
-            twig::render('membre_edit.php', ['membre' => $selectMembre]);
+            // $membre = new ModelMembre;
+            // $selectMembre = $membre->selectId($_SESSION['id_membre']);
+
+
+            twig::render('timbre_edit.php', ['timbre' => $timbre_infos]);
         // }else{
         //     requirePage::redirectPage('home/error');
         // }
@@ -185,10 +211,46 @@ class ControllerTimbre{
 
     // Pour modifier les information d'un employé précis
     public function update(){
-        $membre = new ModelMembre;
-        $_POST['id_membre'] = $_SESSION['id_membre'];
-        $update = $membre->update($_POST);
-        RequirePage::redirectPage('membre/show/'.$_SESSION['id_membre']);
+        $timbre = new ModelTimbre;
+        print_r($_POST);
+
+        
+        // Je sais, faudrait je fasse une boucle!
+        if($_POST['annee_parution_timbre'] < 1){
+            $_POST['annee_parution_timbre'] = null;
+        }
+
+        if($_POST['id_provenance_timbre'] == 0){
+            $_POST['id_provenance_timbre'] = null;
+        }
+
+        if($_POST['id_etat_timbre'] == 0){
+            $_POST['id_etat_timbre'] = null;
+        }
+
+        if($_POST['id_format_timbre'] == 0){
+            $_POST['id_format_timbre'] = null;
+        }
+
+        if($_POST['id_evaluation_timbre'] == 0){
+            $_POST['id_evaluation_timbre'] = null;
+        }
+
+        if($_POST['id_alignement_timbre'] == 0){
+            $_POST['id_alignement_timbre'] = null;
+        }
+
+        if($_POST['id_couleur_timbre'] == 0){
+            $_POST['id_couleur_timbre'] = null;
+        }
+
+
+        $update = $timbre->update($_POST);
+        if(isset($_POST['retour'])){
+            RequirePage::redirectPage('enchere/show');
+        } else if(isset($_POST['avancer'])){
+            RequirePage::redirectPage('image/edit');
+        }
     }
 
     // Pour supprimer les information d'un employé précis

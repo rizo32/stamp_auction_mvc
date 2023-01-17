@@ -38,7 +38,12 @@ class ControllerImage{
 
             // $privilege = new ModelPrivilege;
             // $selectPrivilege = $privilege->select('id_privilege');
-            twig::render('image_create.php');
+            $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+            $id_timbre = end($urlArray);
+
+
+
+            twig::render('image_create.php', ['id_timbre' => $id_timbre]);
 
 
         // }else{
@@ -77,16 +82,20 @@ class ControllerImage{
                         $_POST['extension_image'] = $imageExt;
 
                         // check si le timbre en question appartient à l'id de la session
-                        $urlArray = explode('/', $_POST['url']);
+                        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
                         $_POST['id_timbre_image'] = end($urlArray);
+                        $id_timbre = end($urlArray);
+                        
+            
 
                         // print_r($_POST['id_timbre_image']);
 
                         $image = new ModelImage;
                         $insert = $image->insert($_POST);
 
-                        $message = "Téléversement réussi.<br>Voulez-vous téléverser d'autres images?";
-                        twig::render('image_create.php', ['message'=>$message]);
+                        $message = "Téléversement réussi. Vous pouvez téléverser jusqu'à 3 images";
+
+                        twig::render('image_create.php', ['message'=>$message, 'id_timbre' => $id_timbre]);
 
                         // requirePage::redirectPage('image/create');
                     }

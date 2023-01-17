@@ -1,6 +1,6 @@
 <?php
 RequirePage::requireModel('Crud');
-// RequirePage::requireModel('ModelLog');
+RequirePage::requireModel('ModelTimbre');
 RequirePage::requireModel('ModelMembre');
 RequirePage::requireModel('ModelPrivilege');
 
@@ -134,7 +134,14 @@ class ControllerMembre{
         $membre = new ModelMembre;
         // Fait intervenir des données de deux tables: membre, privilege
         $selectMembre = $membre->selectIdJoin($_SESSION['id_membre'], 'privilege', 'id_privilege_membre', 'id_privilege');
-        twig::render('membre_show.php', ['membre' => $selectMembre]);
+
+        $timbre = new ModelTimbre;
+        $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
+
+        twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
+
+
+        // twig::render('membre_show.php', ['membre' => $selectMembre]);
     }
 
     // Pour afficher la page de modification d'employé

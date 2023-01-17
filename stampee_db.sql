@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `stampee`.`Enchere` (
   `date_debut_enchere` DATETIME NOT NULL,
   `prix_initial_enchere` FLOAT NOT NULL,
   `date_fin_enchere` DATETIME NOT NULL,
-  `id_timbre_enchere` INT NOT NULL,
+  `id_timbre_enchere` INT NOT NULL UNIQUE,
   `id_membre_proprietaire_enchere` INT NOT NULL,
   PRIMARY KEY (`id_enchere`),
   INDEX `fk_Enchere_Timbre_idx` (`id_timbre_enchere` ASC),

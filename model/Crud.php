@@ -16,10 +16,11 @@ abstract class Crud extends PDO {
 
     
     // Pour acquérir des informations provenant d'une instance
-    public function selectJoin($value, $table2, $field1, $field2){
+    public function selectJoin($prop, $value, $table2, $field1, $field2, $ordre){
         $sql = "SELECT * FROM $this->table
                          LEFT JOIN $table2 ON $field1 = $field2
-                         ORDER BY $value DESC";
+                         WHERE $prop = $value
+                         ORDER BY $ordre DESC";
         $stmt  = $this->query($sql);
         return $stmt->fetchAll();
     }

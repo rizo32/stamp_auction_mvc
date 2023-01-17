@@ -7,7 +7,7 @@ class Twig{
         $twig = new \Twig\Environment($loader, array('auto_reload' => true));
         // $twig->addGlobal('path', 'https://e2295331.webdev.cmaisonneuve.qc.ca/tp2ecolemagie/');
         $twig->addGlobal('path', 'http://maisonneuve/Projet1/StampeeMVC/');
-        $twig->addGlobal('server', $_SERVER);
+        // $twig->addGlobal('server', $_SERVER);
         // On va chercher le glossaire de langue correspondant à la variable enregistrée dans les cookies
         // if(!isset($_SESSION['lang'])){
         //     $_SESSION['lang'] = 'en';

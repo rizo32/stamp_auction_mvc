@@ -1,4 +1,4 @@
-{{ include('header.php', { title: "Création de timbre"}) }}
+{{ include('header.php', { title: "Modification de timbre"}) }}
 
 
 <main class="form">
@@ -15,7 +15,7 @@
             </ul>
         </nav>
     
-        <form class="creation" action="{{ path }}timbre/store" method="post">
+        <form class="creation" action="{{ path }}timbre/update" method="post">
             <h3>Informations du timbre</h3>
 
             <div class="flex-vertical">           
@@ -143,8 +143,11 @@
             
             
             <input type="hidden" name="coup_coeur_timbre" value=0>
+            <input type="hidden" name="id_timbre" value={{ timbre.id_timbre }}>
+
             
-            <input class="bouton" type="submit" value="You've been Stamped!">
+            <input class="bouton" name="retour" type="submit" value="Sauvegarder">
+            <input class="bouton" name="avancer" type="submit" value="Sauvegarder et modifier les images">
         </form>
     </div>
 
