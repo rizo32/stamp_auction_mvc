@@ -245,11 +245,15 @@ class ControllerTimbre{
         }
 
 
-        $update = $timbre->update($_POST);
+        
         if(isset($_POST['retour'])){
+            unset($_POST['retour']);
+            $update = $timbre->update($_POST);
             RequirePage::redirectPage('enchere/show');
         } else if(isset($_POST['avancer'])){
-            RequirePage::redirectPage('image/edit');
+            unset($_POST['avancer']);
+            $update = $timbre->update($_POST);
+            RequirePage::redirectPage('image/edit/'.$_POST['id_timbre']);
         }
     }
 

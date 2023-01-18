@@ -134,13 +134,7 @@
                     <option value=8>Noir</option>
                     <option value=9>Brun</option>
                 </select>
-            </div>
-
-            <!-- <div class="flex-vertical">           
-                <label>Image du produit</label>
-                <input type="image" name="annee_parution_timbre" value="{{ timbre.annee_parution_timbre }}"/>
-            </div> -->
-            
+            </div>            
             
             <input type="hidden" name="coup_coeur_timbre" value=0>
             

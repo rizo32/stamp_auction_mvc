@@ -14,6 +14,14 @@ abstract class Crud extends PDO {
         return  $stmt->fetchAll();
     }
 
+    public function selectAll($prop, $wherevalue, $value=null){
+        $sql = "SELECT $value FROM $this->table
+        WHERE $prop = $wherevalue";
+        // print_r($sql);
+        $stmt = $this->query($sql);
+        return  $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
+
     
     // Pour acquérir des informations provenant d'une instance
     public function selectJoin($prop, $value, $table2, $field1, $field2, $ordre){

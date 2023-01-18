@@ -59,6 +59,7 @@ class ControllerImage{
             $imagePost = $_FILES['nom_image'];
 
             $imageNom = $imagePost['name'];
+
             $imageNomTmp = $imagePost['tmp_name'];
             $imageTaille = $imagePost['size'];
             $imageErreur = $imagePost['error'];
@@ -72,12 +73,17 @@ class ControllerImage{
             if(in_array($imageExt, $imageExtPermis)){
                 if(!$imageErreur){
                     if($imageTaille < 3000000){
+
                         $imageNomUnique = uniqid('', true).".".$imageExt;
+
+                        // array_push($imagesTableau, $imageNomUnique);
+
+
                         $imageDestination = 'uploads/'.$imageNomUnique;
 
                         move_uploaded_file($imageNomTmp, $imageDestination);
 
-                        $_POST['nom_image'] = $imageNom;
+                        $_POST['nom_image'] = $imageNomUnique;
                         $_POST['taille_image'] = $imageTaille;
                         $_POST['extension_image'] = $imageExt;
 
@@ -88,14 +94,17 @@ class ControllerImage{
                         
             
 
-                        // print_r($_POST['id_timbre_image']);
-
+                        
                         $image = new ModelImage;
-                        $insert = $image->insert($_POST);
+                        $imagesTableau = $image->selectAll('id_timbre_image', $id_timbre, 'nom_image');
+                        // var_dump($imagesTableau);
+
+
+                        // $insert = $image->insert($_POST);
 
                         $message = "Téléversement réussi. Vous pouvez téléverser jusqu'à 3 images";
 
-                        twig::render('image_create.php', ['message'=>$message, 'id_timbre' => $id_timbre]);
+                        twig::render('image_create.php', ['message'=>$message, 'id_timbre' => $id_timbre, 'images_tableau'=>$imagesTableau]);
 
                         // requirePage::redirectPage('image/create');
                     }
@@ -190,10 +199,15 @@ class ControllerImage{
 
     // Pour afficher la page de modification d'employé
     public function edit(){
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $_POST['id_timbre_image'] = end($urlArray);
+        $id_timbre = end($urlArray);
+
+
         // $log = new ModelLog;
         // $log->store();
 
-        CheckSession::sessionAuth();
+        // CheckSession::sessionAuth();
 
         // Vérifier que les privilges sont bien respectés
         // if ($_SESSION['id_privilege_membre'] == 2){
@@ -201,9 +215,10 @@ class ControllerImage{
         //     $selectPrivilege = $privilege->select('id_privilege_membre');
 
 
-            $membre = new ModelMembre;
-            $selectMembre = $membre->selectId($_SESSION['id_membre']);
-            twig::render('membre_edit.php', ['membre' => $selectMembre]);
+            // $membre = new ModelMembre;
+            // $selectMembre = $membre->selectId($_SESSION['id_membre']);
+            twig::render('image_edit.php', ['id_timbre' => $id_timbre]);
+            // twig::render('image_edit.php', ['membre' => $selectMembre]);
         // }else{
         //     requirePage::redirectPage('home/error');
         // }
