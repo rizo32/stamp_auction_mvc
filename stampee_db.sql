@@ -82,11 +82,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stampee`.`Membre` (
   `id_membre` INT NOT NULL AUTO_INCREMENT,
-  `nom_utilisateur_membre` VARCHAR(45) NULL,
-  `mot_passe_membre` VARCHAR(255) NULL,
-  `nom_membre` VARCHAR(45) NULL,
-  `prenom_membre` VARCHAR(45) NULL,
-  `date_naissance_membre` DATE NULL,
+  `nom_utilisateur_membre` VARCHAR(45) NOT NULL UNIQUE,
+  `mot_passe_membre` VARCHAR(255) NOT NULL,
+  `nom_membre` VARCHAR(45) NOT NULL,
+  `prenom_membre` VARCHAR(45) NOT NULL,
+  `date_naissance_membre` DATE NOT NULL,
   `id_privilege_membre` INT NOT NULL,
   `date_adhesion_membre` DATE NOT NULL,
   PRIMARY KEY (`id_membre`),

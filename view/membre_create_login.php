@@ -1,15 +1,13 @@
 {{ include('header.php', { title: "Creation"}) }}
 
-<!-- Pourquoi mettre des values si on sait qu'elles vont être vides? -->
-
 <main class="form">
-    <!-- {{ dateAujourdhui }} -->
-    {% if errors is defined %}
-            <span class="error">{{ errors | raw}}</span>
-        {% endif %}
    
     <form class="creation nouveau" action="{{ path }}membre/store" method="post">
         <h3>Joignez la communauté!</h3>
+
+        {% if errorStore is defined %}
+            <span class="error">{{ errorStore | raw}}</span>
+        {% endif %}
 
         <div class="flex-vertical">           
             <label>Nom de famille</label>
@@ -36,15 +34,19 @@
             <input type="password" name="mot_passe_membre"/>
         </div>
         
-        <input type="hidden" name="id_privilege_membre" value=2>
-        <input class="bouton" type="submit" value="You've been Stamped!">
+        <input class="bouton" type="submit" value="Enregistrer">
     </form>
 
 
 
     <form class="creation login" action="{{ path }}membre/auth" method="post">
 
-        <h3>Rebonjour!</h3>
+        <h3>Vous avez un compte?</h3>
+
+        {% if errorLogin is defined %}
+            <span class="error">{{ errorLogin | raw}}</span>
+        {% endif %}
+
         <div class="flex-vertical">     
             <label>Courriel</label>
             <input type="email" name="nom_utilisateur_membre" value="{{ membre.nom_utilisateur_membre }}" required/>
@@ -56,7 +58,7 @@
         </div>      
 
         <div class="flex-vertical">           
-            <input type="submit" class="bouton" value="Connectez-vous!">
+            <input type="submit" class="bouton" value="Connexion">
         </div> 
     </form>
 
