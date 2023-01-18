@@ -6,59 +6,22 @@ RequirePage::requireModel('ModelTimbre');
 
 class ControllerTimbre{
 
-    // Pour afficher le registre d'employés
-    public function index(){
-        CheckSession::sessionAuth();
-
-        // Chaque changement de page entraine une insertion de données dans le log
-        $log = new ModelLog;
-        $log->store();
-
-        // L'index fait intervenir des données de trois tables: membre, poste, ecole
-        // Méthode du modele employé
-        $membre = new ModelMembre;
-        $select = $membre->selectDoubleJoin('poste', 'ecole', 'membrePosteId', 'posteId', 'membreEcoleId', 'ecoleId', 'membreDateEmbauche');
-        twig::render("membre-index.php", ['membres' => $select]);
-    }
-
-    // Pour afficher la page de création d'employés
+    // Pour afficher la page de création des timbres
     public function create(){
         // Pour vérifier l'authentification
-        // CheckSession::sessionAuth();
-        // $log = new ModelLog;
-        // $log->store();
+        CheckSession::sessionAuth();
 
-        // if ($_SESSION['privilegeId'] == 1 || $_SESSION['privilegeId'] == 2){
+        // Détermine l'id du prochain timbre crée
+        // $timbre = new ModelTimbre;
+        // $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
 
+        // twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
 
-            // $privilege = new ModelPrivilege;
-            // $selectPrivilege = $privilege->select('id_privilege');
-            // twig::render('membre_create.php', ['privileges' => $selectPrivilege]);
+        twig::render('timbre_create.php', ['id_timbre' => $id_timbre]);
 
-
-            // $privilege = new ModelPrivilege;
-            // $selectPrivilege = $privilege->select('id_privilege');
-
-
-            $timbre = new ModelTimbre;
-            $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
-    
-            // twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
-
-
-
-            twig::render('timbre_create.php', ['id_timbre' => $id_timbre]);
-
-
-    
-
-
-        // }else{
-        //     requirePage::redirectPage('home/error');
-        // }
     }
 
-    // Pour insérer les employés dans la base de données
+    // Pour insérer les timbres dans la base de données
     public function store(){
         // $log = new ModelLog;
         // $log->store();
@@ -121,6 +84,7 @@ class ControllerTimbre{
             // twig::render('image_create.php', ['id_timbre'=>$id_timbre]);
 
             requirePage::redirectPage('image/create/'.$id_timbre);
+            // requirePage::redirectPage('image/create/'.$id_timbre);
 
     
             // twig::render("membre-index.php", ['membres' => $select]);
@@ -134,7 +98,7 @@ class ControllerTimbre{
         // }
     }
 
-    // pour faire le login des employés
+    // pour faire le login des timbres
     public function login(){
         // $log = new ModelLog;
         // $log->store();
@@ -168,7 +132,7 @@ class ControllerTimbre{
     }
 
 
-    // Pour voir les info d'un employé selon l'ID de la session en cours
+    // Pour voir les info d'un timbre selon l'ID de la session en cours
     public function show(){
         // $log = new ModelLog;
         // $log->store();
@@ -179,7 +143,7 @@ class ControllerTimbre{
         twig::render('membre_show.php', ['membre' => $selectMembre]);
     }
 
-    // Pour afficher la page de modification d'employé
+    // Pour afficher la page de modification d'timbre
     public function edit(){
 
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
@@ -209,7 +173,7 @@ class ControllerTimbre{
         // }
     }
 
-    // Pour modifier les information d'un employé précis
+    // Pour modifier les information d'un timbre précis
     public function update(){
         $timbre = new ModelTimbre;
         print_r($_POST);
@@ -257,7 +221,7 @@ class ControllerTimbre{
         }
     }
 
-    // Pour supprimer les information d'un employé précis
+    // Pour supprimer les information d'un timbre précis
     public function delete(){
         $membre = new ModelMembre;
         $delete = $membre->delete($_SESSION['id_membre']);

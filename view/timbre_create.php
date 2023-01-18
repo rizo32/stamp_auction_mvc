@@ -24,11 +24,6 @@
             </div>
 
             <div class="flex-vertical">           
-                <label>Description du produit</label>
-                <input type="text" name="description_timbre" value="{{ timbre.description_timbre }}"/>
-            </div>
-
-            <div class="flex-vertical">           
                 <label>Année de parution</label>
                 <input type="number" name="annee_parution_timbre" value="{{ timbre.annee_parution_timbre }}"/>
             </div>
@@ -134,11 +129,16 @@
                     <option value=8>Noir</option>
                     <option value=9>Brun</option>
                 </select>
-            </div>            
+            </div>
+            
+            <div class="flex-vertical">           
+                <label for="description-timbre">Description du produit</label>
+                <textarea id="description-timbre" name="description_timbre" value="{{ timbre.description_timbre }}" rows=4></textarea>
+            </div>
             
             <input type="hidden" name="coup_coeur_timbre" value=0>
             
-            <input class="bouton" type="submit" value="You've been Stamped!">
+            <input class="bouton" type="submit" value="Enregistrer">
         </form>
     </div>
 

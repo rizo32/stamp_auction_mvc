@@ -3,10 +3,10 @@
 <!-- Pourquoi mettre des values si on sait qu'elles vont être vides? -->
 
 <main class="form">
-    <!-- {{ dateAujourdhui }} -->
    
     <form class="creation nouveau" action="{{ path }}membre/update" method="post">
         <h3>Modifier vos informations</h3>
+        {{ errors }}
 
         <div class="flex-vertical">           
             <label>Nom de famille</label>
@@ -27,24 +27,28 @@
             <label>Courriel</label>
             <input type="email" name="nom_utilisateur_membre" value="{{ membre.nom_utilisateur_membre }}"/>
         </div>
+        <details>
+            <summary>Modifier le mot de passe</summary>
+            <div class="flex-vertical">           
+                <label>Nouveau mot de passe</label>
+                <input type="password" name="mot_passe_membre"/>
+                <!-- <input type="password" name="mot_passe_membre"/> -->
+            </div>
+        </details>
         
-        <div class="flex-vertical">           
-            <label>Mot de passe</label>
-            <input type="password" name="mot_passe_membre"/>
-        </div>
-        
-        <input type="hidden" name="id_privilege_membre" value=2>
+        <!-- <input type="hidden" name="id_privilege_membre" value="{{ membre.nom_utilisateur_membre }}"> -->
 
 
         <div class="flex-horizontal">
-            <input class="bouton" type="submit" value="You've been Stamped!">
-            <form action="{{ path }}membre/delete" method="post">
-                <input type="hidden" name="id_membre" value="{{ session.id_membre }}">
-                <input type="submit" value="Supprimer votre compte" class="bouton supprimer">
-            </form>
-        </div>
-
+            <input class="bouton" type="submit" value="Confirmer">
+            
     </form>
+        <form action="{{ path }}membre/delete" method="post">
+            <input type="hidden" name="id_membre" value="{{ session.id_membre }}">
+            <input type="submit" value="Supprimer votre compte" class="bouton supprimer">
+        </form>
+        <!-- Intertwined html tags -->
+        </div>
 
 </main>
 

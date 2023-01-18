@@ -268,11 +268,15 @@
          */
         public function displayErrors(){
 
-            $html = '<ul>';
+            $html = '';
                 foreach($this->getErrors() as $error){
-                    $html .= '<li>'.$error.'</li>';
+                    $html .= $error;
                 }
-            $html .= '</ul>';
+            // $html = '<ul>';
+            //     foreach($this->getErrors() as $error){
+            //         $html .= '<li>'.$error.'</li>';
+            //     }
+            // $html .= '</ul>';
 
             return $html;
 

@@ -26,7 +26,7 @@
                 </span>
                 <span class="filler alerte">
                 <p>session_id: {{ session.id_membre }}</p>
-                <p>membre_id: {{ membre.id_membre }}</p>
+                <!-- <p>membre_id: {{ membre.id_membre }}</p> -->
                 <p>guest: {{ guest }}</p>
 
                 </span>

@@ -18,7 +18,24 @@ abstract class Crud extends PDO {
         if($count == 1 ){
             return $stmt->fetch();
         }else{
-            header("location: ../../home/error2");
+            header("location: ../../home/error");
+        }
+    }
+
+
+        
+    public function checkAppartenance($prop, $value){
+        $sql = "SELECT * FROM $this->table
+                WHERE $this->primaryKey = :$this->primaryKey
+                AND $prop = $value";
+        $stmt = $this->prepare($sql);
+        $stmt->bindValue(":$this->primaryKey", $value);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if($count > 0 ){
+            return $stmt->fetch();
+        }else{
+            header("location: ../../home/error");
         }
     }
 
@@ -111,10 +128,21 @@ abstract class Crud extends PDO {
         $stmt = $this->prepare($sql);
         $stmt->bindValue(":$this->primaryKey", $id);
         if(!$stmt->execute()){
-            print_r($stmt->errorInfo());
+            twig::render('membre_edit.php', ['errors' => $stmt->errorInfo()]);
+            // print_r($stmt->errorInfo());
         }else{
             return true;
         }
+    }
+
+    // Pour acquérir des informations provenant d'une instance
+    public function selectJoin($prop, $value, $table2, $field1, $field2, $ordre){
+        $sql = "SELECT * FROM $this->table
+                         LEFT JOIN $table2 ON $field1 = $field2
+                         WHERE $prop = $value
+                         ORDER BY $ordre DESC";
+        $stmt  = $this->query($sql);
+        return $stmt->fetchAll();
     }
 
     // Pour créer un régistre
@@ -134,15 +162,6 @@ abstract class Crud extends PDO {
     //     return  $stmt->fetchAll();
     // }
 
-    // Pour acquérir des informations provenant d'une instance
-    // public function selectJoin($prop, $value, $table2, $field1, $field2, $ordre){
-    //     $sql = "SELECT * FROM $this->table
-    //                      LEFT JOIN $table2 ON $field1 = $field2
-    //                      WHERE $prop = $value
-    //                      ORDER BY $ordre DESC";
-    //     $stmt  = $this->query($sql);
-    //     return $stmt->fetchAll();
-    // }
 }
 
 

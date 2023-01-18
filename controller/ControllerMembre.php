@@ -6,19 +6,8 @@ RequirePage::requireModel('ModelPrivilege');
 
 class ControllerMembre{
 
-    // Pour afficher le registre des membres
-    // public function index(){
-    //     CheckSession::sessionAuth();
 
-    //     // L'index fait intervenir des données de trois tables: membre, poste, ecole
-    //     // Méthode du modele employé
-    //     $membre = new ModelMembre;
-    //     $select = $membre->selectDoubleJoin('poste', 'ecole', 'membrePosteId', 'posteId', 'membreEcoleId', 'ecoleId', 'membreDateEmbauche');
-    //     twig::render("membre-index.php", ['membres' => $select]);
-    // }
-
-
-    // Pour afficher la page de création d'employés
+    // Pour afficher la page de création d'membres
     public function create(){
         twig::render('membre_create_login.php');
     }
@@ -75,23 +64,17 @@ class ControllerMembre{
                     $_POST['id_privilege_membre'] = 2; 
                 }
 
-
                 // INSERTION
                 $insert = $membre->insert($_POST);
 
-
                 // Login automatique après la création
-                // session_regenerate_id();
                 $_SESSION['id_membre'] = $insert;
                 $_SESSION['id_privilege_membre'] = $_POST['id_privilege_membre'];
                 $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
-
                 // Redirection
                 requirePage::redirectPage('home/index');
             }
-
-
         }else{    // Si la validation n'est pas réussite
             $errors = $validation->displayErrors();
             twig::render('membre_create_login.php', ['errors' => $errors, 'membre' => $_POST]); // on conserve les données
@@ -99,7 +82,7 @@ class ControllerMembre{
     }
 
 
-    // pour faire le login des employés
+    // pour faire le login des membres
     public function login(){
         twig::render('membre_create_login.php');
     }
@@ -109,10 +92,11 @@ class ControllerMembre{
     public function auth(){
         $validation = new Validation;
         extract($_POST);
-        if(isset($nom_utilisateur_membre) && isset($mot_passe_membre)){
-            $validation->name('nom_utilisateur_membre')->value($nom_utilisateur_membre)->pattern('email')->required()->max(45);
-            $validation->name('mot_passe_membre')->value($mot_passe_membre)->required();
-        }
+
+        // Validation
+        $validation->name('nom_utilisateur_membre')->value($nom_utilisateur_membre)->pattern('email')->required()->max(45);
+
+        $validation->name('mot_passe_membre')->value($mot_passe_membre)->required();
 
         if($validation->isSuccess()){
             $membre = new ModelMembre;
@@ -127,59 +111,109 @@ class ControllerMembre{
     // log out
     public function logout(){
         session_destroy();
-        requirePage::redirectPage('membre/login');
+        requirePage::redirectPage('home/index');
     }
 
 
-    // Pour voir les info d'un employé selon l'ID de la session en cours
+    // Pour voir les info d'un membre selon l'ID de la session en cours
     public function show(){
+        // Pour vérifier l'authentification
+        CheckSession::sessionAuth();
        
         $membre = new ModelMembre;
-        // Fait intervenir des données de deux tables: membre, privilege
+        // Join pour afficher le nom du rôle
         $selectMembre = $membre->selectIdJoin($_SESSION['id_membre'], 'privilege', 'id_privilege_membre', 'id_privilege');
 
-        $timbre = new ModelTimbre;
-        $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
+        // infos du timbre pour mettre l'id du prochain timbre dans l'url de sa création
+        // $timbre = new ModelTimbre;
+        // $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
 
         twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
-
-
-        // twig::render('membre_show.php', ['membre' => $selectMembre]);
     }
 
-    // Pour afficher la page de modification d'employé
-    public function edit(){
-        // $log = new ModelLog;
-        // $log->store();
 
+    // Pour afficher la page de modification d'un membre
+    public function edit(){
+        // Pour vérifier l'authentification
         CheckSession::sessionAuth();
 
-        // Vérifier que les privilges sont bien respectés
-        // if ($_SESSION['id_privilege_membre'] == 2){
-        //     $privilege = new ModelPrivilege;
-        //     $selectPrivilege = $privilege->select('id_privilege_membre');
-
-
-            $membre = new ModelMembre;
-            $selectMembre = $membre->selectId($_SESSION['id_membre']);
-            twig::render('membre_edit.php', ['membre' => $selectMembre]);
-        // }else{
-        //     requirePage::redirectPage('home/error');
-        // }
-    }
-
-    // Pour modifier les information d'un employé précis
-    public function update(){
+        // On modifie l'utilisateur connecté
         $membre = new ModelMembre;
-        $_POST['id_membre'] = $_SESSION['id_membre'];
-        $update = $membre->update($_POST);
-        RequirePage::redirectPage('membre/show/'.$_SESSION['id_membre']);
+        $selectMembre = $membre->selectId($_SESSION['id_membre']);
+
+        twig::render('membre_edit.php', ['membre' => $selectMembre]);
     }
 
-    // Pour supprimer les information d'un employé précis
+    
+    // Pour modifier les information d'un membre précis
+    public function update(){
+
+        $validation = new Validation;
+        extract($_POST);
+
+        $validation->name('nom_membre')->value($nom_membre)->pattern('alpha')->required()->max(45);
+
+        $validation->name('prenom_membre')->value($prenom_membre)->pattern('alpha')->required()->max(45);
+
+        $validation->name('nom_utilisateur_membre')->value($nom_utilisateur_membre)->pattern('email')->required()->max(50);
+
+        if($_POST['mot_passe_membre']) {
+            $validation->name('mot_passe_membre')->value($mot_passe_membre)->max(20)->min(6);
+        }
+
+        if($validation->isSuccess()){
+            $membre = new ModelMembre;
+
+            // Si le courriel a changé, vérifier si le courriel existe déjà
+            $ancienCourriel = $membre->selectId($_SESSION['id_membre'])['nom_utilisateur_membre'];
+            if($_POST['nom_utilisateur_membre'] != $ancienCourriel && !$membre->checkCourriel($_POST)){
+                $verifCourriel = "Le courriel existe déjà";
+                twig::render('membre_edit.php', ['errors' => $verifCourriel, 'membre' => $_POST]); 
+            } else {
+                // Hashage du mot de passe s'il est modifié
+                if($_POST['mot_passe_membre']) {
+                    $options = [
+                        'cost' => 10,
+                    ];
+                    $_POST['mot_passe_membre'] = password_hash($_POST['mot_passe_membre'], PASSWORD_BCRYPT, $options);
+                // Sinon le mot de passe reste intact
+                } else {
+                    $_POST['mot_passe_membre'] = $membre->selectId($_SESSION['id_membre'])['mot_passe_membre'];
+                }
+
+                // UPDATE
+                $membre = new ModelMembre;
+                $_POST['id_membre'] = $_SESSION['id_membre'];
+                $update = $membre->update($_POST);
+                
+                // Redirection
+                RequirePage::redirectPage('membre/show');
+            }
+
+        }else{    // Si la validation n'est pas réussite
+            $errors = $validation->displayErrors();
+            twig::render('membre_edit.php', ['errors' => $errors, 'membre' => $_POST]); // on conserve les données
+        }
+    }
+
+
+    // Pour supprimer les information d'un membre précis
     public function delete(){
         $membre = new ModelMembre;
         $delete = $membre->delete($_SESSION['id_membre']);
-        RequirePage::redirectPage('membre');
+        RequirePage::redirectPage('membre/create');
     }
+
+
+
+    // Pour afficher le registre des membres
+    // public function index(){
+    //     CheckSession::sessionAuth();
+
+    //     // L'index fait intervenir des données de trois tables: membre, poste, ecole
+    //     // Méthode du modele membre
+    //     $membre = new ModelMembre;
+    //     $select = $membre->selectDoubleJoin('poste', 'ecole', 'membrePosteId', 'posteId', 'membreEcoleId', 'ecoleId', 'membreDateEmbauche');
+    //     twig::render("membre-index.php", ['membres' => $select]);
+    // }
 }

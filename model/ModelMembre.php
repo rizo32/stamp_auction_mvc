@@ -19,6 +19,7 @@ class ModelMembre extends Crud {
     // Vérifie si le courriel existe déjà
     public function checkCourriel($data){
         extract($data);
+
         $sql = "SELECT * FROM $this->table
                             WHERE nom_utilisateur_membre = ?";
         $stmt = $this->prepare($sql);
@@ -26,8 +27,11 @@ class ModelMembre extends Crud {
             $stmt->execute(array($nom_utilisateur_membre));
         }
         $count = $stmt->rowCount();
-        if($count != 0){
-            return 0; // FAUX    
+        print_r($count);    
+        if($count == 0){
+            return 1; // OK
+        } else {
+            return 0; // PAS OK
         }
     }
 
@@ -56,7 +60,8 @@ class ModelMembre extends Crud {
         }else{
             return "Le courriel n'existe pas";
         }
-    } 
+    }
+
 }
 
 ?>
