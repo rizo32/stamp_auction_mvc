@@ -123,7 +123,7 @@ ENGINE = InnoDB;
 -- Table `stampee`.`Timbre`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stampee`.`Timbre` (
-  `id_timbre` INT NOT NULL,
+  `id_timbre` INT NOT NULL AUTO_INCREMENT,
   `nom_timbre` VARCHAR(100) NOT NULL,
   `description_timbre` TEXT NULL,
   `annee_parution_timbre` YEAR NULL,

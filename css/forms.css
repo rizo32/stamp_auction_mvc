@@ -125,3 +125,7 @@ label {
     max-width: 30ch;
     margin-bottom: 1em;
 }
+
+.small-img {
+    height: 100px;
+}

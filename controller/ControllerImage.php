@@ -87,7 +87,13 @@ class ControllerImage{
                         $_POST['taille_image'] = $imageTaille;
                         $_POST['extension_image'] = $imageExt;
 
+
+
+                        
                         // check si le timbre en question appartient à l'id de la session
+
+
+
                         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
                         $_POST['id_timbre_image'] = end($urlArray);
                         $id_timbre = end($urlArray);
@@ -100,10 +106,14 @@ class ControllerImage{
                         // var_dump($imagesTableau);
 
 
-                        // $insert = $image->insert($_POST);
+                        $insert = $image->insert($_POST);
 
                         $message = "Téléversement réussi. Vous pouvez téléverser jusqu'à 3 images";
 
+                        requirePage::redirectPage('image/create/'.$id_timbre);
+
+
+                        // Le problème c'est qu'on perd l'url 'create' -> store
                         twig::render('image_create.php', ['message'=>$message, 'id_timbre' => $id_timbre, 'images_tableau'=>$imagesTableau]);
 
                         // requirePage::redirectPage('image/create');
@@ -187,15 +197,13 @@ class ControllerImage{
 
 
     // Pour voir les info d'un employé selon l'ID de la session en cours
-    public function show(){
-        // $log = new ModelLog;
-        // $log->store();
+    // public function show(){
        
-        $membre = new ModelMembre;
-        // Fait intervenir des données de deux tables: membre, privilege
-        $selectMembre = $membre->selectIdJoin($_SESSION['id_membre'], 'privilege', 'id_privilege_membre', 'id_privilege');
-        twig::render('membre_show.php', ['membre' => $selectMembre]);
-    }
+    //     $membre = new ModelMembre;
+    //     // Fait intervenir des données de deux tables: membre, privilege
+    //     $selectMembre = $membre->selectIdJoin($_SESSION['id_membre'], 'privilege', 'id_privilege_membre', 'id_privilege');
+    //     twig::render('membre_show.php', ['membre' => $selectMembre]);
+    // }
 
     // Pour afficher la page de modification d'employé
     public function edit(){

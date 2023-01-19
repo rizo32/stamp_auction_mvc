@@ -32,10 +32,8 @@ abstract class Crud extends PDO {
         $stmt->bindValue(":$this->primaryKey", $value);
         $stmt->execute();
         $count = $stmt->rowCount();
-        if($count > 0 ){
+        if($count = 1 ){
             return $stmt->fetch();
-        }else{
-            header("location: ../../home/error");
         }
     }
 
@@ -57,22 +55,22 @@ abstract class Crud extends PDO {
 
 
     // Pour créer un registre (ex. enchères pour un membre)
-    // public function selectAll($prop, $wherevalue, $value=null){
-    //     $sql = "SELECT $value FROM $this->table
-    //     WHERE $prop = $wherevalue";
-    //     $stmt = $this->query($sql);
-    //     return  $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-    // }
-
-    // safe??
     public function selectAll($prop, $wherevalue, $value=null){
         $sql = "SELECT $value FROM $this->table
-        WHERE $prop = :$wherevalue";
+        WHERE $prop = $wherevalue";
         $stmt = $this->query($sql);
-        $stmt->bindValue(":$wherevalue", $wherevalue);
-        $stmt->execute();
         return  $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
     }
+
+    // safe??
+    // public function selectAll($prop, $wherevalue, $value=null){
+    //     $sql = "SELECT $value FROM $this->table
+    //     WHERE $prop = :$wherevalue";
+    //     $stmt = $this->query($sql);
+    //     $stmt->bindValue(":$wherevalue", $wherevalue);
+    //     $stmt->execute();
+    //     return  $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+    // }
 
     public function selectMax($value){
         $sql = "SELECT max($value) FROM $this->table";

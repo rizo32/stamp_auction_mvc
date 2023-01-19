@@ -2,21 +2,22 @@
 
 
 <main class="form">
-    {% if errors is defined %}
-        <span class="error">{{ errors | raw}}</span>
-    {% endif %}
     <div class="compte">
         <nav>
             <ul class="flex-horizontal">
                 <li><a href = "{{ path }}membre/show">Vos informations</a></li>
                 <li><a href = "{{ path }}enchere/show">Vos enchères</a></li>
-                <li class="selectionne"><a href = "{{ path }}timbre/create/{{ id_timbre }}">Créer une enchère</a></li>
+                <li class="selectionne"><a href = "{{ path }}timbre/create">Créer une enchère</a></li>
                 <li><a href = "{{ path }}membre/logout">Déconnexion</a></li>
             </ul>
         </nav>
     
         <form class="creation" action="{{ path }}timbre/update" method="post">
             <h3>Informations du timbre</h3>
+            {% if errors is defined %}
+                <span class="error">{{ errors | raw}}</span>
+            {% endif %}
+
 
             <div class="flex-vertical">           
                 <label>Nom de l'enchère</label>
@@ -136,12 +137,13 @@
                 </select>
             </div>          
             
-            <input type="hidden" name="coup_coeur_timbre" value=0>
-            <input type="hidden" name="id_timbre" value={{ timbre.id_timbre }}>
+            <input type="hidden" name="coup_coeur_timbre" value=0/>
+            <input type="hidden" name="id_timbre" value="{{ timbre.id_timbre }}"/>
 
-            
-            <input class="bouton" name="retour" type="submit" value="Sauvegarder">
-            <input class="bouton" name="avancer" type="submit" value="Sauvegarder et modifier les images">
+            <div class="flex-horizontal">
+                <input class="bouton" name="retour" type="submit" value="Sauvegarder">
+                <input class="bouton" name="avancer" type="submit" value="Sauvegarder et ajouter des images">
+            </div>
         </form>
     </div>
 

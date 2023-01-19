@@ -1,11 +1,11 @@
 <?php
 RequirePage::requireModel('Crud');
-RequirePage::requireModel('ModelTimbre');
+// RequirePage::requireModel('ModelTimbre');
 RequirePage::requireModel('ModelMembre');
-RequirePage::requireModel('ModelPrivilege');
+// RequirePage::requireModel('ModelPrivilege');
+
 
 class ControllerMembre{
-
 
     // Pour afficher la page de création d'membres
     public function create(){
@@ -128,7 +128,8 @@ class ControllerMembre{
         // $timbre = new ModelTimbre;
         // $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
 
-        twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
+        twig::render("membre_show.php", ['membre' => $selectMembre]);
+        // twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
     }
 
 

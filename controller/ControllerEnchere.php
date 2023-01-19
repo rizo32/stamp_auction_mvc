@@ -1,6 +1,6 @@
 <?php
 RequirePage::requireModel('Crud');
-RequirePage::requireModel('ModelProvenance');
+RequirePage::requireModel('ModelTimbre');
 RequirePage::requireModel('ModelEnchere');
 // RequirePage::requireModel('ModelPrivilege');
 
@@ -78,15 +78,40 @@ class ControllerEnchere{
     }
 
     public function show(){
+        // Actually on va faire un select à partir de timbre pour ne pas manquer les timbres qui n'ont pas encore d'enchères
         $enchere = new ModelEnchere;
         $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere');
         // print_r($selectEnchere);
         twig::render('enchere_show.php', ['encheres' => $selectEnchere]);
-
     }
     
 
+    
+    // Pour supprimer les information d'un enchère précis
+    public function delete(){
+        // Pour vérifier l'authentification
+        CheckSession::sessionAuth();
 
+        // Va chercher l'URL pour avoir l'ID de l'enchère
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $id_enchere = end($urlArray);
+
+        // va chercher les infos de l'enchère selon son ID
+        $enchere = new ModelTimbre;
+        $enchere_infos = $enchere->selectId($id_enchere);
+
+        // Vérifier si l'enchère' existe et..
+        $enchere = new ModelEnchere;
+        if($enchere->checkAppartenance('id_enchere', $id_enchere) != null &&
+        
+        // ...appartient au membre
+        $enchere->checkAppartenance('id_enchere', $id_enchere)['id_membre_proprietaire_enchere'] == $_SESSION['id_membre']){
+            $delete = $enchere->delete($id_enchere);
+            RequirePage::redirectPage('enchere/show');
+        } else {
+            $errors = "L'enchère que vous souhaitez supprimer nous vous appartient pas";
+            twig::render('enchere_show.php', ['errors' => $errors]);
+        }
+    }
 
 }
-?>

@@ -10,7 +10,7 @@
             <ul class="flex-horizontal">
                 <li><a href = "{{ path }}membre/show">Vos informations</a></li>
                 <li><a href = "{{ path }}enchere/show">Vos enchères</a></li>
-                <li class="selectionne"><a href = "{{ path }}timbre/create/{{ id_timbre }}">Créer une enchère</a></li>
+                <li class="selectionne"><a href = "{{ path }}timbre/create">Créer une enchère</a></li>
                 <li><a href = "{{ path }}membre/logout">Déconnexion</a></li>
             </ul>
         </nav>
@@ -138,7 +138,7 @@
             
             <input type="hidden" name="coup_coeur_timbre" value=0>
             
-            <input class="bouton" type="submit" value="Enregistrer">
+            <input class="bouton" type="submit" value="Ajouter des images">
         </form>
     </div>
 
