@@ -19,12 +19,31 @@
         <form class="creation" action="{{ path }}image/store/{{ id_timbre }}" method="post" enctype="multipart/form-data">
 
             <h3>Ajout d'image(s)</h3>
+            {% if message is defined %}
+                <span>{{ message | raw}}</span>
+            {% endif %}
 
-            <div class="flex-vertical">
-                <p class="message">{{ message }}</p>           
-                <label>Image du produit</label>
-                <input type="file" name="nom_image"/>
+            <div class="flex-horizontal">
+
+                
+                <div class="flex-vertical">
+                    <label>Image du produit</label>
+                    <input type="file" name="nom_image"/>
+                </div>
+                <button class="bouton" type="submit" name="soumettre">Téléverser l'image</button>
+                
             </div>
+                <div class="flex-horizontal">
+
+                    {% for image in images_tableau %}
+                    <div class="supprime-image-contenant">
+                        <img class="upload-image" src="{{ path }}uploads/{{ image }}">
+                        <a class="supprime-image" href="{{ path }}image/delete/{{ image }}">X</a>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
             
 
             <div class="flex-horizontal">
@@ -32,7 +51,7 @@
                 <!-- <input type="hidden" name="url" value= "{{ server.REQUEST_URI }}"> -->
 
                 <a href="{{ path }}timbre/edit/{{ id_timbre }}">Informations du timbre</a>
-                <a href="{{ path }}enchere/create/{{ id_timbre }}">Informations de l'enchère</a>
+                <a href="{{ path }}enchere/edit/{{ id_timbre }}">Informations de l'enchère</a>
                 <input type="hidden" name="id_timbre_image" value= "{{ id_timbre }}">
 
                 <!-- Faudrait juste vérifier que le timbre appartient bien à la personne connectée -->

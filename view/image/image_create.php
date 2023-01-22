@@ -15,29 +15,32 @@
    
         <form class="creation" action="{{ path }}image/store/{{ id_timbre }}" method="post" enctype="multipart/form-data">
             <h3>Ajout d'image(s)</h3>
-            {% if errors is defined %}
-                <span class="error">{{ errors | raw}}</span>
+            {% if message is defined %}
+                <span>{{ message | raw}}</span>
             {% endif %}
 
             <div class="flex-horizontal">
 
                 
                 <div class="flex-vertical">
-                    <p class="message">{{ message }}</p>           
                     <label>Image du produit</label>
                     <input type="file" name="nom_image"/>
                 </div>
                 <button class="bouton" type="submit" name="soumettre">Téléverser l'image</button>
                 
             </div>
-                <div class="flex-horizontal">
-
+                <div class="supprime-image-contenant-grid">
                     {% for image in images_tableau %}
-                    <img src="{{ path }}uploads/{{ image }}" width="200">
+                    <div class="supprime-image-contenant">
+                        <img class="upload-image" src="{{ path }}uploads/{{ image }}">
+                        <div class="supprime-image">
+                            <a href="{{ path }}image/delete/{{ image }}">&#10006;</a>
+                        </div>
+                    </div>
                     {% endfor %}
-
                 </div>
-                
+
+               
                 
 
             <div class="flex-horizontal">

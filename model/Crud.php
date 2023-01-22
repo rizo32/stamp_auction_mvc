@@ -8,6 +8,19 @@ abstract class Crud extends PDO {
     }
 
     // Pour acquérir des informations provenant d'une instance
+    public function select($listeProp, $prop, $value){
+        $sql = "SELECT $listeProp FROM $this->table
+                WHERE $prop = $value";
+        $stmt = $this->query($sql);
+        $count = $stmt->rowCount();
+        if($count == 1 ){
+            return $stmt->fetch();
+        }else{
+            return $stmt->fetchAll();
+        }
+    }
+
+    // Pour acquérir des informations provenant d'une instance
     public function selectId($value){
         $sql = "SELECT * FROM $this->table
                 WHERE $this->primaryKey = :$this->primaryKey";
@@ -23,19 +36,7 @@ abstract class Crud extends PDO {
     }
 
 
-        
-    public function checkAppartenance($prop, $value){
-        $sql = "SELECT * FROM $this->table
-                WHERE $this->primaryKey = :$this->primaryKey
-                AND $prop = $value";
-        $stmt = $this->prepare($sql);
-        $stmt->bindValue(":$this->primaryKey", $value);
-        $stmt->execute();
-        $count = $stmt->rowCount();
-        if($count = 1 ){
-            return $stmt->fetch();
-        }
-    }
+
 
     // Pour acquérir des informations provenant d'une instance
     public function selectIdJoin($value, $table2, $field1, $field2){

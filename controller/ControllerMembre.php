@@ -1,15 +1,13 @@
 <?php
 RequirePage::requireModel('Crud');
-// RequirePage::requireModel('ModelTimbre');
 RequirePage::requireModel('ModelMembre');
-// RequirePage::requireModel('ModelPrivilege');
 
 
 class ControllerMembre{
 
     // Pour afficher la page de création d'membres
     public function create(){
-        twig::render('membre_create_login.php');
+        twig::render('membre/membre_create_login.php');
     }
 
 
@@ -35,7 +33,7 @@ class ControllerMembre{
             if(!$membre->checkCourriel($_POST)){
                 // : si la vérification n'est pas respecté, sortir de la fonction
                 $verifCourriel = "Le courriel existe déjà";
-                twig::render('membre_create_login.php', ['errorStore' => $verifCourriel, 'membre' => $_POST]); 
+                twig::render('membre_create_login.php', ['messageStore' => $verifCourriel, 'membre' => $_POST]); 
 
             } else {
                 // Hashage du mot de passe
@@ -77,14 +75,14 @@ class ControllerMembre{
             }
         }else{    // Si la validation n'est pas réussite
             $errors = $validation->displayErrors();
-            twig::render('membre_create_login.php', ['errors' => $errors, 'membre' => $_POST]); // on conserve les données
+            twig::render('membre_create_login.php', ['messageStore' => $errors, 'membre' => $_POST]); // on conserve les données
         }
     }
 
 
     // pour faire le login des membres
     public function login(){
-        twig::render('membre_create_login.php');
+        twig::render('membre/membre_create_login.php');
     }
 
 
@@ -101,10 +99,10 @@ class ControllerMembre{
         if($validation->isSuccess()){
             $membre = new ModelMembre;
             $checkMembre = $membre->checkMembre($_POST);
-            twig::render('membre_create_login.php', ['errorLogin' => $checkMembre, 'membre' => $_POST]);        
+            twig::render('membre_create_login.php', ['messageLogin' => $checkMembre, 'membre' => $_POST]);        
         }else{
             $errors = $validation->displayErrors();
-            twig::render('membre_create_login.php', ['errorLogin' => $errors, 'membre' => $_POST]);
+            twig::render('membre_create_login.php', ['messageLogin' => $errors, 'membre' => $_POST]);
         }
     }
 
@@ -128,7 +126,7 @@ class ControllerMembre{
         // $timbre = new ModelTimbre;
         // $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
 
-        twig::render("membre_show.php", ['membre' => $selectMembre]);
+        twig::render("membre/membre_show.php", ['membre' => $selectMembre]);
         // twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
     }
 
@@ -142,7 +140,7 @@ class ControllerMembre{
         $membre = new ModelMembre;
         $selectMembre = $membre->selectId($_SESSION['id_membre']);
 
-        twig::render('membre_edit.php', ['membre' => $selectMembre]);
+        twig::render('membre/membre_edit.php', ['membre' => $selectMembre]);
     }
 
     
@@ -169,7 +167,7 @@ class ControllerMembre{
             $ancienCourriel = $membre->selectId($_SESSION['id_membre'])['nom_utilisateur_membre'];
             if($_POST['nom_utilisateur_membre'] != $ancienCourriel && !$membre->checkCourriel($_POST)){
                 $verifCourriel = "Le courriel existe déjà";
-                twig::render('membre_edit.php', ['errors' => $verifCourriel, 'membre' => $_POST]); 
+                twig::render('membre_edit.php', ['message' => $verifCourriel, 'membre' => $_POST]); 
             } else {
                 // Hashage du mot de passe s'il est modifié
                 if($_POST['mot_passe_membre']) {
@@ -193,7 +191,7 @@ class ControllerMembre{
 
         }else{    // Si la validation n'est pas réussite
             $errors = $validation->displayErrors();
-            twig::render('membre_edit.php', ['errors' => $errors, 'membre' => $_POST]); // on conserve les données
+            twig::render('membre/membre_edit.php', ['message' => $errors, 'membre' => $_POST]); // on conserve les données
         }
     }
 
@@ -202,6 +200,7 @@ class ControllerMembre{
     public function delete(){
         $membre = new ModelMembre;
         $delete = $membre->delete($_SESSION['id_membre']);
+        session_destroy();
         RequirePage::redirectPage('membre/create');
     }
 

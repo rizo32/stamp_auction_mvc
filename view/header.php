@@ -25,7 +25,8 @@
                     <span class="point-reference"><img src="{{ path }}img/recherche.svg" alt="icone-recherche"></span>
                 </span>
                 <span class="filler alerte">
-                <p>session_id: {{ session.id_membre }}</p>
+                    <p>timbre_id: {{ session.id_timbre }}</p>
+                    <p>session_id: {{ session.id_membre }}</p>
                 <!-- <p>membre_id: {{ membre.id_membre }}</p> -->
                 <p>guest: {{ guest }}</p>
 

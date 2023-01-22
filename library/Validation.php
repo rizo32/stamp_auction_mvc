@@ -147,13 +147,13 @@
             if(is_string($this->value)){
 
                 if(strlen($this->value) < $length){
-                    $this->errors[] = 'La valeur du champ '.$this->name.' est inférieur à la valeur minimale';
+                    $this->errors[] = 'La longueur du champ '.$this->name.' est inférieur à la valeur minimale';
                 }
 
             }else{
 
                 if($this->value < $length){
-                    $this->errors[] = 'La valeur du champ '.$this->name.' est inférieur à la valeur minimale';
+                    $this->errors[] = 'La longueur du champ '.$this->name.' est inférieur à la valeur minimale';
                 }
 
             }

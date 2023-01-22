@@ -27,7 +27,6 @@ class ModelMembre extends Crud {
             $stmt->execute(array($nom_utilisateur_membre));
         }
         $count = $stmt->rowCount();
-        print_r($count);    
         if($count == 0){
             return 1; // OK
         } else {

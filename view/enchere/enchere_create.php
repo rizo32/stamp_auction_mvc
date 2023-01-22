@@ -42,7 +42,7 @@
             <div class="flex-horizontal">
 
                 <a href="{{ path }}image/edit/{{ id_timbre }}">Retour</a>
-                <button class="bouton" type="submit" name="soumettre">Soumettre l'enchère</button>
+                <button class="bouton " type="submit" name="soumettre">Soumettre l'enchère</button>
             </div>
         </form>
     </div>

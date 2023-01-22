@@ -6,8 +6,11 @@
    
     <form class="creation nouveau" action="{{ path }}membre/update" method="post">
         <h3>Modifier vos informations</h3>
-        {{ errors }}
 
+        {% if message is defined %}
+            <span class="error">{{ message | raw }}</span>
+        {% endif %}
+        
         <div class="flex-vertical">           
             <label>Nom de famille</label>
             <input type="text" name="nom_membre" value="{{ membre.nom_membre }}"/>

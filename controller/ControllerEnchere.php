@@ -6,11 +6,11 @@ RequirePage::requireModel('ModelEnchere');
 
 class ControllerEnchere{
     public function index(){
-        twig::render("enchere_index.php");
+        twig::render("enchere/enchere_index.php");
     }
 
     public function detail(){
-        twig::render("enchere_detail.php");
+        twig::render("enchere/enchere_detail.php");
     }
 
     public function create(){
@@ -25,14 +25,31 @@ class ControllerEnchere{
         // print_r($id_timbre_enchere);
         // requirePage::redirectPage('enchere/create/'.$id_timbre_enchere);
 
-        twig::render('enchere_create.php', ['id_timbre' => $id_timbre]);
+        twig::render('enchere/enchere_create.php', ['id_timbre' => $id_timbre]);
 
         
+        // $provenance = new ModelProvenance;
+        // $selectProvenance = $provenance->select('id_provenance');
+        // twig::render('enchere_create.php', ['provenance'=>$selectProvenance]);
+    }
+
+    public function edit(){
+
+        // si il existe déjà, rediriger vers le fonction update
+
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $id_timbre = end($urlArray);
+
+        // print_r($id_timbre_enchere);
+        // requirePage::redirectPage('enchere/create/'.$id_timbre_enchere);
+
+        $enchere = new ModelEnchere;
+        $enchere_infos = $enchere->checkAppartenance('id_timbre_enchere', $id_timbre);
 
 
+        twig::render('enchere/enchere_edit.php', ['enchere' => $enchere_infos, 'id_timbre' => $id_timbre]);
 
-
-
+        
         // $provenance = new ModelProvenance;
         // $selectProvenance = $provenance->select('id_provenance');
         // twig::render('enchere_create.php', ['provenance'=>$selectProvenance]);
@@ -82,7 +99,7 @@ class ControllerEnchere{
         $enchere = new ModelEnchere;
         $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere');
         // print_r($selectEnchere);
-        twig::render('enchere_show.php', ['encheres' => $selectEnchere]);
+        twig::render('enchere/enchere_show.php', ['encheres' => $selectEnchere]);
     }
     
 
@@ -110,7 +127,7 @@ class ControllerEnchere{
             RequirePage::redirectPage('enchere/show');
         } else {
             $errors = "L'enchère que vous souhaitez supprimer nous vous appartient pas";
-            twig::render('enchere_show.php', ['errors' => $errors]);
+            twig::render('enchere/enchere_show.php', ['errors' => $errors]);
         }
     }
 

@@ -45,7 +45,8 @@ label {
 }
 
 .bouton {
-    margin-top: 20px;
+    /* Ceci brise le bouton dans enchere create */
+    /* margin-top: 20px; */
     width: fit-content;
     height: auto;
     padding: 5px 10px;
@@ -128,4 +129,40 @@ label {
 
 .small-img {
     height: 100px;
+}
+
+.supprime-image-contenant-grid {
+    margin: 20px;
+    display: grid;
+    width: 100%;
+    grid-template-columns : repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+}
+
+.supprime-image-contenant {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    overflow: hidden;
+    height: 200px;  
+}
+
+.supprime-image {
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    width: clamp(100px, 100%, 200px);
+    max-height: clamp(100px, 100%, 200px);
+}
+
+.supprime-image a {
+    color: red;
+    font-size: 22px;
+    padding-right: 5px;
+}
+
+.supprime-image-contenant>img {
+    width: clamp(100px, 100%, 150px);
+    max-height: clamp(100px, 100%, 150px);
 }
