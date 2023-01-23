@@ -13,21 +13,24 @@
     <main id="page-produit" class="flex-vertical">
         <article class="informations-principales flex-horizontal">
             <div class="images-produit flex-horizontal">
+
+                
+                
                 <div class="galerie flex-vertical">
-                    <img class="produit actif" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
-                    <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                    <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
-                    <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
-                    <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
+                    {% for image in images %}
+                    <img class="produit actif" src="{{ path }}uploads/{{ image.nom_image }}" alt="image produit">
+                    {% endfor %}
                 </div>
+
                 <div class="image-contenant">
                     <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
                 </div>
+
             </div>
             <section class="sommaire-produit flex-vertical">
                 <header>
-                    <small>1j 4h | 13 mises</small>
-                    <h1>#2607c Imperf Pair Superb NH SCV</h1>
+                    <small>{{ enchere.delais }} | 13 mises</small>
+                    <h1>{{ enchere.nom_timbre }}</h1>
                     <small class="alerte">6 ajouts à des listes de suivi dans les 24 dernières heures</small>
                 </header>
                 <div class="information-prix">
@@ -38,43 +41,43 @@
                 <table>
                     <tr>
                         <th>Mise de départ</th>
-                        <td>$80.00</td>
+                        <td>{{ enchere.prix_initial_enchere }}</td>
                     </tr>
                     <tr>
                         <th>Provenance</th>
-                        <td>Canada</td>
+                        <td>{{ enchere.nom_provenance }}</td>
                     </tr>
                     <tr>
                         <th>Condition</th>
-                        <td>Excellente</td>
+                        <td>{{ enchere.nom_etat }}</td>
                     </tr>
                     <tr>
                         <th>Couleur</th>
-                        <td>Noir, gris</td>
+                        <td>{{ enchere.nom_couleur_principale }}</td>
                     </tr>
                     <tr>
                         <th>Évaluation</th>
-                        <td>95 (XF/Superbe)</td>
+                        <td>{{ enchere.nom_evaluation }}</td>
                     </tr>
                     <tr>
                         <th>Année d'émission</th>
-                        <td>1874</td>
+                        <td>{{ enchere.annee_parution_timbre }}</td>
                     </tr>
                     <tr>
-                        <th>Mise en vente</th>
-                        <td>2022/11/06</td>
+                        <th>Mise à l'enchère</th>
+                        <td>{{ enchere.date_debut_enchere }}</td>
                     </tr>
                     <tr>
                         <th>Certification</th>
-                        <td>Oui</td>
+                        <td>{{ enchere.certification_timbre }}</td>
                     </tr>
                     <tr>
                         <th>Format</th>
-                        <td>Seul</td>
+                        <td>{{ enchere.nom_format }}</td>
                     </tr>
                     <tr>
                         <th>Alignement</th>
-                        <td>Fine</td>
+                        <td>{{ enchere.nom_alignement }}</td>
                     </tr>
                 </table>
             </section>

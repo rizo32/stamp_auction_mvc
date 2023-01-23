@@ -13,8 +13,16 @@ class ControllerImage{
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
         $id_timbre = end($urlArray);
 
-        twig::render('image/image_create.php', ['id_timbre' => $id_timbre]);
+        $image = new ModelImage;
+        $imagesTableau = $image->selectAll('id_timbre_image', $id_timbre, 'nom_image');
+
+        twig::render('image/image_create.php', ['id_timbre' => $id_timbre, 'images_tableau'=>$imagesTableau]);
+
+
     }
+
+
+
 
     // Pour insérer les employés dans la base de données
     public function store(){
@@ -38,9 +46,10 @@ class ControllerImage{
 
             $imageExtPermis = array('jpg', 'jpeg', 'png', 'webp');
 
-            $urlArray = explode('/', $_SERVER['REQUEST_URI']);
-            $_POST['id_timbre_image'] = end($urlArray);
-            $id_timbre = end($urlArray);
+            // $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+            // $_POST['id_timbre_image'] = end($urlArray);
+            // $id_timbre = end($urlArray);
+            $id_timbre = $_POST['id_timbre_image'];
 
             if(in_array($imageExt, $imageExtPermis)){
                 if(!$imageErreur){
@@ -90,28 +99,7 @@ class ControllerImage{
     }
 
 
-    // Pour afficher la page de modification d'images
-    public function edit(){
-        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
-        $_POST['id_timbre_image'] = end($urlArray);
-        $id_timbre = end($urlArray);
 
-
-        // CheckSession::sessionAuth();
-
-
-            // $membre = new ModelMembre;
-            // $selectMembre = $membre->selectId($_SESSION['id_membre']);
-            $image = new ModelImage;
-
-            $imagesTableau = $image->selectAll('id_timbre_image', $id_timbre, 'nom_image');
-
-            twig::render('image/image_create.php', ['id_timbre' => $id_timbre, 'images_tableau'=>$imagesTableau]);
-            // twig::render('image_edit.php', ['membre' => $selectMembre]);
-        // }else{
-        //     requirePage::redirectPage('home/error');
-        // }
-    }
 
     // Pour supprimer une image
     public function delete(){
@@ -128,7 +116,7 @@ class ControllerImage{
         
         $delete = $image->delete($idImage['id_image']);
 
-        RequirePage::redirectPage('image/edit/'.$idImage['id_timbre_image']);
+        RequirePage::redirectPage('image/create/'.$idImage['id_timbre_image']);
     }
 }
 ?>

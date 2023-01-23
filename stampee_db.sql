@@ -181,9 +181,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stampee`.`Enchere` (
   `id_enchere` INT NOT NULL AUTO_INCREMENT,
-  `date_debut_enchere` DATETIME NOT NULL,
-  `prix_initial_enchere` FLOAT NOT NULL,
-  `date_fin_enchere` DATETIME NOT NULL,
+  `date_debut_enchere` DATE,
+  `date_fin_enchere` DATE,
+  `prix_initial_enchere` FLOAT,
   `id_timbre_enchere` INT NOT NULL UNIQUE,
   `id_membre_proprietaire_enchere` INT NOT NULL,
   PRIMARY KEY (`id_enchere`),
@@ -341,3 +341,5 @@ INSERT INTO Couleur (nom_couleur_principale) VALUES ("Violet");
 INSERT INTO Couleur (nom_couleur_principale) VALUES ("Magenta");
 INSERT INTO Couleur (nom_couleur_principale) VALUES ("Noir");
 INSERT INTO Couleur (nom_couleur_principale) VALUES ("Brun");
+
+INSERT INTO timbre ()

@@ -1,104 +1,127 @@
 <?php
 RequirePage::requireModel('Crud');
 RequirePage::requireModel('ModelTimbre');
+RequirePage::requireModel('ModelImage');
 RequirePage::requireModel('ModelEnchere');
-// RequirePage::requireModel('ModelPrivilege');
 
 class ControllerEnchere{
     public function index(){
-        twig::render("enchere/enchere_index.php");
+
+        $enchere = new ModelEnchere;
+        $selectEnchere = $enchere->enchereIndex('*', 'timbre', 'image', 'id_timbre', 'id_timbre_enchere', 'id_timbre', 'id_timbre_image', 'date_debut_enchere', ' IS NOT NULL', 'id_timbre');
+
+        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere]);
     }
 
     public function detail(){
-        twig::render("enchere/enchere_detail.php");
+
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $id_timbre = end($urlArray);
+
+        $enchere = new ModelEnchere;
+
+
+        $image = new ModelImage;
+        $selectImages = $image->selectSingleJoin('nom_image',
+        'timbre', 'id_timbre', 'id_timbre_image', 'id_timbre', $id_timbre);       
+        
+        
+        $selectEnchere = $enchere->enchereDetail('*', 'timbre', 'etat', 'provenance', 'alignement', 'format', 'couleur', 'evaluation',
+        'id_timbre', 'id_timbre_enchere', 'id_etat', 'id_etat_timbre', 'id_provenance', 'id_provenance_timbre', 'id_alignement', 'id_alignement_timbre', 'id_format', 'id_format_timbre', 'id_couleur', 'id_couleur_timbre', 'id_evaluation', 'id_evaluation_timbre',
+        'id_timbre', $id_timbre);
+
+
+        $tz = 'America/Toronto';
+        $timestamp = time();
+        $dt = new DateTime("now", new DateTimeZone($tz));
+        $dt->setTimestamp($timestamp);
+
+        $aujourdhui = new DateTime($dt->format('Y-m-d'));
+        $dateFinEnchere = new DateTime($selectEnchere['date_fin_enchere']);
+
+        $delais = $aujourdhui->diff($dateFinEnchere);
+        $delaisString = $this->format_interval($delais);
+        $selectEnchere['delais'] = $delaisString;
+
+
+        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'images' => $selectImages]);
     }
 
     public function create(){
 
-        // si il existe déjà, rediriger vers le fonction update
-
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
         $id_timbre = end($urlArray);
-
-
-
-        // print_r($id_timbre_enchere);
-        // requirePage::redirectPage('enchere/create/'.$id_timbre_enchere);
-
-        twig::render('enchere/enchere_create.php', ['id_timbre' => $id_timbre]);
-
-        
-        // $provenance = new ModelProvenance;
-        // $selectProvenance = $provenance->select('id_provenance');
-        // twig::render('enchere_create.php', ['provenance'=>$selectProvenance]);
-    }
-
-    public function edit(){
-
-        // si il existe déjà, rediriger vers le fonction update
-
-        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
-        $id_timbre = end($urlArray);
-
-        // print_r($id_timbre_enchere);
-        // requirePage::redirectPage('enchere/create/'.$id_timbre_enchere);
 
         $enchere = new ModelEnchere;
-        $enchere_infos = $enchere->checkAppartenance('id_timbre_enchere', $id_timbre);
+        $enchere_infos = $enchere->select('*', 'id_timbre_enchere', $id_timbre);
 
-
-        twig::render('enchere/enchere_edit.php', ['enchere' => $enchere_infos, 'id_timbre' => $id_timbre]);
-
-        
-        // $provenance = new ModelProvenance;
-        // $selectProvenance = $provenance->select('id_provenance');
-        // twig::render('enchere_create.php', ['provenance'=>$selectProvenance]);
+        twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos]);
     }
+
+    // public function edit(){
+
+    //     $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+    //     $id_timbre = end($urlArray);
+
+    //     // requirePage::redirectPage('enchere/create/'.$id_timbre_enchere);
+
+    //     $enchere = new ModelEnchere;
+    //     $enchere_infos = $enchere->checkAppartenance('id_timbre_enchere', $id_timbre);
+
+
+    //     twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos, 'id_timbre' => $id_timbre]);
+
+    // }
 
 
     // Pour insérer les enchères dans la base de données
     public function store(){
 
-        // $_POST['id_timbre_enchere'] = end($urlArray);
-        // $_POST['id_membre_enchere'] = $_SESSION[];
+        // $id_timbre = $_POST['id_timbre_enchere'];
+        // $countTimbre = $enchere->select('count(id_timbre_enchere)', 'id_timbre_enchere', $id_timbre);
 
-        // $log = new ModelLog;
-        // $log->store();
 
-        // if($_SESSION['privilegeId']==2){
-        //     $_POST['employePosteId'] = 3; 
-        // }
+        $validation = new Validation;
+        extract($_POST);
 
-        // $validation = new Validation;
-        // extract($_POST);
-        // $validation->name('employeNom')->value($employeNom)->pattern('alpha')->required()->max(45);
-        // $validation->name('employePrenom')->value($employePrenom)->pattern('alpha')->required()->max(45);
-        // $validation->name('employeCourriel')->value($employeCourriel)->pattern('email')->required()->max(50);
-        // $validation->name('employeMotDePasse')->value($employeMotDePasse)->max(20)->min(6);
+        $validation->name('date_debut_enchere')->value($date_debut_enchere)->pattern('date_ymd')->required();
 
-        // if($validation->isSuccess()){
-            $enchere = new ModelEnchere;
+        $validation->name('date_fin_enchere')->value($date_fin_enchere)->pattern('date_ymd')->required();
 
-            // Pour ajouter la date d'aujourd'hui comme date d'embauche sans passer par le formulaire
-            // $tz = 'America/Toronto';
-            // $timestamp = time();
-            // $dt = new DateTime("now", new DateTimeZone($tz));
-            // $dt->setTimestamp($timestamp);
-            // $_POST['employeDateEmbauche'] = $dt->format('Y-m-d');
+        $validation->name('prix_initial_enchere')->value($prix_initial_enchere)->pattern('float')->required();
 
-            $insert = $enchere->insert($_POST);
-            requirePage::redirectPage('enchere/show');
-        // }else{
-        //     $errors = $validation->displayErrors();
-        //     twig::render('employe-create.php', ['errors' => $errors, 'employe' => $_POST]);
-        // }
+        $_POST['id_membre_proprietaire_enchere'] = $_SESSION['id_membre'];
+
+
+
+
+        if($validation->isSuccess()){
+
+            // Vérifier si l'enchère du timbre existe déjà...
+            // if($countTimbre){
+                //... si oui, update
+                $enchere = new ModelEnchere;
+
+                // var_dump($_POST);
+
+                $update = $enchere->update($_POST);                
+            // } else {
+                // $insert = $enchere->insert($_POST);
+            // }
+            // Redirection
+            RequirePage::redirectPage('membre/show');
+
+        } else {
+            $errors = $validation->displayErrors();
+            twig::render('enchere/enchere_create.php', ['errors' => $errors, 'enchere' => $_POST]);
+        }
     }
 
+
     public function show(){
-        // Actually on va faire un select à partir de timbre pour ne pas manquer les timbres qui n'ont pas encore d'enchères
         $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere');
-        // print_r($selectEnchere);
+        $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere', 'image', 'id_timbre_image', 'id_timbre');
+
         twig::render('enchere/enchere_show.php', ['encheres' => $selectEnchere]);
     }
     
@@ -131,4 +154,27 @@ class ControllerEnchere{
         }
     }
 
+    /**
+     * Format an interval to show all existing components.
+     * If the interval doesn't have a time component (years, months, etc)
+     * That component won't be displayed.
+     *
+     * @param DateInterval $interval The interval
+     *
+     * @return string Formatted interval string.
+     * 
+     * Madara's Ghost
+     * https://stackoverflow.com/questions/676824/how-to-calculate-the-difference-between-two-dates-using-php
+     */
+    function format_interval(DateInterval $interval) {
+        $result = "";
+        if ($interval->y) { $result .= $interval->format("%y annéees "); }
+        if ($interval->m) { $result .= $interval->format("%m mois "); }
+        if ($interval->d) { $result .= $interval->format("%d jours "); }
+        if ($interval->h) { $result .= $interval->format("%h heures "); }
+        if ($interval->i) { $result .= $interval->format("%i minutes "); }
+        if ($interval->s) { $result .= $interval->format("%s secondes "); }
+
+        return $result;
+    }
 }

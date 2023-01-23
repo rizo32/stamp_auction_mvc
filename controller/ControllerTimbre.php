@@ -2,7 +2,6 @@
 RequirePage::requireModel('Crud');
 RequirePage::requireModel('ModelTimbre');
 RequirePage::requireModel('ModelEnchere');
-// RequirePage::requireModel('ModelPrivilege');
 
 class ControllerTimbre{
 
@@ -62,8 +61,15 @@ class ControllerTimbre{
 
             $id_timbre = $timbre->insert($_POST);
 
-            // On garde l'id du dernier timbre créé dans la _session pour pouvoir y apporter des modifications avant que la table Enchère ait été créée
-            $_SESSION['id_timbre'] = $id_timbre;
+            $enchere = new ModelEnchere;
+            $enchereInitiale = [];
+            $enchereInitiale['id_timbre_enchere'] = $id_timbre;
+            $enchereInitiale['id_membre_proprietaire_enchere'] = $_SESSION['id_membre'];
+
+            $enchere -> insert($enchereInitiale);
+
+            // On garde l'id du dernier timbre créé dans la _session pour pouvoir y apporter des modifications avant que la table Enchère ait été créée // plus nécéssaire!
+            // $_SESSION['id_timbre'] = $id_timbre;
 
             requirePage::redirectPage('image/create/'.$id_timbre);
 
@@ -100,12 +106,8 @@ class ControllerTimbre{
 
         // Pour trouver le propriétaire du timbre
         $enchere = new ModelEnchere;
-        $proprio = $enchere->checkAppartenance('id_timbre_enchere', $id_timbre) ?? 'id_membre_proprietaire_enchere';
+        $proprio = $enchere->checkAppartenance('id_timbre_enchere', $id_timbre)[0];
 
-        if(!isset($_SESSION['id_timbre'])){
-            $_SESSION['id_timbre'] = 0;
-        }
-        isset($_SESSION['id_timbre']) ? $_SESSION['id_timbre'] : 0;
 
         // Vérifier si le timbre existe et..
         if($timbre->selectId($id_timbre) != null &&
@@ -113,14 +115,13 @@ class ControllerTimbre{
         // ...appartient au membre ou...
         ($proprio == $_SESSION['id_membre']
 
-        // ...à la session (au cas où l'enchère n'a pas été créée)
-        || $id_timbre === $_SESSION['id_timbre'])){
+        )){
             twig::render('timbre/timbre_edit.php', ['timbre' => $timbre_infos]);
         }
         else {
             // $errors = "Le timbre que vous souhaitez modifier nous vous appartient pas";
             // twig::render('timbre/timbre_edit.php', ['errors' => $errors]);
-
+            // print_r($proprio);
             RequirePage::redirectPage('home/error');
         }
     }
@@ -167,7 +168,8 @@ class ControllerTimbre{
         } else if(isset($_POST['avancer'])){
             unset($_POST['avancer']);
             $update = $timbre->update($_POST);
-            RequirePage::redirectPage('image/edit/'.$_POST['id_timbre']);
+
+            RequirePage::redirectPage('image/create/'.$_POST['id_timbre']);
         }
     }
 }

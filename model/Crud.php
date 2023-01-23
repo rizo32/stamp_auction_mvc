@@ -12,12 +12,8 @@ abstract class Crud extends PDO {
         $sql = "SELECT $listeProp FROM $this->table
                 WHERE $prop = $value";
         $stmt = $this->query($sql);
-        $count = $stmt->rowCount();
-        if($count == 1 ){
-            return $stmt->fetch();
-        }else{
-            return $stmt->fetchAll();
-        }
+        // print_r($stmt);
+        return $stmt->fetch();
     }
 
     // Pour acquérir des informations provenant d'une instance
@@ -106,9 +102,12 @@ abstract class Crud extends PDO {
         }
         $champRequete = rtrim($champRequete, ", ");
 
+        
+        
         $sql = "UPDATE $this->table SET $champRequete WHERE $this->primaryKey = :$this->primaryKey";
-
+        
         $stmt = $this->prepare($sql);
+        print_r($stmt);
         foreach($data as $key=>$value){
             $stmt->bindValue(":$key", $value);
         } 
@@ -135,14 +134,38 @@ abstract class Crud extends PDO {
     }
 
     // Pour acquérir des informations provenant d'une instance
-    public function selectJoin($prop, $value, $table2, $field1, $field2, $ordre){
+    public function selectJoin($prop, $value, $table2, $field1, $field2, $ordre, $table3, $field3, $field4){
         $sql = "SELECT * FROM $this->table
                          LEFT JOIN $table2 ON $field1 = $field2
+                         LEFT JOIN $table3 ON $field3 = $field4
                          WHERE $prop = $value
-                         ORDER BY $ordre DESC";
-        $stmt  = $this->query($sql);
+                         GROUP BY $field2";
+        // $stmt  = $this->query($sql);
+        return $stmt->fetchAll();
+        return $sql;
+    }
+
+    // Pour acquérir des informations provenant d'une instance
+    public function selectSingleJoin($listeProp, $table2, $field1, $field2, $prop, $value){
+        $sql = "SELECT $listeProp FROM $this->table
+                         LEFT JOIN $table2 ON $field1 = $field2
+                         WHERE $prop = $value";
+        $stmt = $this->query($sql);
+        // var_dump($stmt);
         return $stmt->fetchAll();
     }
+
+    public function customSelect($query){
+        $sql = $query;
+        $stmt = $this->query($sql);
+        $count = $stmt->rowCount();
+        if($count == 1 ){
+            return $stmt->fetch();
+        }else{
+            return $stmt->fetchAll();
+        }
+    }
+
 
     // Pour créer un régistre
     // public function select($champ='id_membre', $order='ASC'){

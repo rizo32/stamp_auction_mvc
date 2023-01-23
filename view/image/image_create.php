@@ -13,7 +13,8 @@
             </ul>
         </nav>
    
-        <form class="creation" action="{{ path }}image/store/{{ id_timbre }}" method="post" enctype="multipart/form-data">
+        <form class="creation" action="{{ path }}image/store" method="post" enctype="multipart/form-data">
+        <!-- <form class="creation" action="{{ path }}image/store/{{ id_timbre }}" method="post" enctype="multipart/form-data"> -->
             <h3>Ajout d'image(s)</h3>
             {% if message is defined %}
                 <span>{{ message | raw}}</span>
@@ -41,12 +42,8 @@
                 </div>
 
                
-                
-
+            
             <div class="flex-horizontal">
-
-
-
 
                 <a href="{{ path }}timbre/edit/{{ id_timbre }}" class="bouton">&#9664; Informations du timbre</a>
                 <a href="{{ path }}enchere/create/{{ id_timbre }}" class="bouton">Informations de l'enchère &#9654;</a>

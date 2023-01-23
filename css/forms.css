@@ -145,7 +145,12 @@ label {
     align-items: center;
     justify-content: start;
     overflow: hidden;
-    height: 200px;  
+    max-height: clamp(100px, 100%, 200px);
+}
+
+.supprime-image-contenant:first-child {
+    background-color: var(--gris);
+    border: 2px solid var(--gris-fonce);
 }
 
 .supprime-image {
@@ -164,5 +169,14 @@ label {
 
 .supprime-image-contenant>img {
     width: clamp(100px, 100%, 150px);
-    max-height: clamp(100px, 100%, 150px);
+    height: 100%;
+}
+
+.pas-enchere {
+    background-color: yellow;
+}
+
+.small-img {
+    max-width: 50px;
+    max-height: 50px;
 }

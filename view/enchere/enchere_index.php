@@ -165,24 +165,33 @@
                 </header>
             </div>
         </aside>
+
+
+
         <section class="catalogue">
-            <a href="{{ path }}enchere/detail">
+
+        {% for enchere in encheres %}
+            <a href="{{ path }}enchere/detail/{{ enchere.id_timbre_enchere }}">
 
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-rouge.webp" alt="timbre rouge">
+                        <img class="produit" src="{{ path }}uploads/{{ enchere.nom_image }}" alt="timbre rouge">
                         <span class="point-reference"><span></span></span>
                     </div>
                     <header>
-                        <h5>GREAT BRITAIN 116 MINT FVF OG HR</h5>
+                        <h5>{{ enchere.nom_timbre }}</h5>
                     </header>
-                    <span class="prix">$159.87</span>
+                    <span class="prix">{{ enchere.prix_initial_enchere }}</span>
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
+            
+            {% endfor %}
+            
+            
+            
             <a href="{{ path }}enchere/detail">
-
                 <article class="carte-produit flex-vertical">
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
@@ -196,6 +205,8 @@
                     <small>1j 4h | 23 mises</small>
                 </article>
             </a>
+
+
             <a href="{{ path }}enchere/detail">
 
                 <article class="carte-produit flex-vertical">
@@ -211,411 +222,11 @@
                     <small><span class="alerte">4:12:09</span> | 23 mises</small>
                 </article>
             </a>
-            <a href="{{ path }}enchere/detail">
 
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
 
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>GB SG429 N45(1) 1924 1/= BISTRE-</h5>
-                    </header>
-                    <span class="prix">$47.12</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
 
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>Great Britain 1864</h5>
-                    </header>
-                    <span class="prix">$18.80</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
 
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
-                        <span class="point-reference"><span class="coup-coeur"></span></span>
-                    </div>
-                    <header>
-                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small><span class="alerte">1:15:42</span> | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-rouge.webp" alt="timbre rouge">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small><span class="alerte">1:45:12</span> | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$175.00</span>
-                    <small>3j 4h | 0 mise</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span class="coup-coeur"></span></span>
-                    </div>
-                    <header>
-                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span class="coup-coeur"></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME...</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
-                        <span class="point-reference"><span class="coup-coeur"></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                        <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                        <span class="point-reference"><span></span></span>
-                    </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                    <span class="point-reference"><span></span></span>
-                </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
-                    <span class="point-reference"><span></span></span>
-                </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
-                    <span class="point-reference"><span></span></span>
-                </div>
-                    <header>
-                        <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
-            <a href="{{ path }}enchere/detail">
-
-                <article class="carte-produit flex-vertical">
-                    <div class="image-contenant">
-                        <span class="point-reference"><span class="watchlist"></span></span>
-                    <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                    <span class="point-reference"><span></span></span>
-                </div>
-                    <header>
-                        <h5>#2607c Imperf Pair Superb NH SCV</h5>
-                    </header>
-                    <span class="prix">$188.87</span>
-                    <small>1j 4h | 23 mises</small>
-                </article>
-            </a>
+            
         </section>
     </main>
     <nav class="navigation-pages-catalogue">
