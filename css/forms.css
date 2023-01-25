@@ -40,6 +40,10 @@ input, select {
     box-sizing: border-box;
 }
 
+input[type='checkbox']{
+    width: inherit;
+}
+
 label {
     padding-bottom: 5px;
 }

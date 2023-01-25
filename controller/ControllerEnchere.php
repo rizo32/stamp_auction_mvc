@@ -10,8 +10,24 @@ class ControllerEnchere{
         $enchere = new ModelEnchere;
         $selectEnchere = $enchere->enchereIndex('*', 'timbre', 'image', 'id_timbre', 'id_timbre_enchere', 'id_timbre', 'id_timbre_image', 'date_debut_enchere', ' IS NOT NULL', 'id_timbre');
 
+
+        foreach($selectEnchere as $enchere => $valeur){
+            $selectEnchere[$enchere]['prix_initial_enchere'] = number_format($selectEnchere[$enchere]['prix_initial_enchere'], 2);
+        }
+
+        // Par reference : non recommendé
+        // foreach($selectEnchere as &$enchere){
+        //     $enchere['prix_initial_enchere'] = number_format($enchere['prix_initial_enchere'], 2);
+        // }
+
         twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere]);
     }
+
+    // public function filtre(){
+
+
+    //     var_dump($_POST);
+    // }
 
     public function detail(){
 
@@ -19,6 +35,9 @@ class ControllerEnchere{
         $id_timbre = end($urlArray);
 
         $enchere = new ModelEnchere;
+
+
+
 
 
         $image = new ModelImage;
@@ -29,6 +48,17 @@ class ControllerEnchere{
         $selectEnchere = $enchere->enchereDetail('*', 'timbre', 'etat', 'provenance', 'alignement', 'format', 'couleur', 'evaluation',
         'id_timbre', 'id_timbre_enchere', 'id_etat', 'id_etat_timbre', 'id_provenance', 'id_provenance_timbre', 'id_alignement', 'id_alignement_timbre', 'id_format', 'id_format_timbre', 'id_couleur', 'id_couleur_timbre', 'id_evaluation', 'id_evaluation_timbre',
         'id_timbre', $id_timbre);
+
+
+        // Format du prix
+        $selectEnchere['prix_initial_enchere'] = number_format($selectEnchere['prix_initial_enchere'], 2);
+
+        if($selectEnchere['certification_timbre'] == 1){
+            $selectEnchere['certification_timbre'] = "Oui";
+        } else {
+            $selectEnchere['certification_timbre'] = "Non";
+        }
+
 
 
         $tz = 'America/Toronto';

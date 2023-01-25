@@ -17,6 +17,17 @@
 
 [id='page-produit'] .informations-principales .image-contenant {
     width: 80%;
+    position: relative;
+}
+
+[id='page-produit'] .informations-principales .loupe {
+    position: absolute;
+    border: 3px solid #000;
+    border-radius: 50%;
+    cursor: none;
+    /*Set the size of the magnifier glass:*/
+    width: 150px;
+    height: 150px;
 }
 
 [id='page-produit'] .image-contenant img {

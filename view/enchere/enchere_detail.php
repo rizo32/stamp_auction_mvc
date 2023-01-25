@@ -18,7 +18,7 @@
                 
                 <div class="galerie flex-vertical">
                     {% for image in images %}
-                    <img class="produit actif" src="{{ path }}uploads/{{ image.nom_image }}" alt="image produit">
+                    <img class="produit" src="{{ path }}uploads/{{ image.nom_image }}" alt="image produit">
                     {% endfor %}
                 </div>
 
@@ -41,7 +41,7 @@
                 <table>
                     <tr>
                         <th>Mise de départ</th>
-                        <td>{{ enchere.prix_initial_enchere }}</td>
+                        <td>{{ enchere.prix_initial_enchere }}$</td>
                     </tr>
                     <tr>
                         <th>Provenance</th>
@@ -113,9 +113,10 @@
 
                 <section class="description-produit">
                     <h2>Description du produit</h2>
-                    <p>Il s'agit d'un timbre de 1874 provenant du Canada et représentant la reine Victoria. La condition est excellente, gomme originale, évaluation de 95 (XF/Superbe). Alignement est bon (fine), petit offset à gauche</p>
+                    <p>{{ enchere.description_timbre }}</p>
+                    <!-- <p>Il s'agit d'un timbre de 1874 provenant du Canada et représentant la reine Victoria. La condition est excellente, gomme originale, évaluation de 95 (XF/Superbe). Alignement est bon (fine), petit offset à gauche</p>
                     <p>Vendu à l'unité avec certification</p>
-                    <p>Pour plus d'information sur la livraison, consultez <a href="#">la politique de livraison et retours.</a></p>
+                    <p>Pour plus d'information sur la livraison, consultez <a href="#">la politique de livraison et retours.</a></p> -->
                 </section>
 
                 <section class="questions">

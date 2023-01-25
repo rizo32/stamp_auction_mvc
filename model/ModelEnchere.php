@@ -46,7 +46,7 @@ class ModelEnchere extends Crud {
         $stmt = $this->query($sql);
         $count = $stmt->rowCount();
         if($count == 1 ){
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
         }else{
             return $stmt->fetchAll();
         }
