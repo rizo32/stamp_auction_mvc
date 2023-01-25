@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stampee`.`Evaluation` (
   `id_evaluation` INT NOT NULL AUTO_INCREMENT,
-  `nom_evaluation` INT NULL,
+  `nom_evaluation` INT NOT NULL,
   PRIMARY KEY (`id_evaluation`))
 ENGINE = InnoDB;
 
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `stampee`.`Timbre` (
   `id_timbre` INT NOT NULL AUTO_INCREMENT,
   `nom_timbre` VARCHAR(100) NOT NULL,
   `description_timbre` TEXT NULL,
-  `annee_parution_timbre` YEAR NULL,
+  `annee_parution_timbre` SMALLINT NULL, /* peut pas mettre type = YEAR parce qu'on a des timbres avant 1901 */
   `coup_coeur_timbre` INT NOT NULL,
   `id_provenance_timbre` INT NULL,
   `id_etat_timbre` INT NULL,
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `stampee`.`Enchere` (
   `id_enchere` INT NOT NULL AUTO_INCREMENT,
   `date_debut_enchere` DATE,
   `date_fin_enchere` DATE,
-  `prix_initial_enchere` FLOAT,
+  `prix_initial_enchere` DOUBLE,
   `id_timbre_enchere` INT NOT NULL UNIQUE,
   `id_membre_proprietaire_enchere` INT NOT NULL,
   PRIMARY KEY (`id_enchere`),
@@ -208,7 +208,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `stampee`.`Mise` (
   `id_mise` INT NOT NULL AUTO_INCREMENT,
-  `montant_mise` FLOAT NOT NULL,
+  `montant_mise` DOUBLE NOT NULL,
   `id_enchere_mise` INT NOT NULL,
   `id_membre_mise` INT NOT NULL,
   PRIMARY KEY (`id_mise`),
@@ -266,80 +266,3 @@ CREATE TABLE IF NOT EXISTS `stampee`.`Image` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
--- SET SQL_MODE=@OLD_SQL_MODE;
--- SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
--- SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
--- INSERTION DONNEES
-INSERT INTO Privilege (nom_privilege) VALUES ("Administrateur");
-INSERT INTO Privilege (nom_privilege) VALUES ("Membre");
-
-
-INSERT INTO Provenance (nom_provenance) VALUES ("Îles Britanniques");
-INSERT INTO Provenance (nom_provenance) VALUES ("États-Unis");
-INSERT INTO Provenance (nom_provenance) VALUES ("Afrique");
-INSERT INTO Provenance (nom_provenance) VALUES ("Asie");
-INSERT INTO Provenance (nom_provenance) VALUES ("Australie et Océanie");
-INSERT INTO Provenance (nom_provenance) VALUES ("Caraïbes");
-INSERT INTO Provenance (nom_provenance) VALUES ("Europe continentale");
-INSERT INTO Provenance (nom_provenance) VALUES ("Canada");
-INSERT INTO Provenance (nom_provenance) VALUES ("Amérique du Sud");
-INSERT INTO Provenance (nom_provenance) VALUES ("Amérique Centrale");
-INSERT INTO Provenance (nom_provenance) VALUES ("Moyen-Orient");
-
-
-INSERT INTO Etat (nom_etat) VALUES ("Parfaite");
-INSERT INTO Etat (nom_etat) VALUES ("Excellente");
-INSERT INTO Etat (nom_etat) VALUES ("Bonne");
-INSERT INTO Etat (nom_etat) VALUES ("Moyenne");
-INSERT INTO Etat (nom_etat) VALUES ("Endommagé");
-INSERT INTO Etat (nom_etat) VALUES ("Envoi historique");
-INSERT INTO Etat (nom_etat) VALUES ("Premier jour");
-
-
-INSERT INTO Format (nom_format) VALUES ("Simple");
-INSERT INTO Format (nom_format) VALUES ("Bloc");
-INSERT INTO Format (nom_format) VALUES ("Erreur");
-INSERT INTO Format (nom_format) VALUES ("Pleine page");
-INSERT INTO Format (nom_format) VALUES ("Page miniature");
-INSERT INTO Format (nom_format) VALUES ("Multiple");
-INSERT INTO Format (nom_format) VALUES ("Pair");
-INSERT INTO Format (nom_format) VALUES ("Plate block");
-INSERT INTO Format (nom_format) VALUES ("Plate number coil");
-INSERT INTO Format (nom_format) VALUES ("Souvenir sheet");
-
-
-INSERT INTO Evaluation (nom_evaluation) VALUES ("100");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("98");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("95");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("90");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("80");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("75");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("70");
-INSERT INTO Evaluation (nom_evaluation) VALUES ("65");
-
-
-INSERT INTO Alignement (nom_alignement) VALUES ("Superbe");
-INSERT INTO Alignement (nom_alignement) VALUES ("XF/Superbe");
-INSERT INTO Alignement (nom_alignement) VALUES ("XF");
-INSERT INTO Alignement (nom_alignement) VALUES ("VF/XF");
-INSERT INTO Alignement (nom_alignement) VALUES ("VF");
-INSERT INTO Alignement (nom_alignement) VALUES ("F/VF");
-INSERT INTO Alignement (nom_alignement) VALUES ("Fine");
-INSERT INTO Alignement (nom_alignement) VALUES ("VG & below");
-
-
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Rouge");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Orange");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Jaune");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Vert");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Bleu");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Violet");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Magenta");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Noir");
-INSERT INTO Couleur (nom_couleur_principale) VALUES ("Brun");
-
-INSERT INTO timbre ()
