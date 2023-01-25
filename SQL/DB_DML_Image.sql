@@ -1,289 +1,709 @@
-/* DML IMAGES */
+/* TEMPLATE ***********************************/
 
 INSERT INTO image(
     nom_image,
     id_timbre_image,
     taille_image,
-    extension_image
-) VALUES (
+    extension_image)
+VALUES
+(
     "timbre-bleu-fonce.webp",
-    1,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-bleu2.webp",
-    2,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-noir.webp",
-    3,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-requin.webp",
-    4,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-rouge.webp",
-    5,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-vert.webp",
-    6,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
+    "webp"),
+    
+/* FIN TEMPLATE *******************************/
 
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+(
     "timbre-bleu-fonce.webp",
-    6,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-bleu2.webp",
-    1,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-noir.webp",
-    2,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-requin.webp",
-    3,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-rouge.webp",
-    4,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-vert.webp",
-    5,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),(
     "timbre-bleu-fonce.webp",
-    5,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-bleu2.webp",
-    6,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-noir.webp",
-    1,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-requin.webp",
-    2,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-rouge.webp",
-    3,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-vert.webp",
-    4,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),(
     "timbre-bleu-fonce.webp",
-    4,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-bleu2.webp",
-    5,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-noir.webp",
-    6,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-requin.webp",
-    1,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-rouge.webp",
-    2,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
-
-INSERT INTO image(
-    nom_image,
-    id_timbre_image,
-    taille_image,
-    extension_image
-) VALUES (
+    "webp"),
+(
     "timbre-vert.webp",
-    3,
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
     50,
-    "webp"
-);
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),(
+    "timbre-bleu-fonce.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-bleu2.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-noir.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-requin.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-rouge.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
+(
+    "timbre-vert.webp",
+    (SELECT id_timbre FROM timbre ORDER BY RAND() LIMIT 1),
+    50,
+    "webp"),
