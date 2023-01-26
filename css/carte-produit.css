@@ -47,6 +47,7 @@
 /* prend la même verticalité si 1 seule ligne */
     flex-grow: 1;
     overflow: hidden;
+    max-height: 100%;
 }
 
 .carte-produit img {

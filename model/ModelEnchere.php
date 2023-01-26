@@ -15,20 +15,44 @@ class ModelEnchere extends Crud {
     }
 
     // Pour acquérir des informations provenant d'une instance
-    public function enchereIndex($listeProp, $table2, $table3, $propJoin, $propJoin2, $propJoin3, $propJoin4, $where, $whereValue, $groupBy){
+    // public function enchereIndex($listeProp, $table2, $table3, $propJoin, $propJoin2, $propJoin3, $propJoin4, $whereKey1 = 1, $whereValue1 = 1, $whereKey2 = 1, $whereValue2 = 1, $whereKey3 = 1, $whereValue3 = 1, $whereKey4 = 1, $whereValue4 = 1, $whereKey5 = 1, $whereValue5 = 1, $whereKey6 = 1, $whereValue6 = 1){
+    //     $sql = "SELECT $listeProp FROM $this->table
+    //             LEFT JOIN $table2 ON $propJoin = $propJoin2
+    //             LEFT JOIN $table3 ON $propJoin3 = $propJoin4
+    //             WHERE date_debut_enchere IS NOT NULL AND
+
+    //             $whereKey1 = $whereValue1 AND
+    //             $whereKey2 = $whereValue2 AND
+    //             $whereKey3 = $whereValue3 AND
+    //             $whereKey4 = $whereValue4 AND
+    //             $whereKey5 = $whereValue5 AND
+    //             $whereKey6 = $whereValue6
+
+    //             GROUP BY id_timbre";
+    //     // print_r($sql);
+    //     $stmt = $this->query($sql);
+    //     $count = $stmt->rowCount();
+    //     if($count == 1 ){
+    //         return $stmt->fetch();
+    //     }else{
+    //         return $stmt->fetchAll();
+    //     }
+    // }
+
+    // Pour acquérir des informations provenant d'une instance
+    public function enchereIndex($listeProp, $table2, $table3, $propJoin, $propJoin2, $propJoin3, $propJoin4, $tableau){
         $sql = "SELECT $listeProp FROM $this->table
                 LEFT JOIN $table2 ON $propJoin = $propJoin2
                 LEFT JOIN $table3 ON $propJoin3 = $propJoin4
-                WHERE $where $whereValue
-                GROUP BY $groupBy";
+                WHERE date_debut_enchere IS NOT NULL
+
+                $tableau
+
+                GROUP BY id_timbre";
+        // print_r($sql);
         $stmt = $this->query($sql);
-        // print_r($stmt);
         $count = $stmt->rowCount();
-        if($count == 1 ){
-            return $stmt->fetch();
-        }else{
-            return $stmt->fetchAll();
-        }
+        return $stmt->fetchAll();
     }
 
     // Pour acquérir des informations provenant d'une instance
@@ -45,11 +69,7 @@ class ModelEnchere extends Crud {
         // print_r($sql);
         $stmt = $this->query($sql);
         $count = $stmt->rowCount();
-        if($count == 1 ){
-            return $stmt->fetch();
-        }else{
-            return $stmt->fetchAll();
-        }
+        return $stmt->fetch();
     }
 
 }

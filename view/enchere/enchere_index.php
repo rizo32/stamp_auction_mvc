@@ -19,55 +19,149 @@
         <img src="{{ path }}img/cells.webp" alt="">
     </nav>
 
+
     <main id="page-catalogue">
         <form id="filtre" action="{{ path }}enchere/index" method="GET">
             <aside class="filtre">
-                <div class="filtre-actif">
-                    Appliqué : <span>Angleterre</span>
+
+            <!-- Pour afficher le filtre actif ça va me prendre un join dans le controller et passer ça en plus -->
+                <!-- <div class="filtre-actif">
+                    Appliqué :
+                    {% for filtre in filtre %}
+                    <span>{{ filtre }}</span>
+                    {% endfor %}
+                </div> -->
+
+
+                <div class="categorie-filtre flex-vertical">
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Stampee</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="coup-coeur" name="coup_coeur_timbre" value="1"
+                                {% if filtre.coup_coeur_timbre == 1 %} checked {% endif %}>
+                                <label for="coup-coeur">Coups de coeur du Lord Stampee</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="archive" name="archive" value="1"
+                                {% if filtre.archive == 1 %} checked {% endif %}>
+                                <label for="archive">Enchères archivées</label>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
-                <div class="categorie-filtre flex-vertical ouvert">
-                    <header class="flex-horizontal">
-                        <h5>Stampee</h5>
-                        <span class="material-icons">arrow_drop_up</span>
-                    </header>
-                    <ul>
-                        <li><input type="checkbox" id="coup-coeur"><label for="coup-coeur">Coups de coeur du Lord Stampee</label></li>
-                        <li><input type="checkbox" id="archive"><label for="archive">Enchères archivées</label></li>
-                    </ul>
+                <div class="categorie-filtre flex-vertical">
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Provenance</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="angleterre" name="id_provenance_timbre" value=1
+                                {% if filtre.id_provenance_timbre == 1 %} checked {% endif %}>
+                                <label for="angleterre">Îles Britanniques</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="id_etat_timbres-unis" name="id_provenance_timbre" value=2
+                                {% if filtre.id_provenance_timbre == 2 %} checked {% endif %}>
+                                <label for="angleterre">États-Unis</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="afrique" name="id_provenance_timbre" value=3
+                                {% if filtre.id_provenance_timbre == 3 %} checked {% endif %}>
+                                <label for="afrique">Afrique</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="asie" name="id_provenance_timbre" value=4
+                                {% if filtre.id_provenance_timbre == 4 %} checked {% endif %}>
+                                <label for="asie">Asie</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="oceanie" name="id_provenance_timbre" value=5
+                                {% if filtre.id_provenance_timbre == 5 %} checked {% endif %}>
+                                <label for="oceanie">Australie et Océanie</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="caraibes" name="id_provenance_timbre" value=6
+                                {% if filtre.id_provenance_timbre == 6 %} checked {% endif %}>
+                                <label for="caraibes">Caraïbes</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="europe" name="id_provenance_timbre" value=7
+                                {% if filtre.id_provenance_timbre == 7 %} checked {% endif %}>
+                                <label for="europe">Europe continentale</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="canada" name="canada" value=8
+                                {% if filtre.id_provenance_timbre == 8 %} checked {% endif %}>
+                                <label for="canada">Canada</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="amerique-sud" name="id_provenance_timbre" value=9
+                                {% if filtre.id_provenance_timbre == 9 %} checked {% endif %}>
+                                <label for="amerique-sud">Amérique du Sud</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="amerique-centrale" name="id_provenance_timbre" value=10
+                                {% if filtre.id_provenance_timbre == 10 %} checked {% endif %}>
+                                <label for="amerique-centrale">Amérique Centrale</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="moyen-orient" name="id_provenance_timbre" value=11
+                                {% if filtre.id_provenance_timbre == 11 %} checked {% endif %}>
+                                <label for="moyen-orient">Moyen-Orient</label>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
-                <div class="categorie-filtre flex-vertical ouvert">
-                    <header class="flex-horizontal">
-                        <h5>Provenance</h5>
-                        <span class="material-icons">arrow_drop_up</span>
-                    </header>
-                    <ul>
-                        <li><input type="checkbox" id="angleterre" name="provenance" value=1><label for="angleterre">Îles Britanniques</label></li>
-                        <li><input type="checkbox" id="etats-unis" name="provenance" value=2><label for="etats-unis">États-Unis</label></li>
-                        <li><input type="checkbox" id="afrique" name="provenance" value=3><label for="afrique">Afrique</label></li>
-                        <li><input type="checkbox" id="asie" name="provenance" value=4><label for="asie">Asie</label></li>
-                        <li><input type="checkbox" id="oceanie" name="provenance" value=5><label for="oceanie">Australie et Océanie</label></li>
-                        <li><input type="checkbox" id="caraibes" name="provenance" value=6><label for="caraibes">Caraïbes</label></li>
-                        <li><input type="checkbox" id="europe" name="provenance" value=7><label for="europe">Europe continentale</label></li>
-                        <li><input type="checkbox" id="canada" name="canada" value=8><label for="canada">Canada</label></li>
-                        <li><input type="checkbox" id="amerique-sud" name="provenance" value=9><label for="amerique-sud">Amérique du Sud</label></li>
-                        <li><input type="checkbox" id="amerique-centrale" name="provenance" value=10><label for="amerique-centrale">Amérique Centrale</label></li>
-                        <li><input type="checkbox" id="moyen-orient" name="provenance" value=11><label for="moyen-orient">Moyen-Orient</label></li>
-                    </ul>
-                </div>
-                <div class="categorie-filtre flex-vertical ouvert">
-                    <header class="flex-horizontal">
-                        <h5>Condition</h5>
-                        <span class="material-icons">arrow_drop_up</span>
-                    </header>
-                    <ul>
-                        <li><input type="checkbox" id="parfaite" name="etat" value=1><label for="parfaite">Parfaite</label></li>
-                        <li><input type="checkbox" id="excellente" name="etat" value=2><label for="excellente">Excellente</label></li>
-                        <li><input type="checkbox" id="bonne" name="etat" value=3><label for="bonne">Bonne</label></li>
-                        <li><input type="checkbox" id="moyenne" name="etat" value=4><label for="moyenne">Moyenne</label></li>
-                        <li><input type="checkbox" id="endommage" name="etat" value=5><label for="endommage">Endommagé</label></li>
-                        <li><input type="checkbox" id="envoi-historique" name="etat" value=6><label for="envoi-historique">Envoi historique</label></li>
-                        <li><input type="checkbox" id="premier-jour" name="etat" value=7><label for="premier-jour">Premier jour</label></li>
-                    </ul>
+                <div class="categorie-filtre flex-vertical">
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Condition</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="parfaite" name="id_etat_timbre" value=1
+                                {% if filtre.id_etat_timbre == 1 %} checked {% endif %}>
+                                <label for="parfaite">Parfaite</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="excellente" name="id_etat_timbre" value=2
+                                {% if filtre.id_etat_timbre == 2 %} checked {% endif %}>
+                                <label for="excellente">Excellente</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="bonne" name="id_etat_timbre" value=3
+                                {% if filtre.id_etat_timbre == 3 %} checked {% endif %}>
+                                <label for="bonne">Bonne</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="moyenne" name="id_etat_timbre" value=4
+                                {% if filtre.id_etat_timbre == 4 %} checked {% endif %}>
+                                <label for="moyenne">Moyenne</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="endommage" name="id_etat_timbre" value=5
+                                {% if filtre.id_etat_timbre == 5 %} checked {% endif %}>
+                                <label for="endommage">Endommagé</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="envoi-historique" name="id_etat_timbre" value=6
+                                {% if filtre.id_etat_timbre == 6 %} checked {% endif %}>
+                                <label for="envoi-historique">Envoi historique</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="premier-jour" name="id_etat_timbre" value=7
+                                {% if filtre.id_etat_timbre == 7 %} checked {% endif %}>
+                                <label for="premier-jour">Premier jour</label>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
 
                 <!-- <div class="categorie-filtre flex-vertical ouvert">
@@ -83,47 +177,123 @@
                 </div> -->
 
                 <div class="categorie-filtre flex-vertical">
-                    <header class="flex-horizontal">
-                        <h5>Couleur</h5>
-                        <span class="material-icons">arrow_drop_down</span>
-                    </header>
-                    <ul>
-                        <li><input type="checkbox" name="couleur" id="rouge"><label for="rouge"></label></li>
-                        <li><input type="checkbox" name="couleur" id="orange"><label for="orange"></label></li>
-                        <li><input type="checkbox" name="couleur" id="jaune"><label for="jaune"></label></li>
-                        <li><input type="checkbox" name="couleur" id="vert"><label for="vert"></label></li>
-                        <li><input type="checkbox" name="couleur" id="bleu"><label for="bleu"></label></li>
-                        <li><input type="checkbox" name="couleur" id="violet"><label for="violet"></label></li>
-                        <li><input type="checkbox" name="couleur" id="magenta"><label for="magenta"></label></li>
-                        <li><input type="checkbox" name="couleur" id="noir"><label for="noir"></label></li>
-                        <li><input type="checkbox" name="couleur" id="brun"><label for="brun"></label></li>
-                    </ul>
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Couleur</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                        <ul>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="rouge" value=1
+                                {% if filtre.id_couleur_timbre == 1 %} checked {% endif %}>
+                                <label for="rouge">Rouge</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="orange" value="2"
+                                {% if filtre.id_couleur_timbre == "2" %} checked {% endif %}>
+                                <label for="orange">Orange</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="jaune" value=3
+                                {% if filtre.id_couleur_timbre == 3 %} checked {% endif %}>
+                                <label for="jaune">Jaune</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="vert" value=4
+                                {% if filtre.id_couleur_timbre == 4 %} checked {% endif %}>
+                                <label for="vert">Vert</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="bleu" value=5
+                                {% if filtre.id_couleur_timbre == 5 %} checked {% endif %}>
+                                <label for="bleu">Bleu</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="violet" value=6
+                                {% if filtre.id_couleur_timbre == 6 %} checked {% endif %}>
+                                <label for="violet">Violet</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="magenta" value=7
+                                {% if filtre.id_couleur_timbre == 7 %} checked {% endif %}>
+                                <label for="magenta">Magenta</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="noir" value=8
+                                {% if filtre.id_couleur_timbre == 8 %} checked {% endif %}>
+                                <label for="noir">Noir</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="id_couleur_timbre" id="brun" value=9
+                                {% if filtre.id_couleur_timbre == 9 %} checked {% endif %}>
+                                <label for="brun">Brun</label>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
-                <div class="categorie-filtre flex-vertical ouvert">
+                <!-- <div class="categorie-filtre flex-vertical ouvert">
                     <header class="flex-horizontal">
                         <h5>Prix</h5>
                         <span class="material-icons">arrow_drop_up</span>
                     </header>   
                     <div class="flex-horizontal">
-                        $<input type="number" placeholder="Min">- $<input type="number" placeholder="Max">
+                        $<input type="number" placeholder="Min" value="0" name="prix_derniere_mise">- $<input type="number" placeholder="Max"  value="50000" name="prix_derniere_mise">
                     </div>
-                </div>
-                <div class="categorie-filtre flex-vertical ouvert">
-                    <header class="flex-horizontal">
-                        <h5>Évaluation</h5>
-                        <span class="material-icons">arrow_drop_up</span>
-                    </header>
-                    <ul>
-                        <li><input type="checkbox" id="100" name="evaluation" value=100><label for="100">100 (Gem)</label></li>
-                        <li><input type="checkbox" id="98" name="evaluation" value=98><label for="98">98 (Superbe)</label></li>
-                        <li><input type="checkbox" id="95" name="evaluation" value=95><label for="95">95 (XF/Superbe)</label></li>
-                        <li><input type="checkbox" id="90" name="evaluation" value=90><label for="90">90 (XF)</label></li>
-                        <li><input type="checkbox" id="80" name="evaluation" value=80><label for="80">80 (VF/XF)</label></li>
-                        <li><input type="checkbox" id="75" name="evaluation" value=75><label for="75">75 (F/VF)</label></li>
-                        <li><input type="checkbox" id="70" name="evaluation" value=70><label for="70">70 (Fine)</label></li>
-                        <li><input type="checkbox" id="65" name="evaluation" value=65><label for="65">65-</label></li>
-                        <li><input type="checkbox" id="non-evalue" name="evaluation" value=null><label for="non-evalue">Non évalué</label></li>
-                    </ul>
+                </div> -->
+                <div class="categorie-filtre flex-vertical">
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Évaluation</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="100" name="id_evaluation_timbre" value=1
+                                {% if filtre.id_evaluation_timbre == 1 %} checked {% endif %}>
+                                <label for="100">100 (Gem)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="98" name="id_evaluation_timbre" value=2
+                                {% if filtre.id_evaluation_timbre == 2 %} checked {% endif %}>
+                                <label for="98">98 (Superbe)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="95" name="id_evaluation_timbre" value=3
+                                {% if filtre.id_evaluation_timbre == 3 %} checked {% endif %}>
+                                <label for="95">95 (XF/Superbe)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="90" name="id_evaluation_timbre" value=4
+                                {% if filtre.id_evaluation_timbre == 4 %} checked {% endif %}>
+                                <label for="90">90 (XF)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="80" name="id_evaluation_timbre" value=5
+                                {% if filtre.id_evaluation_timbre == 5 %} checked {% endif %}>
+                                <label for="80">80 (VF/XF)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="75" name="id_evaluation_timbre" value=6
+                                {% if filtre.id_evaluation_timbre == 6 %} checked {% endif %}>
+                                <label for="75">75 (F/VF)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="70" name="id_evaluation_timbre" value=7
+                                {% if filtre.id_evaluation_timbre == 7 %} checked {% endif %}>
+                                <label for="70">70 (Fine)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="65" name="id_evaluation_timbre" value=8
+                                {% if filtre.id_evaluation_timbre == 8 %} checked {% endif %}>
+                                <label for="65">65-</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="non-evalue" name="id_evaluation_timbre" value=null
+                                {% if filtre.id_evaluation_timbre == 9 %} checked {% endif %}>
+                                <label for="non-evalue">Non évalué</label>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
 
 
@@ -143,19 +313,20 @@
                 </div> -->
 
 
-
-
-                <div class="categorie-filtre flex-vertical ouvert">
-                    <header class="flex-horizontal">
-                        <h5><label for="annee-emission-min">Année d'émission</label></h5>
-                        <span class="material-icons">arrow_drop_up</span>
-                    </header>   
-                    <div class="flex-horizontal">
-                        <input type="number" placeholder="Min" id="annee-emission-min" name="annee-emission-min">-<input type="number" placeholder="Max" id="annee-emission-max" name="annee-emission-max">
-                    </div>
+                <div class="categorie-filtre flex-vertical">
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5><label for="annee-emission-min">Année d'émission</label></h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>   
+                        <div class="flex-horizontal">
+                            <input type="number" placeholder="Min" value="{{ filtre.annee_parution_timbre_min }}" id="annee-emission-min" name="annee_parution_timbre_min">-<input type="number" placeholder="Max"  value="{{ filtre.annee_parution_timbre_max }}" id="annee-emission-max" name="annee_parution_timbre_max">
+                            <input type="submit" value="OK">
+                        </div>
+                    </details>
                 </div>
 
-                <div class="categorie-filtre flex-vertical ouvert">
+                <!-- <div class="categorie-filtre flex-vertical ouvert">
                     <header class="flex-horizontal">
                         <h5>Mis en vente</h5>
                         <span class="material-icons">arrow_drop_up</span>
@@ -165,29 +336,35 @@
                         <li>Dernière semaine</li>
                         <li>Dernier mois</li>
                     </ul>    
-                </div>
+                </div> -->
                 <div class="categorie-filtre flex-vertical">
-                    <header class="flex-horizontal">
-                        <h5>Certifié</h5>
-                        <span class="material-icons">arrow_drop_down</span>
-                    </header>
-                </div>
-                <div class="categorie-filtre flex-vertical">
-                    <header class="flex-horizontal">
-                        <h5>Format</h5>
-                        <span class="material-icons">arrow_drop_down</span>
-                    </header>
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Certifié</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                    <details>
                 </div>
 
                 <div class="categorie-filtre flex-vertical">
-                    <header class="flex-horizontal">
-                        <h5>Alignement</h5>
-                        <span class="material-icons">arrow_drop_down</span>
-                    </header>
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Format</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                    <details>
+                </div>
+
+                <div class="categorie-filtre flex-vertical">
+                    <details>
+                        <summary class="flex-horizontal">
+                            <h5>Alignement</h5>
+                            <span class="material-icons">arrow_drop_down</span>
+                        </summary>
+                    <details>
                 </div>
             </aside>
         </form>
-
 
 
         <section class="catalogue">
@@ -204,8 +381,8 @@
                     <header>
                         <h5>{{ enchere.nom_timbre }}</h5>
                     </header>
-                    <span class="prix">{{ enchere.prix_initial_enchere }}</span>
-                    <small>1j 4h | 23 mises</small>
+                    <span class="prix">{{ enchere.prix_initial_enchere }}$</span>
+                    <small>{{ enchere.delais | raw }} | 23 mises</small>
                 </article>
             </a>
             

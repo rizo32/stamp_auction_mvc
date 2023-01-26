@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="image-contenant">
-                    <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir">
+                    <!-- <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir"> -->
                 </div>
 
             </div>

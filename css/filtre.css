@@ -81,3 +81,7 @@
 .filtre .categorie-filtre header{
     cursor: pointer;
 }
+
+summary {
+    cursor: pointer;
+}

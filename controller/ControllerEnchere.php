@@ -5,29 +5,148 @@ RequirePage::requireModel('ModelImage');
 RequirePage::requireModel('ModelEnchere');
 
 class ControllerEnchere{
-    public function index(){
+    // On ne peut pas cocher plus qu'un filtre par catégorie parce qu'ils
+    // vont partager la même clé dans le tableau associatif.
+    // Je pourrais créer un tableau pour chaque clé, à voir si j'ai le temps
+    // dans le sprint 3
 
+    public function index(){
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $filtre = explode('?', end($urlArray));
+        $filtre = end($filtre);
+        if($filtre == "index"){
+            $filtre = "1";
+        }
+        $filtreTableauStr = explode('&', $filtre);
+
+        $filtreKeys = [];
+        $filtreValues = [];
+
+        foreach($filtreTableauStr as $filtreInd){
+            $key = explode('=', $filtreInd);
+            array_push($filtreKeys, reset($key));
+
+            $value = explode('=', $filtreInd);
+            array_push($filtreValues, end($value));
+        }
+
+        
+        $filtreTableau = array_combine($filtreKeys, $filtreValues);
+        
+        // var_dump($filtreTableau);
+
+
+        // Je pourrais surement mettre ça en en tête parce que je le reetuilise dans detail
+        $tz = 'America/Toronto';
+        $timestamp = time();
+        $dt = new DateTime("now", new DateTimeZone($tz));
+        $dt->setTimestamp($timestamp);
+
+        $aujourdhui = $dt->format('Y-m-d');
+
+        
+      
+        
+        // print_r($filtreTableau);
+        // echo("<br>");
+
+        
+        // $filtreString = "";
+        // foreach($filtreTableau as $key => $value){
+        //     $filtreString.= ", ". $key . ", " . $value;
+        // }
+        // $filtreString = substr($filtreString, 2);
+        
+        $sqlString = "";
+        foreach($filtreTableau as $key => $value){
+            if($key == 'annee_parution_timbre_min'){
+                if($value){
+                    $sqlString.= " AND " . "annee_parution_timbre" . " >= " . $value;
+                }
+            } elseif($key == 'annee_parution_timbre_max'){
+                if($value){
+                    $sqlString.= " AND " . "annee_parution_timbre" . " <= " . $value;
+                }
+            } elseif($key == 'archive'){
+                $sqlString.= " AND " . "date_fin_enchere" . " < " . $aujourdhui;
+            } else {
+                $sqlString.= " AND " . $key . " = " . $value;
+            }
+        }
+        // $sqlString = substr($sqlString, 0, -4);
+
+        
+        // print_r($sqlString);
+        
+        
         $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->enchereIndex('*', 'timbre', 'image', 'id_timbre', 'id_timbre_enchere', 'id_timbre', 'id_timbre_image', 'date_debut_enchere', ' IS NOT NULL', 'id_timbre');
+        $selectEnchere = $enchere->enchereIndex('*', 'timbre', 'image', 'id_timbre', 'id_timbre_enchere', 'id_timbre', 'id_timbre_image', $sqlString);
+
+
+
+        // print_r(gettype($selectEnchere[0]['date_fin_enchere']));
+        // print_r(gettype($aujourdhui));
+
+        // print_r(date_diff($selectEnchere[0]['date_fin_enchere'], $aujourdhui));
+
+        $maintenant = $dt->format('Y-m-d H:i:s');
+
+
+        $maintenant = strtotime($maintenant);
+
+
+        // $diffInDays = $diffInSeconds / 86400;
+
+        print_r($maintenant);
+        // echo "<br>";
+        // print_r($finEnchere);
+        // echo "<br>";
+        // print_r($delaisSec);
+        // echo "<br>";
+        // print_r($delais);
+
+
+
 
 
         foreach($selectEnchere as $enchere => $valeur){
             $selectEnchere[$enchere]['prix_initial_enchere'] = number_format($selectEnchere[$enchere]['prix_initial_enchere'], 2);
+
+
+
+            $finEnchere = strtotime($selectEnchere[$enchere]['date_fin_enchere']);
+            $delaisSec = $finEnchere - $maintenant;
+
+            $jours = floor($delaisSec / 86400);
+            $heures = floor(($delaisSec - $jours * 86400) / 3600);
+            $minutes = floor(($delaisSec - $jours * 86400 - $heures * 3600) / 60);
+            $class = "";
+
+            if($jours < 0){
+                $jours = "";
+                $minutes .= "m";
+                $class = " class = 'alerte'";
+            } else {
+                $jours .= "j ";
+                $minutes = "";
+            }
+            if($heures < 0){
+                $heures = "";
+            } else {
+                $heures .= "h ";
+            }
+
+
+            $selectEnchere[$enchere]['delais'] = "<span" . $class . ">" . $jours . $heures . $minutes . "</span>";
+
         }
 
-        // Par reference : non recommendé
-        // foreach($selectEnchere as &$enchere){
-        //     $enchere['prix_initial_enchere'] = number_format($enchere['prix_initial_enchere'], 2);
-        // }
 
-        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere]);
+
+        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau]);
     }
 
-    // public function filtre(){
 
-
-    //     var_dump($_POST);
-    // }
 
     public function detail(){
 

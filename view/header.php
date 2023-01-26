@@ -21,10 +21,15 @@
         <nav class="menu-principal-contenant">
             <div class="menu-principal">
                 <a href="{{ path }}home/index" class="logo">Stampee</a>
-                <span class="recherche">
+                <!-- <span class="recherche"> -->
+                <form action="{{ path }}enchere/index" method="GET" class="recherche">
+
                     <input type="search" class="recherche-principale" name="recherche-principale" placeholder="Recherchez par provenance, couleur..." data-recherche>
-                    <span class="point-reference"><img src="{{ path }}img/recherche.svg" alt="icone-recherche"></span>
-                </span>
+                    <span class="point-reference"><input class="envoi-recherche" type="submit" alt="icone-recherche" value=""></span>
+                    <!-- <span class="point-reference"><img  src="{{ path }}img/recherche.svg" alt="icone-recherche"></span> -->
+
+                </form>
+                <!-- </span> -->
                 <span class="filler alerte">
                     <p>timbre_id: {{ session.id_timbre }}</p>
                     <p>session_id: {{ session.id_membre }}</p>

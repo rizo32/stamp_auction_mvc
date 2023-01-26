@@ -1,0 +1,78 @@
+import Loupe from "./Loupe.js";
+import Galerie from "./Galerie.js";
+
+export default class App {
+    imagePrincipaleContenant = document.querySelector('.image-contenant');
+
+    imagesTimbres = document.querySelector('.galerie');
+
+
+    constructor(){
+
+        let page = document.querySelector("main").id;
+
+        switch(page){
+            case 'page-produit':
+                this.Galerie = new Galerie();
+                this.Loupe = new Loupe();
+
+                // Event Listener galerie
+                this.imagesTimbres.addEventListener("click", this.Galerie.agrandir.bind(this));
+                this.imagesTimbres.addEventListener("click", this.Loupe.magnify);
+                
+                // Activation galerie
+                this.Galerie.agrandir(this.imagesTimbres.querySelector("img"));
+                this.Loupe.magnify(".image-contenant>*", 2);
+                break;
+
+            case 'page-catalogue':
+                let filtre = document.querySelector("form#filtre");
+                // let filtreCheckbox = document.querySelector('input[type="checkbox"]');
+
+                // Ouvrir les filtres actifs
+                let checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
+                checkboxes.forEach(checkbox => {
+
+                    let catFiltre = checkbox.closest(".categorie-filtre");
+                    catFiltre.classList.add("ouvert");
+
+                    catFiltre.querySelector("span.material-icons").innerText = "arrow_drop_up";
+                    catFiltre.querySelector("details").open = true;
+                })
+                
+
+
+        
+        
+                // filtreCheckbox.addEventListener("click", () => {
+                filtre.addEventListener("click", submit.bind(this));
+                
+                // Soumettre le formulaire lors de l'appuis sur checkbox
+                function submit(e){
+                    if(e.target.type == "checkbox"){
+                        filtre.submit();
+
+                    // Ouvrir/fermer les tirroirs de filtre
+                    } else if(e.target.tagName == "SUMMARY" || e.target.parentElement.tagName == "SUMMARY"){
+                        if(e.target.closest(".categorie-filtre").classList.contains("ouvert")){
+                            this.fermerFiltre(e);
+                        } else {
+                            this.ouvrirFiltre(e);
+                        }
+                    }
+                }
+                break;
+        }
+
+    }
+
+    ouvrirFiltre(e){
+        e.target.closest(".categorie-filtre").classList.add("ouvert");
+        e.target.querySelector("span.material-icons").innerText = "arrow_drop_up";
+    }  
+
+    fermerFiltre(e){
+        e.target.closest(".categorie-filtre").classList.remove("ouvert");
+        e.target.querySelector("span.material-icons").innerText = "arrow_drop_down";
+    }
+}

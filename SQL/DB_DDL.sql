@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `stampee`.`Enchere` (
   CONSTRAINT `fk_Enchere_Timbre`
     FOREIGN KEY (`id_timbre_enchere`)
     REFERENCES `stampee`.`Timbre` (`id_timbre`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Enchere_Membre1`
     FOREIGN KEY (`id_membre_proprietaire_enchere`)

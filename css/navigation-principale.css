@@ -107,12 +107,24 @@ input[type="search"]:focus {
     justify-content: start;
 }
 
-.recherche img {
+.recherche input[type='submit'] {
     position: absolute;
     right: clamp(50px, 6vw, 130px);
     margin-top: 0;
     width: 25px;
     opacity: 0.6;
-    max-width: 25px;
-    max-height: 30px;
+
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+
+    /* max-width: 25px;
+    max-height: 30px; */
+
+    width: 25px;
+    height: 30px;
+    /* object-fit: contain;
+    overflow-clip-margin: content-box;
+    overflow: clip; */
+    background-image: url("../img/recherche.svg");
+    cursor: pointer;
 }
