@@ -375,10 +375,12 @@
             </aside>
         </form>
 
-
+        {{ nav_cat.premier_item }}-{{ nav_cat.item_page }}
+        {{ nav_cat.nombre_enchere }}résultats
+        
         <section class="catalogue">
 
-        {% for enchere in encheres %}
+        {% for enchere in encheres|slice(nav_cat.premier_item, nav_cat.item_page) %}
             <a href="{{ path }}enchere/detail/{{ enchere.id_timbre_enchere }}">
 
                 <article class="carte-produit flex-vertical">
@@ -414,23 +416,57 @@
             
         </section>
     </main>
-    <nav class="navigation-pages-catalogue">
+    <form id="navigation-page" action="{{ path }}enchere/index?archive=0" method="POST" class="navigation-pages-catalogue">
         <div class="items-par-page">
-            <span>Items par page</span>
-            <span>24</span>
-            <span>48</span>
-            <span>96</span>
+            <label id='item_page'>Items par page</label>
+            <input for='item_page' type="radio" name="item_page" value="20"
+            {% if nav_cat.item_page == 20 or nav_cat.nbr_items == 0 %}
+            checked
+            {% endif %}
+            >
+            <input for='item_page' type="radio" name="item_page" value="40"
+            {% if nav_cat.item_page == 40 %}
+            checked
+            {% endif %}
+            >
+            <input for='item_page' type="radio" name="item_page" value="60"
+            {% if nav_cat.item_page == 60 %}
+            checked
+            {% endif %}
+            >
         </div>
+
         <div class="pages">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span><input type="text" placeholder="" id="catalogue-page" name="page-catalogue"><label for="catalogue-page">_</label></span>
+            <label id='page_catalogue'>Items par page</label>
+            <input for="page_catalogue" type="radio" name="page_catalogue" value="0"
+            {% if nav_cat.page_catalogue == 0 %}
+            checked
+            {% endif %}
+            >
+            <input for="page_catalogue" type="radio" name="page_catalogue" value="1"
+            {% if nav_cat.page_catalogue == 1 %}
+            checked
+            {% endif %}
+            >
+            <input for="page_catalogue" type="radio" name="page_catalogue" value="2"
+            {% if nav_cat.page_catalogue == 2 %}
+            checked
+            {% endif %}
+            >
+            <input for="page_catalogue" type="radio" name="page_catalogue" value="3"
+            {% if nav_cat.page_catalogue == 3 %}
+            checked
+            {% endif %}
+            >
+            <input for="page_catalogue" type="radio" name="page_catalogue" value="4"
+            {% if nav_cat.page_catalogue == 4 %}
+            checked
+            {% endif %}
+            >
+            <!-- <span><input type="text" placeholder="" id="catalogue-page" name="page_catalogue"><label for="catalogue-page">_</label></span> -->
             <span>Suivant></span>
             <span>Fin</span>
         </div>
-    </nav>
+    </form>
 
 {{ include('footer.php') }}

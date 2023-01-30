@@ -77,7 +77,7 @@ class ControllerEnchere{
         $enchere = new ModelEnchere;
         $selectEnchere = $enchere->select(
         // propriétés:
-            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise)',
+            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER () AS nombre_enchere',
 
         // joins:
             'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
@@ -105,14 +105,9 @@ class ControllerEnchere{
         );
 
 
-        // var_dump($selectEnchere[0]);
 
 
-
-
-        // PRIX MISE
-
-        
+     
     
 
 
@@ -172,9 +167,35 @@ class ControllerEnchere{
 
         }
 
+        $navigation_catalogue = [];
+
+        $navigation_catalogue['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'];
 
 
-        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau]);
+        if($_POST){
+
+            print_r((int)$_POST['page_catalogue']);
+            print_r($_POST['item_page']);
+
+            
+            $navigation_catalogue['item_page'] = (int)$_POST['item_page'];
+
+            $navigation_catalogue['page_catalogue'] = (int)$_POST['page_catalogue'];
+
+
+
+            $navigation_catalogue['premier_item'] = $navigation_catalogue['page_catalogue'] * $navigation_catalogue['item_page'];
+
+        } else {
+            $navigation_catalogue['item_page'] = 20;
+            $navigation_catalogue['page_catalogue'] = 0;
+            $navigation_catalogue['premier_item'] = 0;
+        }
+
+
+
+
+        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'nav_cat' => $navigation_catalogue]);
     }
 
 

@@ -18,7 +18,8 @@ abstract class Crud extends PDO {
                 $orderBy";
         // print_r($sql);
         $stmt = $this->query($sql);
-        // $count = $stmt->rowCount();
+        $count = $stmt->rowCount();
+        // print_r($count);
         return $stmt->fetchAll();
     }
 

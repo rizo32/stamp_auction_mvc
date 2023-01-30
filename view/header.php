@@ -38,8 +38,8 @@
                 </span> -->
 
                 <span class="flex-horizontal icones">
-                    <a href="#"><img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère"></a>
-                    <a href="#"><img src="{{ path }}img/bookmark-orig.webp" alt="menu produits suivis"></a>
+                    <a href="{{ path }}mise/show"><img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère"></a>
+                    <a href=""><img src="{{ path }}img/bookmark-orig.webp" alt="menu produits suivis"></a>
 
                     {% if guest %}
                     <a href="{{ path }}membre/create">

@@ -141,8 +141,8 @@ main[id='page-catalogue'] {
     align-items: center;
 }
 
-.navigation-pages-catalogue>.items-par-page span,
-.navigation-pages-catalogue>.pages span {
+.navigation-pages-catalogue>.items-par-page input,
+.navigation-pages-catalogue>.pages input {
     text-align: center;
     padding: 2px 10px;
     box-shadow: 1px 0 var(--bordure), -1px -1px var(--bordure), 0 1px var(--ombre);
@@ -160,7 +160,7 @@ main[id='page-catalogue'] {
     color: white;
 }
 
-.navigation-pages-catalogue input {
+.navigation-pages-catalogue input[type='text'] {
     border: none;
     background-color: inherit;
     width: 0;

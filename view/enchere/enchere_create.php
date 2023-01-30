@@ -6,9 +6,11 @@
     <div class="compte">
         <nav>
             <ul class="flex-horizontal">
-                <li><a href = "{{ path }}membre/show">Vos informations</a></li>
+            <li><a href = "{{ path }}membre/show">Vos informations</a></li>
+                <li><a href = "">Méthodes de paiement</a></li>
                 <li><a href = "{{ path }}enchere/show">Vos enchères</a></li>
-                <li class="selectionne"><a href = "{{ path }}timbre/edit/{{ enchere.id_timbre_enchere }}">Créer une enchère</a></li>
+                <li class="selectionne"><a href = "{{ path }}timbre/create">Créer une enchère</a></li>
+                <li><a href = "{{ path }}mise/show">Vos mises</a></li>
                 <li><a href = "{{ path }}membre/logout">Déconnexion</a></li>
             </ul>
         </nav>

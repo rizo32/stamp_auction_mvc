@@ -43,10 +43,11 @@ export default class App {
 
             case 'page-catalogue':
                 let filtre = document.querySelector("form#filtre");
+                let navigation_page = document.querySelector("form#navigation-page");
                 // let filtreCheckbox = document.querySelector('input[type="checkbox"]');
 
                 // Ouvrir les filtres actifs
-                let checkboxes = document.querySelectorAll("input:checked");
+                let checkboxes = document.querySelectorAll("form#filtre input:checked");
                 checkboxes.forEach(checkbox => {
 
                     let catFiltre = checkbox.closest(".categorie-filtre");
@@ -63,9 +64,13 @@ export default class App {
                 // filtreCheckbox.addEventListener("click", () => {
                 filtre.addEventListener("click", submit.bind(this));
                 
+                navigation_page.addEventListener("click", submit.bind(this));
+                
                 // Soumettre le formulaire lors de l'appuis sur checkbox
-                function submit(e){
-                    if(e.target.type == "checkbox" || e.target.type == "radio"){
+                function submit(e){
+                    if(e.target.name == "item_page" || e.target.name == "page_catalogue"){
+                        navigation_page.submit();
+                    } else if(e.target.type == "checkbox" || e.target.type == "radio"){
                         filtre.submit();
 
                     // Ouvrir/fermer les tirroirs de filtre

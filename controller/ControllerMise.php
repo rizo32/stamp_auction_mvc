@@ -39,6 +39,41 @@ class ControllerMise{
         requirePage::redirectPage('enchere/detail/'.$id_timbre);
         // twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'mise' => $mise]);
 
+    }
+
+
+
+    public function show(){
+        CheckSession::sessionAuth();
+
+        $mise = new ModelMise;
+        $selectMise = $mise->select(
+            
+        // propriétés:
+            '*',
+
+        // joins:
+            'LEFT JOIN enchere ON id_enchere_mise = id_enchere
+             LEFT JOIN timbre ON id_timbre_enchere = id_timbre
+             LEFT JOIN image ON id_timbre = id_timbre_image',
+                        
+        // Conditions:
+            'WHERE id_membre_mise = '.$_SESSION['id_membre'] . ' AND id_image IN (SELECT
+            min(id_image) from image group by id_timbre_image)',
+
+        // groupBy
+            '',
+
+        // having
+            '',
+
+        // order
+            'ORDER BY date_mise DESC'
+        );
+
+
+        twig::render('mise/mise_show.php', ['mises' => $selectMise]);
+
 
     }
 
