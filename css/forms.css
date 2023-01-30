@@ -40,9 +40,19 @@ input, select {
     box-sizing: border-box;
 }
 
-input[type='checkbox']{
+input[type='checkbox'], input[type='radio']{
     width: inherit;
 }
+
+.boutons-achat .modal .flex-horizontal {
+    text-align: left;
+    justify-content: start;
+}
+
+.boutons-achat .modal input[type='radio'] {
+    margin-right: 6px;
+}
+
 
 label {
     padding-bottom: 5px;
@@ -189,3 +199,16 @@ label {
     background-color: none;
     font
 } */
+
+.modal {
+    padding: 1em;
+    max-width: 50ch;
+    /* border; */
+    margin: 0 auto;
+    margin-top: 35vh;
+    border-radius: 5px;
+}
+
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}

@@ -22,15 +22,31 @@ export default class App {
                 
                 // Activation galerie
                 this.Galerie.agrandir(this.imagesTimbres.querySelector("img"));
-                this.Loupe.magnify(".image-contenant>*", 2);
+                this.Loupe.magnify(".image-contenant>*", 1.8);
+
+                this.modal = document.querySelector('.modal');
+                this.openModal = document.querySelector('[data-etat="open"]');
+                this.closeModal = document.querySelector('[data-etat="close"]');
+
+                this.openModal.addEventListener('click', () => {
+                    modal.showModal();
+                })
+
+                this.closeModal.addEventListener('click', () => {
+                    modal.close();
+                })
+
+
                 break;
+
+
 
             case 'page-catalogue':
                 let filtre = document.querySelector("form#filtre");
                 // let filtreCheckbox = document.querySelector('input[type="checkbox"]');
 
                 // Ouvrir les filtres actifs
-                let checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
+                let checkboxes = document.querySelectorAll("input:checked");
                 checkboxes.forEach(checkbox => {
 
                     let catFiltre = checkbox.closest(".categorie-filtre");
@@ -49,7 +65,7 @@ export default class App {
                 
                 // Soumettre le formulaire lors de l'appuis sur checkbox
                 function submit(e){
-                    if(e.target.type == "checkbox"){
+                    if(e.target.type == "checkbox" || e.target.type == "radio"){
                         filtre.submit();
 
                     // Ouvrir/fermer les tirroirs de filtre

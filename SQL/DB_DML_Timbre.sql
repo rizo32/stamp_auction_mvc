@@ -20931,6 +20931,7 @@ SELECT
     (FLOOR(RAND()*(8-1+1)+1)),
     (FLOOR(RAND()*(9-1+1)+1)),
     (FLOOR(RAND()*(11-1+1)+1));
+    
 INSERT INTO timbre(
     nom_timbre,
     description_timbre,
@@ -47474,7 +47475,7 @@ SELECT
     "Singapore 2001 Orangutan Booklet VF",
     "Complete Pane of 10 Care For nature issue VF",
     (FLOOR(RAND()*(2000-1700)+1700)),
-    (FLOOR(RAND()*(1-0+0.1)+0)),
+    (FLOOR(RAND()*(1-0+0.08)+0)),
     (FLOOR(RAND()*(7-1+1)+1)),
     (FLOOR(RAND()*(1-0+0.8)+0)),
     (FLOOR(RAND()*(10-1+1)+1)),

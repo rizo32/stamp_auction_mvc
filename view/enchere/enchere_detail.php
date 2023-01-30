@@ -29,13 +29,19 @@
             </div>
             <section class="sommaire-produit flex-vertical">
                 <header>
-                    <small>{{ enchere.delais }} | 13 mises</small>
+                    <small>{{ enchere.delais | raw }} | {{ enchere.nombre_mises }}</small>
                     <h1>{{ enchere.nom_timbre }}</h1>
                     <small class="alerte">6 ajouts à des listes de suivi dans les 24 dernières heures</small>
                 </header>
                 <div class="information-prix">
-                    <span class="prix">$118.87</span>
-                    <small>Approximativement 145.58CAD</small>
+                    <span class="prix">
+                    {% if enchere.max_montant_mise %}    
+                    {{ enchere.max_montant_mise }}
+                    {% else %}
+                    {{ enchere.prix_initial_enchere }}
+                    {% endif %}
+                    </span>
+                    <!-- <small>Approximativement 145.58CAD</small> -->
                     <p>Ou acheter pour <b>$160.00</b></p>
                 </div>
                 <table>
@@ -68,6 +74,10 @@
                         <td>{{ enchere.date_debut_enchere }}</td>
                     </tr>
                     <tr>
+                        <th>Fin de l'enchère</th>
+                        <td>{{ enchere.date_fin_enchere }}</td>
+                    </tr>
+                    <tr>
                         <th>Certification</th>
                         <td>{{ enchere.certification_timbre }}</td>
                     </tr>
@@ -83,16 +93,71 @@
             </section>
             <div class="enchere flex-vertical">
                 <div class="prix-livraison">
-                    <span class="prix">$118.87</span>
-                    <small>$188.87/timbre</small>
+                    
+                    <span class="prix">
+                    {% if enchere.max_montant_mise %}    
+                    {{ enchere.max_montant_mise }}
+                    {% else %}
+                    {{ enchere.prix_initial_enchere }}
+                    {% endif %}
+                    </span>
+
+                    <small>
+                    {% if enchere.max_montant_mise %}    
+                    {{ enchere.max_montant_mise }}/timbre
+                    {% else %}
+                    {{ enchere.prix_initial_enchere }}/timbre
+                    {% endif %}
+                    </small>
+                    
+                    
                     <p><small>Livraison au CANADA: <b>$3.99</b></small></p>
-                    <p><small>Livraison garantie pour le <b>jeu, 14 janvier 2023</b></small></p>
+
+                    {% if enchere.dernier_miseur == session.id_membre %}
+                    <p>Vous êtes le dernier miseur</p>
+                    {% endif %}
+
+
+                    <!-- <p><small>Livraison garantie pour le <b>{{ enchere.livraison }}</b></small></p> -->
+                    <p><small>Livraison garantie pour le <b>jeu, 7 février 2023</b></small></p>
                 </div>
-                <div class="boutons-achat flex-vertical">
-                    <button class="mise-rapide">Mise rapide (123.87$)</button>
-                    <button class="mise">Miser</button>
-                    <button class="liste-suivi">Ajouter à la liste<br>des suivis</button>
-                </div>
+                <form class="boutons-achat flex-vertical" action="{{ path }}mise/store/{{ enchere.id_timbre }}" method="POST">
+
+                    <input type="hidden" id="mise-rapide" name="montant_mise" value="{{ enchere.enchere_min }}">
+                    <input type="hidden" id="mise-rapide" name="id_enchere_mise" value="{{ enchere.id_enchere }}">
+                    <input type="hidden" id="mise-rapide" name="id_membre_mise" value="{{ session.id_membre }}">
+
+                    <input type="submit" id="mise-rapide" value="Mise rapide ({{ enchere.enchere_min }})">
+
+                    <button data-etat="open" type="button" class="button">Miser</button>
+                
+                    <dialog class="modal" id="modal">
+                        <h2>Entrez un montant</h2>
+                        <!-- <form method="dialog"> -->
+                        <div class="flex-horizontal">
+
+                            <label class="mise" for="mise">Mise: </label>
+                            <input type="number" id="mise" name="montant_mise" step=0.01 min="{{ enchere.enchere_min }}" value="{{ enchere.enchere_min }}">
+                        </div>
+                        <small>Mise minimale: {{ enchere.enchere_min }}</small>
+
+                        <div class="flex-horizontal">
+                            <input type="radio" id="carte-dossier" name="carte" checked disabled>
+                            <label for="carte-dossier">Utiliser la carte au dossier</label>
+                        </div>
+
+                        <div class="flex-horizontal">
+                            <input type="radio" id="nouvelle-carte" name="carte" disabled>
+                            <label for="carte-dossier">Nouvelle carte</label>
+                        </div>
+
+                        <button data-etat="close" class="button" type="button">Fermer</button>
+                        <input type="submit" class="button" value="Miser">
+                    </dialog>
+                </form>
+                
+                <button class="liste-suivi">Ajouter à la liste<br>des suivis</button>
+
                 <span class="transaction flex-horizontal">
                     <span class="transactions-secure flex-horizontal">
                         <img src="{{ path }}img/lock.webp" alt="verrou">
@@ -153,35 +218,37 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for mise in mises|slice(0, 5) %}
                         <tr>
-                            <td>sanchesmarkitos</td>
-                            <td class="insecable">$118.87</td>
-                            <td>2022/11/06 22:57</td>
+                            <td>{{ mise.nom_membre }}</td>
+                            <td class="insecable">{{ mise.montant_mise }}</td>
+                            <td>{{ mise.date_mise }}</td>
                         </tr>
-                        <tr>
-                            <td>harvey_king67</td>
-                            <td class="insecable">$113.87</td>
-                            <td>2022/11/06 22:04</td>
-                        </tr>
-                        <tr>
-                            <td>charpentier_kool_skate88</td>
-                            <td class="insecable">$108.87</td>
-                            <td>2022/11/06 21:19</td>
-                        </tr>
-                        <tr>
-                            <td>sanchesmarkitos</td>
-                            <td class="insecable">$103.87</td>
-                            <td>2022/11/06 20:47</td>
-                        </tr>
-                        <tr>
-                            <td>charpentier_kool<wbr>_skate88</td>
-                            <td class="insecable">$98.87</td>
-                            <td>2022/11/06 20:12</td>
-                        </tr>
+                        
+                        {% endfor %}
+
                     </tbody>
                 </table>
 
-                <button class="flex-horizontal"><span>Voir toutes les mises</span><span class="material-icons">expand_more</span></button>
+                <details>
+
+                    <summary class="flex-horizontal"><span>Voir toutes les mises</span><span class="material-icons">expand_more</span></summary>
+
+                    <table><tbody>
+
+                    {% for mise in mises|slice(5, 100) %}
+                        <tr>
+                            <td>{{ mise.nom_membre }}</td>
+                            <td class="insecable">{{ mise.montant_mise }}</td>
+                            <td>{{ mise.date_mise }}</td>
+                        </tr>
+                    {% endfor %}
+
+</tbody></table>
+
+
+
+                </details>
             </section>
         </article>
 

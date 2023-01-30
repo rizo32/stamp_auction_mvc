@@ -7,7 +7,7 @@ class CheckSession {
     if(isset($_SESSION['fingerPrint']) and $_SESSION['fingerPrint'] === md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR'])){
             return true;
         }else{
-            requirePage::redirectPage('employe/login');
+            requirePage::redirectPage('membre/membre_create_login');
         }
     }
 }

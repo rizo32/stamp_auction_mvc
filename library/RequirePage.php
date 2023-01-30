@@ -10,6 +10,7 @@ class RequirePage{
 
     // }
     static public function redirectPage($page){
+        // return header("Location: https://e2295331.webdev.cmaisonneuve.qc.ca/StampeeMVC/".$page);
         return header("Location: http://maisonneuve/Projet1/StampeeMVC/".$page);
     }
 }

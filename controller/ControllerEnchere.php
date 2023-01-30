@@ -3,6 +3,7 @@ RequirePage::requireModel('Crud');
 RequirePage::requireModel('ModelTimbre');
 RequirePage::requireModel('ModelImage');
 RequirePage::requireModel('ModelEnchere');
+RequirePage::requireModel('ModelMise');
 
 class ControllerEnchere{
     // On ne peut pas cocher plus qu'un filtre par catégorie parce qu'ils
@@ -33,8 +34,6 @@ class ControllerEnchere{
         
         $filtreTableau = array_combine($filtreKeys, $filtreValues);
         
-        // var_dump($filtreTableau);
-
 
         // Je pourrais surement mettre ça en en tête parce que je le reetuilise dans detail
         $tz = 'America/Toronto';
@@ -42,21 +41,16 @@ class ControllerEnchere{
         $dt = new DateTime("now", new DateTimeZone($tz));
         $dt->setTimestamp($timestamp);
 
-        $aujourdhui = $dt->format('Y-m-d');
+        // $aujourdhui = $dt->format('Y-m-d');
+        $maintenantChaine = $dt->format('Y-m-d H:i:s');
+        $maintenant = strtotime($maintenantChaine);
 
-        
-      
-        
-        // print_r($filtreTableau);
-        // echo("<br>");
 
-        
-        // $filtreString = "";
-        // foreach($filtreTableau as $key => $value){
-        //     $filtreString.= ", ". $key . ", " . $value;
-        // }
-        // $filtreString = substr($filtreString, 2);
-        
+
+
+
+
+        // FILTRE
         $sqlString = "";
         foreach($filtreTableau as $key => $value){
             if($key == 'annee_parution_timbre_min'){
@@ -68,52 +62,67 @@ class ControllerEnchere{
                     $sqlString.= " AND " . "annee_parution_timbre" . " <= " . $value;
                 }
             } elseif($key == 'archive'){
-                $sqlString.= " AND " . "date_fin_enchere" . " < " . $aujourdhui;
+                if($value == 0){
+                    $sqlString.= " AND " . "date_fin_enchere" . " >= '" . $maintenantChaine . "'";
+                } elseif($value == 1){
+                    $sqlString.= " AND " . "date_fin_enchere" . " < '" . $maintenantChaine . "'";
+                }
             } else {
                 $sqlString.= " AND " . $key . " = " . $value;
             }
-        }
-        // $sqlString = substr($sqlString, 0, -4);
+        }       
+        
+        
 
-        
-        // print_r($sqlString);
-        
-        
         $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->enchereIndex('*', 'timbre', 'image', 'id_timbre', 'id_timbre_enchere', 'id_timbre', 'id_timbre_image', $sqlString);
+        $selectEnchere = $enchere->select(
+        // propriétés:
+            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise)',
+
+        // joins:
+            'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
+             LEFT JOIN image ON id_timbre = id_timbre_image
+             LEFT JOIN mise ON id_enchere = id_enchere_mise',
+                        
+        // Conditions:
+        // mettre de côtés les enchères sans timbre
+            'WHERE date_debut_enchere IS NOT NULL '.
+
+            // 'AND date_fin_enchere > ' . '"' . $maintenantChaine . '"' .
+        // Une image par timbre
+            ' AND id_image IN (SELECT
+            min(id_image) from image group by id_timbre_image)'.
+
+        // filtre
+            $sqlString,
+            
+        // groupby
+            'GROUP BY id_timbre',
+        
+        // having
+            ''
+        
+        );
+
+
+        // var_dump($selectEnchere[0]);
 
 
 
-        // print_r(gettype($selectEnchere[0]['date_fin_enchere']));
-        // print_r(gettype($aujourdhui));
 
-        // print_r(date_diff($selectEnchere[0]['date_fin_enchere'], $aujourdhui));
+        // PRIX MISE
 
-        $maintenant = $dt->format('Y-m-d H:i:s');
-
-
-        $maintenant = strtotime($maintenant);
-
-
-        // $diffInDays = $diffInSeconds / 86400;
-
-        print_r($maintenant);
-        // echo "<br>";
-        // print_r($finEnchere);
-        // echo "<br>";
-        // print_r($delaisSec);
-        // echo "<br>";
-        // print_r($delais);
+        
+    
 
 
 
 
 
         foreach($selectEnchere as $enchere => $valeur){
-            $selectEnchere[$enchere]['prix_initial_enchere'] = number_format($selectEnchere[$enchere]['prix_initial_enchere'], 2);
 
-
-
+            
+            // Format fin enchère
             $finEnchere = strtotime($selectEnchere[$enchere]['date_fin_enchere']);
             $delaisSec = $finEnchere - $maintenant;
 
@@ -122,22 +131,44 @@ class ControllerEnchere{
             $minutes = floor(($delaisSec - $jours * 86400 - $heures * 3600) / 60);
             $class = "";
 
-            if($jours < 0){
+
+            if($jours > 0) {
+                $jours .= "j ";
+                $heures .= "h ";
+                $minutes = "";
+            } elseif($jours == 0) {
                 $jours = "";
+                $heures .= "h ";
                 $minutes .= "m";
                 $class = " class = 'alerte'";
-            } else {
-                $jours .= "j ";
-                $minutes = "";
-            }
-            if($heures < 0){
+            } elseif($jours < 0){
+                $jours = "Terminée";
                 $heures = "";
-            } else {
-                $heures .= "h ";
+                $minutes = "";
+                $class = " class = 'emphase'";
             }
+
 
 
             $selectEnchere[$enchere]['delais'] = "<span" . $class . ">" . $jours . $heures . $minutes . "</span>";
+
+            $selectEnchere[$enchere]['nombre_mises'] = $selectEnchere[$enchere]['count(id_mise)'];
+
+            // NOMBRE DE MISES
+            if($selectEnchere[$enchere]['nombre_mises'] > 1){
+                $selectEnchere[$enchere]['nombre_mises'] .= " mises";
+            } else {
+                $selectEnchere[$enchere]['nombre_mises'] .= " mise";
+            }
+
+
+            // Format prix
+            if($selectEnchere[$enchere]['id_mise']){
+                $selectEnchere[$enchere]['max_montant_mise'] = number_format($selectEnchere[$enchere]['max(montant_mise)'], 2);
+            } else {   
+                $selectEnchere[$enchere]['prix_initial_enchere'] = number_format($selectEnchere[$enchere]['prix_initial_enchere'], 2);
+            }
+            
 
         }
 
@@ -164,13 +195,55 @@ class ControllerEnchere{
         'timbre', 'id_timbre', 'id_timbre_image', 'id_timbre', $id_timbre);       
         
         
-        $selectEnchere = $enchere->enchereDetail('*', 'timbre', 'etat', 'provenance', 'alignement', 'format', 'couleur', 'evaluation',
-        'id_timbre', 'id_timbre_enchere', 'id_etat', 'id_etat_timbre', 'id_provenance', 'id_provenance_timbre', 'id_alignement', 'id_alignement_timbre', 'id_format', 'id_format_timbre', 'id_couleur', 'id_couleur_timbre', 'id_evaluation', 'id_evaluation_timbre',
-        'id_timbre', $id_timbre);
+
+    // REQUÊTE PRINCIPALE ********************/
+        $selectEnchere = $enchere->enchereDetail(
+        // propriétés:
+            'max(montant_mise), count(id_mise), id_mise, prix_initial_enchere, certification_timbre, date_fin_enchere, nom_provenance, nom_etat, nom_couleur_principale, nom_evaluation, annee_parution_timbre, date_debut_enchere, nom_format, nom_alignement, id_enchere, id_timbre',
+            
+            
+            
+        // tables:
+            'timbre', 'etat', 'provenance', 'alignement', 'format', 'couleur', 'evaluation', 'mise',
+            
+            
+        // clés liaisons:
+            'id_timbre', 'id_timbre_enchere', 'id_etat', 'id_etat_timbre', 'id_provenance', 'id_provenance_timbre', 'id_alignement', 'id_alignement_timbre', 'id_format', 'id_format_timbre', 'id_couleur', 'id_couleur_timbre', 'id_evaluation', 'id_evaluation_timbre', 'id_enchere_mise', 'id_enchere',
+            
+        // condition
+            'id_timbre', $id_timbre,
+
+        // Group by
+            'id_timbre_enchere');
+
+    // FIN REQUÊTE PRINCIPALE ********************/
+
+
+    $selectEnchere['nombre_mises'] = $selectEnchere['count(id_mise)'];
+
+    if($selectEnchere['nombre_mises'] > 1){
+        $selectEnchere['nombre_mises'] .= " mises";
+    } else {
+        $selectEnchere['nombre_mises'] .= " mise";
+    }
+
+
+
+       
+        if($selectEnchere['id_mise']){
+            $selectEnchere['enchere_min'] = number_format(($selectEnchere['max(montant_mise)'] + 5), 2);
+            $selectEnchere['max_montant_mise'] = $selectEnchere['max(montant_mise)'];
+        } else {
+            $selectEnchere['enchere_min'] = number_format(($selectEnchere['prix_initial_enchere'] + 5), 2);
+        }
 
 
         // Format du prix
-        $selectEnchere['prix_initial_enchere'] = number_format($selectEnchere['prix_initial_enchere'], 2);
+        if($selectEnchere['id_mise']){
+            $selectEnchere['max_montant_mise'] = number_format($selectEnchere['max(montant_mise)'], 2);
+        } else {   
+            $selectEnchere['prix_initial_enchere'] = number_format($selectEnchere['prix_initial_enchere'], 2);
+        }
 
         if($selectEnchere['certification_timbre'] == 1){
             $selectEnchere['certification_timbre'] = "Oui";
@@ -180,20 +253,87 @@ class ControllerEnchere{
 
 
 
+        
+        // $aujourdhui = new DateTime($dt->format('Y-m-d'));
+        // $dateFinEnchere = new DateTime($selectEnchere['date_fin_enchere']);
+        
+        // $delais = $aujourdhui->diff($dateFinEnchere);
+        // $delaisString = $this->format_interval($delais);
+        // $selectEnchere['delais'] = $delaisString;
+        
+        
         $tz = 'America/Toronto';
         $timestamp = time();
         $dt = new DateTime("now", new DateTimeZone($tz));
         $dt->setTimestamp($timestamp);
 
-        $aujourdhui = new DateTime($dt->format('Y-m-d'));
-        $dateFinEnchere = new DateTime($selectEnchere['date_fin_enchere']);
+        // Format fin enchère
+        $maintenant = $dt->format('Y-m-d H:i:s');
+        $maintenant = strtotime($maintenant);
 
-        $delais = $aujourdhui->diff($dateFinEnchere);
-        $delaisString = $this->format_interval($delais);
-        $selectEnchere['delais'] = $delaisString;
+        
+        $finEnchere = strtotime($selectEnchere['date_fin_enchere']);
+        // Je rajoute une journée parce que la fin serait à 23:59
+        $delaisSec = $finEnchere - $maintenant + 86400;
+
+        $jours = floor($delaisSec / 86400);
+        $heures = floor(($delaisSec - $jours * 86400) / 3600);
+        $minutes = floor(($delaisSec - $jours * 86400 - $heures * 3600) / 60);
+        $class = "";
+
+        if($jours > 0) {
+            $jours .= "j ";
+            $heures .= "h ";
+            $minutes = "";
+        } elseif($jours == 0) {
+            $jours = "";
+            $heures .= "h ";
+            $minutes .= "m";
+            $class = " class = 'alerte'";
+        } elseif($jours < 0){
+            $jours = "Terminée";
+            $heures = "";
+            $minutes = "";
+            $class = " class = 'emphase'";
+        }
+
+        // print_r($selectEnchere['date_fin_enchere']);
+        // $livraison = $finEnchere + 5;
+        // $livraison = strtotime($livraison);
 
 
-        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'images' => $selectImages]);
+        $selectEnchere['delais'] = "<span" . $class . ">" . $jours . $heures . $minutes . "</span>";
+
+        $selectEnchere['livraison'] = $finEnchere;
+
+        $mise = new ModelMise();
+
+
+        // ALLER CHERCHER LES MISES
+        $selectMises = $mise->select(
+
+        // propriétés:
+            '*',
+
+        // joins:
+            'LEFT JOIN membre on id_membre_mise = id_membre',
+                        
+        // Conditions:
+            'WHERE id_enchere_mise = '.$selectEnchere['id_enchere'],
+
+        // groupBy
+            '',
+
+        // having
+            '',
+
+        // order
+            'ORDER BY date_mise DESC',
+
+        );
+
+
+        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'images' => $selectImages, 'mises' => $selectMises]);
     }
 
     public function create(){
@@ -202,7 +342,27 @@ class ControllerEnchere{
         $id_timbre = end($urlArray);
 
         $enchere = new ModelEnchere;
-        $enchere_infos = $enchere->select('*', 'id_timbre_enchere', $id_timbre);
+        $enchere_infos = $enchere->select(
+            
+        // propriétés:
+        '*',
+
+        // joins:
+            '',
+                        
+        // Conditions:
+            'WHERE id_timbre_enchere = '.$id_timbre,
+
+        // groupBy
+            '',
+
+        // having
+            '',
+
+        // order
+            '',
+        );
+            
 
         twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos]);
     }
@@ -303,6 +463,7 @@ class ControllerEnchere{
         }
     }
 
+
     /**
      * Format an interval to show all existing components.
      * If the interval doesn't have a time component (years, months, etc)
@@ -315,15 +476,15 @@ class ControllerEnchere{
      * Madara's Ghost
      * https://stackoverflow.com/questions/676824/how-to-calculate-the-difference-between-two-dates-using-php
      */
-    function format_interval(DateInterval $interval) {
-        $result = "";
-        if ($interval->y) { $result .= $interval->format("%y annéees "); }
-        if ($interval->m) { $result .= $interval->format("%m mois "); }
-        if ($interval->d) { $result .= $interval->format("%d jours "); }
-        if ($interval->h) { $result .= $interval->format("%h heures "); }
-        if ($interval->i) { $result .= $interval->format("%i minutes "); }
-        if ($interval->s) { $result .= $interval->format("%s secondes "); }
+    // function format_interval(DateInterval $interval) {
+    //     $result = "";
+    //     if ($interval->y) { $result .= $interval->format("%y annéees "); }
+    //     if ($interval->m) { $result .= $interval->format("%m mois "); }
+    //     if ($interval->d) { $result .= $interval->format("%d jours "); }
+    //     if ($interval->h) { $result .= $interval->format("%h heures "); }
+    //     if ($interval->i) { $result .= $interval->format("%i minutes "); }
+    //     if ($interval->s) { $result .= $interval->format("%s secondes "); }
 
-        return $result;
-    }
+    //     return $result;
+    // }
 }

@@ -39,24 +39,9 @@ class ModelEnchere extends Crud {
     //     }
     // }
 
-    // Pour acquérir des informations provenant d'une instance
-    public function enchereIndex($listeProp, $table2, $table3, $propJoin, $propJoin2, $propJoin3, $propJoin4, $tableau){
-        $sql = "SELECT $listeProp FROM $this->table
-                LEFT JOIN $table2 ON $propJoin = $propJoin2
-                LEFT JOIN $table3 ON $propJoin3 = $propJoin4
-                WHERE date_debut_enchere IS NOT NULL
-
-                $tableau
-
-                GROUP BY id_timbre";
-        // print_r($sql);
-        $stmt = $this->query($sql);
-        $count = $stmt->rowCount();
-        return $stmt->fetchAll();
-    }
 
     // Pour acquérir des informations provenant d'une instance
-    public function enchereDetail($listeProp, $table2, $table3, $table4, $table5, $table6, $table7, $table8, $propJoin, $propJoin2, $propJoin3, $propJoin4, $propJoin5, $propJoin6, $propJoin7, $propJoin8, $propJoin9, $propJoin10, $propJoin11, $propJoin12, $propJoin13, $propJoin14, $where, $whereValue){
+    public function enchereDetail($listeProp, $table2, $table3, $table4, $table5, $table6, $table7, $table8, $table9, $propJoin, $propJoin2, $propJoin3, $propJoin4, $propJoin5, $propJoin6, $propJoin7, $propJoin8, $propJoin9, $propJoin10, $propJoin11, $propJoin12, $propJoin13, $propJoin14, $propJoin15, $propJoin16, $where, $whereValue, $groupby){
         $sql = "SELECT $listeProp FROM $this->table
                 LEFT JOIN $table2 ON $propJoin = $propJoin2
                 LEFT JOIN $table3 ON $propJoin3 = $propJoin4
@@ -65,10 +50,16 @@ class ModelEnchere extends Crud {
                 LEFT JOIN $table6 ON $propJoin9 = $propJoin10
                 LEFT JOIN $table7 ON $propJoin11 = $propJoin12
                 LEFT JOIN $table8 ON $propJoin13 = $propJoin14
-                WHERE $where = $whereValue";
+
+                LEFT JOIN $table9 ON $propJoin15 = $propJoin16
+
+                WHERE $where = $whereValue
+
+                GROUP BY $groupby";
         // print_r($sql);
         $stmt = $this->query($sql);
-        $count = $stmt->rowCount();
+        // $count = $stmt->rowCount();
+        // var_dump($stmt->fetch());
         return $stmt->fetch();
     }
 

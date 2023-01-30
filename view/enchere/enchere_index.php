@@ -46,9 +46,18 @@
                                 <label for="coup-coeur">Coups de coeur du Lord Stampee</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="archive" name="archive" value="1"
-                                {% if filtre.archive == 1 %} checked {% endif %}>
-                                <label for="archive">Enchères archivées</label>
+                                <input type="radio" id="en cours" name="archive" value="0"
+                                {% if filtre.archive == 0 %}
+                                checked
+                                {% endif %}>
+                                <label for="archive">Enchères en cours</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="en cours" name="archive" value="1"
+                                {% if filtre.archive == 1 %}
+                                checked
+                                {% endif %}>
+                                <label for="archive">Enchères archivés</label>
                             </li>
                         </ul>
                     </details>
@@ -96,7 +105,7 @@
                                 <label for="europe">Europe continentale</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="canada" name="canada" value=8
+                                <input type="checkbox" id="canada" name="id_provenance_timbre" value=8
                                 {% if filtre.id_provenance_timbre == 8 %} checked {% endif %}>
                                 <label for="canada">Canada</label>
                             </li>
@@ -376,13 +385,26 @@
                     <div class="image-contenant">
                         <span class="point-reference"><span class="watchlist"></span></span>
                         <img class="produit" src="{{ path }}uploads/{{ enchere.nom_image }}" alt="timbre rouge">
-                        <span class="point-reference"><span></span></span>
+                        <span class="point-reference">
+                            {% if enchere.coup_coeur_timbre %}
+                            <span class="coup-coeur"></span>
+                            {% else %}
+                            <span></span>
+                            {% endif %}
+                        </span>
                     </div>
                     <header>
                         <h5>{{ enchere.nom_timbre }}</h5>
                     </header>
-                    <span class="prix">{{ enchere.prix_initial_enchere }}$</span>
-                    <small>{{ enchere.delais | raw }} | 23 mises</small>
+                    <span class="prix">
+                    {% if enchere.max_montant_mise %}    
+                    {{ enchere.max_montant_mise }}
+                    {% else %}
+                    {{ enchere.prix_initial_enchere }}
+                    {% endif %}
+                        
+                    $</span>
+                    <small>{{ enchere.delais | raw }} | {{ enchere.nombre_mises }}</small>
                 </article>
             </a>
             

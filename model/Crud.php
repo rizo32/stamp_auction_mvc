@@ -7,14 +7,29 @@ abstract class Crud extends PDO {
         // parent::__construct('mysql:host=localhost; dbname=e2295331; port=3306; charset=utf8', 'e2295331', 'a1KDLCwOPsYmOSiR37yc');
     }
 
+    
     // Pour acquérir des informations provenant d'une instance
-    public function select($listeProp, $prop, $value){
-        $sql = "SELECT $listeProp FROM $this->table
-                WHERE $prop = $value";
+    public function select($select, $join, $where, $groupBy, $having, $orderBy = null){
+        $sql = "SELECT $select FROM $this->table
+                $join
+                $where
+                $groupBy
+                $having
+                $orderBy";
+        // print_r($sql);
         $stmt = $this->query($sql);
-        // print_r($stmt);
-        return $stmt->fetch();
+        // $count = $stmt->rowCount();
+        return $stmt->fetchAll();
     }
+
+    // Pour acquérir des informations provenant d'une instance
+    // public function select($listeProp, $prop, $value){
+    //     $sql = "SELECT $listeProp FROM $this->table
+    //             WHERE $prop = $value";
+    //     $stmt = $this->query($sql);
+    //     // print_r($stmt);
+    //     return $stmt->fetch();
+    // }
 
     // Pour acquérir des informations provenant d'une instance
     public function selectId($value){
@@ -27,10 +42,9 @@ abstract class Crud extends PDO {
         if($count == 1 ){
             return $stmt->fetch();
         }else{
-            header("location: ../../home/error");
+            header("location: home/error");
         }
     }
-
 
 
 
@@ -46,7 +60,7 @@ abstract class Crud extends PDO {
         if($count == 1 ){
             return $stmt->fetch();
         }else{
-            header("location: ../../home/error");
+            header("location: home/error");
         }
     }
 
@@ -140,7 +154,7 @@ abstract class Crud extends PDO {
                          LEFT JOIN $table3 ON $field3 = $field4
                          WHERE $prop = $value
                          GROUP BY $field2";
-        // $stmt  = $this->query($sql);
+        $stmt  = $this->query($sql);
         return $stmt->fetchAll();
         return $sql;
     }

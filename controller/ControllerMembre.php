@@ -33,7 +33,7 @@ class ControllerMembre{
             if(!$membre->checkCourriel($_POST)){
                 // : si la vérification n'est pas respecté, sortir de la fonction
                 $verifCourriel = "Le courriel existe déjà";
-                twig::render('membre_create_login.php', ['messageStore' => $verifCourriel, 'membre' => $_POST]); 
+                twig::render('membre/membre_create_login.php', ['messageStore' => $verifCourriel, 'membre' => $_POST]); 
 
             } else {
                 // Hashage du mot de passe
@@ -75,7 +75,7 @@ class ControllerMembre{
             }
         }else{    // Si la validation n'est pas réussite
             $errors = $validation->displayErrors();
-            twig::render('membre_create_login.php', ['messageStore' => $errors, 'membre' => $_POST]); // on conserve les données
+            twig::render('membre/membre_create_login.php', ['messageStore' => $errors, 'membre' => $_POST]); // on conserve les données
         }
     }
 
@@ -99,10 +99,10 @@ class ControllerMembre{
         if($validation->isSuccess()){
             $membre = new ModelMembre;
             $checkMembre = $membre->checkMembre($_POST);
-            twig::render('membre_create_login.php', ['messageLogin' => $checkMembre, 'membre' => $_POST]);        
+            twig::render('membre/membre_create_login.php', ['messageLogin' => $checkMembre, 'membre' => $_POST]);        
         }else{
             $errors = $validation->displayErrors();
-            twig::render('membre_create_login.php', ['messageLogin' => $errors, 'membre' => $_POST]);
+            twig::render('membre/membre_create_login.php', ['messageLogin' => $errors, 'membre' => $_POST]);
         }
     }
 
@@ -167,7 +167,7 @@ class ControllerMembre{
             $ancienCourriel = $membre->selectId($_SESSION['id_membre'])['nom_utilisateur_membre'];
             if($_POST['nom_utilisateur_membre'] != $ancienCourriel && !$membre->checkCourriel($_POST)){
                 $verifCourriel = "Le courriel existe déjà";
-                twig::render('membre_edit.php', ['message' => $verifCourriel, 'membre' => $_POST]); 
+                twig::render('membre/membre_edit.php', ['message' => $verifCourriel, 'membre' => $_POST]); 
             } else {
                 // Hashage du mot de passe s'il est modifié
                 if($_POST['mot_passe_membre']) {
