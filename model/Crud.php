@@ -36,32 +36,6 @@ abstract class Crud extends PDO {
         return $stmt->fetch();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     // Pour acquérir des informations provenant d'une instance
     // public function select($listeProp, $prop, $value){
     //     $sql = "SELECT $listeProp FROM $this->table

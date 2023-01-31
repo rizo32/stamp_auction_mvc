@@ -6,49 +6,57 @@ RequirePage::requireModel('ModelEnchere');
 RequirePage::requireModel('ModelMise');
 
 class ControllerEnchere{
-    // On ne peut pas cocher plus qu'un filtre par catégorie parce qu'ils
-    // vont partager la même clé dans le tableau associatif.
-    // Je pourrais créer un tableau pour chaque clé, à voir si j'ai le temps
-    // dans le sprint 3
+    // On ne peut pas cocher plus qu'un filtre par catégorie parce qu'ils vont partager la même clé dans le tableau associatif. Il faudrait créer un tableau pour chaque clé
 
     public function index(){
+
+        // Va décortiquer la requête GET pour filtre/recherche/navigation
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
         $filtre = explode('?', end($urlArray));
         $filtre = end($filtre);
+
+        // Évite qu' <index> soit considéré comme une clé
         if($filtre == "index"){
             $filtre = "1";
         }
+
         $filtreTableauStr = explode('&', $filtre);
 
-        // print_r($filtreTableauStr);
 
-        // foreach($filtreTableauStr as $filtre)
-
+        // Création d'un tableau associatif avec les données de NAVIGATION catalogue
         $navigation_tableau = [];
 
-        for($i=0; $i < count($filtreTableauStr); $i++){
+        for($i = 0; $i < count($filtreTableauStr); $i++){
+
+            // clé item_page
             if(str_starts_with($filtreTableauStr[$i], 'item_page')){
+                // On retire les données du tableau sous forme de chaines de caractères
                 $navigation_tableau['item_page'] = implode("", array_splice($filtreTableauStr, $i, 1));
+                // format clé -> valeur
                 $navigation_tableau['item_page'] = trim($navigation_tableau['item_page'], 'item_page=');
-                // Pour compenser le prochain élément dont l'index prend la place de l'ancien
+                // On compense l'index perdu avec array_splice
                 $i--;
+
+            // clé page_catalogue
             } elseif(str_starts_with($filtreTableauStr[$i],'page_catalogue')){
                 $navigation_tableau['page_catalogue'] = implode("", array_splice($filtreTableauStr, $i, 1));
                 $navigation_tableau['page_catalogue'] = trim($navigation_tableau['page_catalogue'], 'page_catalogue=');
-                // Pour compenser le prochain élément dont l'index prend la place de l'ancien
                 $i--;
+
+            // // Recherche
+            // } elseif(str_starts_with($filtreTableauStr[$i],'recherche')){
+            //     $recherche = implode("", array_splice($filtreTableauStr, $i, 1));
+            //     $recherche = trim($recherche, 'recherche=');
+            //     $i--;
             }
         }
 
-        
 
+        // Création d'un tableau associatif avec les données des FILTRES
         $filtreKeys = [];
         $filtreValues = [];
 
         foreach($filtreTableauStr as $filtreInd){
-            // if($filtreInd['item_page'] || $filtreInd['page_catalogue']){
-            //     $navigation = unset($filtreInd);
-            // }
             $key = explode('=', $filtreInd);
             array_push($filtreKeys, reset($key));
 
@@ -56,35 +64,25 @@ class ControllerEnchere{
             array_push($filtreValues, end($value));
         }
 
-        
-
-        
         $filtreTableau = array_combine($filtreKeys, $filtreValues);
         
 
-        // Je pourrais surement mettre ça en en tête parce que je le reetuilise dans detail
+
+    // Traitement des types de filtres
+
+        // Gestion de date pour créer compte à rebours
         $tz = 'America/Toronto';
         $timestamp = time();
         $dt = new DateTime("now", new DateTimeZone($tz));
         $dt->setTimestamp($timestamp);
-
-        // $aujourdhui = $dt->format('Y-m-d');
         $maintenantChaine = $dt->format('Y-m-d H:i:s');
         $maintenant = strtotime($maintenantChaine);
 
-
-
-
-     
-        // Je rajoute une journée parce que la fin serait à 23:59
-        // $maintenant = $maintenant - 86400;
-
-
-
-        // FILTRE
+        // Création d'une chaine de caractère à passer dans une requête WHERE
         $sqlString = "";
         foreach($filtreTableau as $key => $value){
             if($key == 'annee_parution_timbre_min'){
+                // La clé existe même lorsque la valeur est nulle à cause de l'input type number
                 if($value){
                     $sqlString.= " AND " . "annee_parution_timbre" . " >= " . $value;
                 }
@@ -92,54 +90,51 @@ class ControllerEnchere{
                 if($value){
                     $sqlString.= " AND " . "annee_parution_timbre" . " <= " . $value;
                 }
+                // En cours
             } elseif($key == 'archive'){
                 if($value == 0){
                     $sqlString.= " AND " . "date_fin_enchere" . " >= '" . $maintenantChaine . "'";
+                // Archivé
                 } elseif($value == 1){
                     $sqlString.= " AND " . "date_fin_enchere" . " < '" . $maintenantChaine . "'";
                 }
+            // Filtres checkbox catégoriels
+            } elseif($key == 'recherche') {
+                $sqlString.= " AND " . "nom_timbre" . " LIKE '%" . $value . "%'";
             } else {
                 $sqlString.= " AND " . $key . " = " . $value;
             }
         }       
         
-        
 
+        // REQUÊTE SQL***************************
         $enchere = new ModelEnchere;
         $selectEnchere = $enchere->fetchAll(
-        // propriétés:
+        // SELECT:
             'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER () AS nombre_enchere',
 
-        // joins:
+        // JOIN(S):
             'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
              LEFT JOIN image ON id_timbre = id_timbre_image
              LEFT JOIN mise ON id_enchere = id_enchere_mise',
                         
-        // Conditions:
-        // mettre de côtés les enchères sans timbre
+        // WHERE:
+            // => mettre de côtés les enchères sans timbre
             'WHERE date_debut_enchere IS NOT NULL '.
 
-            // 'AND date_fin_enchere > ' . '"' . $maintenantChaine . '"' .
-        // Une image par timbre
+            // => Une image par timbre
             ' AND id_image IN (SELECT
             min(id_image) from image group by id_timbre_image)'.
 
-        // filtre
+            // => filtres
             $sqlString,
             
-        // groupby
+        // GROUP BY
             'GROUP BY id_timbre',
         
-        // having
+        // HAVING
             ''
-        
         );
-
-
-
-
-
-
 
 
 
@@ -200,7 +195,7 @@ class ControllerEnchere{
 
         $navigation_catalogue = [];
 
-        $navigation_catalogue['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'];
+        $navigation_catalogue['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'] ?? 0;
 
 
         // if($_POST){
@@ -212,7 +207,7 @@ class ControllerEnchere{
 
 
 
-            $navigation_tableau['premier_item'] = $navigation_tableau['page_catalogue'] * $navigation_tableau['item_page'];
+            $navigation_tableau['premier_item'] = ($navigation_tableau['page_catalogue'] ?? $navigation_tableau['page_catalogue'] = 0) * ($navigation_tableau['item_page'] ?? $navigation_tableau['item_page'] = 20);
 
         // } else {
         //     $navigation_tableau['item_page'] = 20;

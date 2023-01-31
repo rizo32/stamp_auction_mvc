@@ -5,7 +5,7 @@ RequirePage::requireModel('ModelMembre');
 
 class ControllerMembre{
 
-    // Pour afficher la page de création d'membres
+    // Pour afficher la page de création de membre
     public function create(){
         twig::render('membre/membre_create_login.php');
     }

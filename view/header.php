@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <title>{{ title }}</title>
-    <meta name="author" content="Rizo, https://github.com/rizo32/stampee">
+    <meta name="author" content="Rizo, https://github.com/rizo32/stamp_auction_mvc">
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,25 +16,26 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="module" src="{{ path }}main.js"></script>
 </head>
+
 <body>
     <header id="haut">
         <nav class="menu-principal-contenant">
             <div class="menu-principal">
                 <a href="{{ path }}home/index" class="logo">Stampee</a>
-                <!-- <span class="recherche"> -->
-                <form action="{{ path }}enchere/index?archive=0" method="GET" class="recherche">
 
-                    <input type="search" class="recherche-principale" name="recherche-principale" placeholder="Recherchez par provenance, couleur..." data-recherche>
+                <form action="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0" method="POST" class="recherche">
+                    <input type="search" class="recherche-principale" name="recherche" placeholder="Recherchez par provenance, couleur..."
+                    value = "{{ filtre.recherche }}"
+                    
+                    >
                     <span class="point-reference"><input class="envoi-recherche" type="submit" alt="icone-recherche" value=""></span>
-                    <!-- <span class="point-reference"><img  src="{{ path }}img/recherche.svg" alt="icone-recherche"></span> -->
-
                 </form>
 
                 <!-- <span class="filler alerte">
                     <p>timbre_id: {{ session.id_timbre }}</p>
                     <p>session_id: {{ session.id_membre }}</p>
-                <p>membre_id: {{ membre.id_membre }}</p>
-                <p>guest: {{ guest }}</p>
+                    <p>membre_id: {{ membre.id_membre }}</p>
+                    <p>guest: {{ guest }}</p>
                 </span> -->
 
                 <span class="flex-horizontal icones">
