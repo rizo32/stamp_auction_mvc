@@ -55,7 +55,13 @@
         </nav>
         <nav class="menu-secondaire-contenant">
             <div class="menu-secondaire flex-horizontal">
-                <a href="{{ path }}enchere/index?archive=0" class="selectionne">Trouver une enchère</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0"
+                
+                
+    
+
+
+                class="selectionne">Trouver une enchère</a>
                 <a href="{{ path }}enchere/index">Coups de coeur</a>
                 <a href="{{ path }}enchere/index">Enchères populaires</a>
                 <a class="optionnel-3" href="{{ path }}enchere/index">Derniers arrivés</a>

@@ -15,7 +15,7 @@
             </ul>
         </nav>
     
-        <form class="creation" action="{{ path }}enchere/store" method="post" enctype="multipart/form-data">
+        <form class="creation" action="{{ path }}enchere/store" method="post">
             <h3>Informations de l'enchère</h3>
 
             {% if errors is defined %}
@@ -24,21 +24,23 @@
 
             <div class="flex-vertical">           
                 <label>Date de début</label>
-                <input type="date" name="date_debut_enchere" value="{{ enchere.date_debut_enchere }}"/>
+                <input type="date" name="date_debut_enchere" value="{{ enchere.date_debut_enchere }}">
             </div>
 
             <div class="flex-vertical">           
                 <label>Date de fin</label>
-                <input type="date" name="date_fin_enchere" value="{{ enchere.date_fin_enchere }}"/>
+                <input type="date" name="date_fin_enchere" value="{{ enchere.date_fin_enchere }}">
             </div>
 
             <div class="flex-vertical">           
                 <label>Prix</label>
-                <input type="number" step="1" name="prix_initial_enchere" value="{{ enchere.prix_initial_enchere }}"/>
+                <input type="number" step="1" name="prix_initial_enchere" value="{{ enchere.prix_initial_enchere }}">
             </div>
+            {{ enchere.id_timbre_enchere }}
+            {{ enchere.id_enchere }}
 
-            <input type="hidden" name="id_enchere" value= "{{ enchere.id_enchere }}"/>
-            <input type="hidden" name="id_timbre_enchere" value= "{{ enchere.id_timbre_enchere }}"/>
+            <input type="hidden" name="id_enchere" value= "{{ enchere.id_enchere }}">
+            <input type="hidden" name="id_timbre_enchere" value= "{{ enchere.id_timbre_enchere }}">
            
 
             <div class="flex-horizontal">

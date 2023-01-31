@@ -47,7 +47,11 @@ class ControllerMise{
         CheckSession::sessionAuth();
 
         $mise = new ModelMise;
-        $selectMise = $mise->select(
+
+        // BEAUCOUP PLUS FACILE À LIRE, LA LOGIQUE EST DANS LE CONTROLLEUR MAIS L'ÉXÉCUTION DANS LE MODÈLE
+
+
+        $selectMise = $mise->fetch(
             
         // propriétés:
             '*',

@@ -40,6 +40,7 @@ class ModelEnchere extends Crud {
     // }
 
 
+    
     // Pour acquérir des informations provenant d'une instance
     public function enchereDetail($listeProp, $table2, $table3, $table4, $table5, $table6, $table7, $table8, $table9, $propJoin, $propJoin2, $propJoin3, $propJoin4, $propJoin5, $propJoin6, $propJoin7, $propJoin8, $propJoin9, $propJoin10, $propJoin11, $propJoin12, $propJoin13, $propJoin14, $propJoin15, $propJoin16, $where, $whereValue, $groupby){
         $sql = "SELECT $listeProp FROM $this->table
@@ -56,10 +57,7 @@ class ModelEnchere extends Crud {
                 WHERE $where = $whereValue
 
                 GROUP BY $groupby";
-        // print_r($sql);
         $stmt = $this->query($sql);
-        // $count = $stmt->rowCount();
-        // var_dump($stmt->fetch());
         return $stmt->fetch();
     }
 

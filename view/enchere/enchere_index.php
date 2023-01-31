@@ -20,8 +20,8 @@
     </nav>
 
 
+    <form id="page-catalogue" action="{{ path }}enchere/index" method="GET">
     <main id="page-catalogue">
-        <form id="filtre" action="{{ path }}enchere/index" method="GET">
             <aside class="filtre">
 
             <!-- Pour afficher le filtre actif ça va me prendre un join dans le controller et passer ça en plus -->
@@ -373,7 +373,6 @@
                     <details>
                 </div>
             </aside>
-        </form>
 
         {{ nav_cat.premier_item }}-{{ nav_cat.item_page }}
         {{ nav_cat.nombre_enchere }}résultats
@@ -416,7 +415,7 @@
             
         </section>
     </main>
-    <form id="navigation-page" action="{{ path }}enchere/index?archive=0" method="POST" class="navigation-pages-catalogue">
+    <!-- <form id="navigation-page" action="{{ path }}enchere/index?archive=0" method="POST" class="navigation-pages-catalogue"> -->
         <div class="items-par-page">
             <label id='item_page'>Items par page</label>
             <input for='item_page' type="radio" name="item_page" value="20"

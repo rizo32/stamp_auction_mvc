@@ -9,7 +9,7 @@ abstract class Crud extends PDO {
 
     
     // Pour acquérir des informations provenant d'une instance
-    public function select($select, $join, $where, $groupBy, $having, $orderBy = null){
+    public function fetchAll($select, $join, $where, $groupBy, $having, $orderBy = null){
         $sql = "SELECT $select FROM $this->table
                 $join
                 $where
@@ -22,7 +22,46 @@ abstract class Crud extends PDO {
         // print_r($count);
         return $stmt->fetchAll();
     }
+    
+    // Pour acquérir des informations provenant d'une instance
+    public function fetch($select, $join, $where, $groupBy, $having, $orderBy = null){
+        $sql = "SELECT $select FROM $this->table
+                $join
+                $where
+                $groupBy
+                $having
+                $orderBy";
+        // print_r($sql);
+        $stmt = $this->query($sql);
+        return $stmt->fetch();
+    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // Pour acquérir des informations provenant d'une instance
     // public function select($listeProp, $prop, $value){
     //     $sql = "SELECT $listeProp FROM $this->table

@@ -42,7 +42,7 @@
                     {% endif %}
                     </span>
                     <!-- <small>Approximativement 145.58CAD</small> -->
-                    <p>Ou acheter pour <b>$160.00</b></p>
+                    <!-- <p>Ou acheter pour <b>$160.00</b></p> -->
                 </div>
                 <table>
                     <tr>
@@ -58,7 +58,7 @@
                         <td>{{ enchere.nom_etat }}</td>
                     </tr>
                     <tr>
-                        <th>Couleur</th>
+                        <th>Couleur principale</th>
                         <td>{{ enchere.nom_couleur_principale }}</td>
                     </tr>
                     <tr>
@@ -112,7 +112,7 @@
                     
                     
                     <p><small>Livraison au CANADA: <b>$3.99</b></small></p>
-
+                    {{ enchere.dernier_miseur }}
                     {% if enchere.dernier_miseur == session.id_membre %}
                     <p>Vous êtes le dernier miseur</p>
                     {% endif %}
@@ -122,6 +122,10 @@
                     <p><small>Livraison garantie pour le <b>jeu, 7 février 2023</b></small></p>
                 </div>
                 <form class="boutons-achat flex-vertical" action="{{ path }}mise/store/{{ enchere.id_timbre }}" method="POST">
+                    {{ enchere.archive }}
+                    {% if enchere.archive %}
+                    {{ "zup" }}
+                    {% endif %}
 
                     <input type="hidden" id="mise-rapide" name="montant_mise" value="{{ enchere.enchere_min }}">
                     <input type="hidden" id="mise-rapide" name="id_enchere_mise" value="{{ enchere.id_enchere }}">

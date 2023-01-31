@@ -20,16 +20,43 @@ class ControllerEnchere{
         }
         $filtreTableauStr = explode('&', $filtre);
 
+        // print_r($filtreTableauStr);
+
+        // foreach($filtreTableauStr as $filtre)
+
+        $navigation_tableau = [];
+
+        for($i=0; $i < count($filtreTableauStr); $i++){
+            if(str_starts_with($filtreTableauStr[$i], 'item_page')){
+                $navigation_tableau['item_page'] = implode("", array_splice($filtreTableauStr, $i, 1));
+                $navigation_tableau['item_page'] = trim($navigation_tableau['item_page'], 'item_page=');
+                // Pour compenser le prochain élément dont l'index prend la place de l'ancien
+                $i--;
+            } elseif(str_starts_with($filtreTableauStr[$i],'page_catalogue')){
+                $navigation_tableau['page_catalogue'] = implode("", array_splice($filtreTableauStr, $i, 1));
+                $navigation_tableau['page_catalogue'] = trim($navigation_tableau['page_catalogue'], 'page_catalogue=');
+                // Pour compenser le prochain élément dont l'index prend la place de l'ancien
+                $i--;
+            }
+        }
+
+        
+
         $filtreKeys = [];
         $filtreValues = [];
 
         foreach($filtreTableauStr as $filtreInd){
+            // if($filtreInd['item_page'] || $filtreInd['page_catalogue']){
+            //     $navigation = unset($filtreInd);
+            // }
             $key = explode('=', $filtreInd);
             array_push($filtreKeys, reset($key));
 
             $value = explode('=', $filtreInd);
             array_push($filtreValues, end($value));
         }
+
+        
 
         
         $filtreTableau = array_combine($filtreKeys, $filtreValues);
@@ -47,6 +74,10 @@ class ControllerEnchere{
 
 
 
+
+     
+        // Je rajoute une journée parce que la fin serait à 23:59
+        // $maintenant = $maintenant - 86400;
 
 
 
@@ -75,7 +106,7 @@ class ControllerEnchere{
         
 
         $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->select(
+        $selectEnchere = $enchere->fetchAll(
         // propriétés:
             'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER () AS nombre_enchere',
 
@@ -107,8 +138,6 @@ class ControllerEnchere{
 
 
 
-     
-    
 
 
 
@@ -119,7 +148,9 @@ class ControllerEnchere{
             
             // Format fin enchère
             $finEnchere = strtotime($selectEnchere[$enchere]['date_fin_enchere']);
+            // Je rajoute une journée parce que la fin serait à 23:59
             $delaisSec = $finEnchere - $maintenant;
+            // $delaisSec = $finEnchere - $maintenant + 86400;
 
             $jours = floor($delaisSec / 86400);
             $heures = floor(($delaisSec - $jours * 86400) / 3600);
@@ -172,30 +203,28 @@ class ControllerEnchere{
         $navigation_catalogue['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'];
 
 
-        if($_POST){
-
-            print_r((int)$_POST['page_catalogue']);
-            print_r($_POST['item_page']);
+        // if($_POST){
 
             
-            $navigation_catalogue['item_page'] = (int)$_POST['item_page'];
+            // $navigation_tableau['item_page'] = (int)$_POST['item_page'];
 
-            $navigation_catalogue['page_catalogue'] = (int)$_POST['page_catalogue'];
-
-
-
-            $navigation_catalogue['premier_item'] = $navigation_catalogue['page_catalogue'] * $navigation_catalogue['item_page'];
-
-        } else {
-            $navigation_catalogue['item_page'] = 20;
-            $navigation_catalogue['page_catalogue'] = 0;
-            $navigation_catalogue['premier_item'] = 0;
-        }
+            // $navigation_tableau['page_catalogue'] = (int)$_POST['page_catalogue'];
 
 
 
+            $navigation_tableau['premier_item'] = $navigation_tableau['page_catalogue'] * $navigation_tableau['item_page'];
 
-        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'nav_cat' => $navigation_catalogue]);
+        // } else {
+        //     $navigation_tableau['item_page'] = 20;
+        //     $navigation_tableau['page_catalogue'] = 0;
+        //     $navigation_tableau['premier_item'] = 0;
+        // }
+
+
+
+
+
+        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'nav_cat' => $navigation_tableau]);
     }
 
 
@@ -215,13 +244,12 @@ class ControllerEnchere{
         $selectImages = $image->selectSingleJoin('nom_image',
         'timbre', 'id_timbre', 'id_timbre_image', 'id_timbre', $id_timbre);       
         
-        
+    //////// DIFFICILE À LIRE, TRÈS PEU RÉUTILISABLE, LA LOGIQUE EST DIFFUSÉE ENTRE CONTROLLEUR ET MODÈLE...
 
     // REQUÊTE PRINCIPALE ********************/
         $selectEnchere = $enchere->enchereDetail(
         // propriétés:
             'max(montant_mise), count(id_mise), id_mise, prix_initial_enchere, certification_timbre, date_fin_enchere, nom_provenance, nom_etat, nom_couleur_principale, nom_evaluation, annee_parution_timbre, date_debut_enchere, nom_format, nom_alignement, id_enchere, id_timbre',
-            
             
             
         // tables:
@@ -295,7 +323,8 @@ class ControllerEnchere{
         
         $finEnchere = strtotime($selectEnchere['date_fin_enchere']);
         // Je rajoute une journée parce que la fin serait à 23:59
-        $delaisSec = $finEnchere - $maintenant + 86400;
+        $delaisSec = $finEnchere - $maintenant;
+        // $delaisSec = $finEnchere - $maintenant + 86400;
 
         $jours = floor($delaisSec / 86400);
         $heures = floor(($delaisSec - $jours * 86400) / 3600);
@@ -316,6 +345,7 @@ class ControllerEnchere{
             $heures = "";
             $minutes = "";
             $class = " class = 'emphase'";
+            $selectEnchere['archive'] = 1;
         }
 
         // print_r($selectEnchere['date_fin_enchere']);
@@ -331,7 +361,7 @@ class ControllerEnchere{
 
 
         // ALLER CHERCHER LES MISES
-        $selectMises = $mise->select(
+        $selectMises = $mise->fetch(
 
         // propriétés:
             '*',
@@ -354,6 +384,12 @@ class ControllerEnchere{
         );
 
 
+        $selectEnchere['date_fin_enchere'] = strtotime($selectEnchere['date_fin_enchere']) - 86400;
+
+        $selectEnchere['date_fin_enchere'] = date('Y-m-d', $selectEnchere['date_fin_enchere']);
+
+
+
         twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'images' => $selectImages, 'mises' => $selectMises]);
     }
 
@@ -363,7 +399,7 @@ class ControllerEnchere{
         $id_timbre = end($urlArray);
 
         $enchere = new ModelEnchere;
-        $enchere_infos = $enchere->select(
+        $enchere_infos = $enchere->fetch(
             
         // propriétés:
         '*',
@@ -383,6 +419,8 @@ class ControllerEnchere{
         // order
             '',
         );
+
+        // print_r($enchere_infos);
             
 
         twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos]);
@@ -425,6 +463,41 @@ class ControllerEnchere{
 
 
 
+        // Ajouter un jour pour inclure la dernière journée (ex. 23:59:59)
+
+        // $maintenant = $dt->format('Y-m-d H:i:s');
+        // $maintenant = strtotime($maintenant);
+
+        $tz = 'America/Toronto';
+        $timestamp = time();
+
+
+
+
+
+
+        // $_POST['date_fin_enchere'] = strtotime($_POST['date_fin_enchere']) + 86400;
+
+        // $dt = new DateTime($_POST['date_fin_enchere'], new DateTimeZone($tz));
+        // $dt->setTimestamp($timestamp);
+
+        // $_POST['date_fin_enchere'] = $dt->format('Y-m-d');
+
+
+        $_POST['date_fin_enchere'] = strtotime($_POST['date_fin_enchere']) + 86400;
+
+        $_POST['date_fin_enchere'] = date('Y-m-d', $_POST['date_fin_enchere']);
+
+
+
+        // print_r($_POST['date_fin_enchere']);
+        // print_r(date_add($_POST['date_fin_enchere'], 1));
+
+
+
+
+
+
         if($validation->isSuccess()){
 
             // Vérifier si l'enchère du timbre existe déjà...
@@ -439,7 +512,7 @@ class ControllerEnchere{
                 // $insert = $enchere->insert($_POST);
             // }
             // Redirection
-            RequirePage::redirectPage('membre/show');
+            // RequirePage::redirectPage('membre/show');
 
         } else {
             $errors = $validation->displayErrors();
