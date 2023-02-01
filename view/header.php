@@ -26,7 +26,7 @@
                 {% if filtreChaine %}
                 <form action="{{ path }}enchere/index?{{ filtreChaine }}"
                 {% else %}
-                <form action="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0"
+                <form action="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1"
                 {% endif %}
 
                 method="POST" class="recherche">
@@ -60,14 +60,14 @@
         </nav>
         <nav class="menu-secondaire-contenant">
             <div class="menu-secondaire flex-horizontal">
-                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0" class="selectionne">Trouver une enchère</a>
-                <a href="{{ path }}enchere/index?coup_coeur_timbre=1&archive=0&item_page=20&page_catalogue=0">Coups de coeur</a>
-                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Enchères populaires</a>
-                <a class="optionnel-3" href="{{ path }}enchere/index?date_debut_enchere=2023-01-31&archive=0&item_page=20&page_catalogue=0">Derniers arrivés</a>
-                <a class="optionnel-1" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Dernière chance</a>
-                <a class="optionnel-2" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">En solde</a>
-                <a class="optionnel-4" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Sélection Paques</a>
-                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Pour vous</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1" class="selectionne">Trouver une enchère</a>
+                <a href="{{ path }}enchere/index?coup_coeur_timbre=1&archive=0&item_page=20&page_catalogue=1">Coups de coeur</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Enchères populaires</a>
+                <a class="optionnel-3" href="{{ path }}enchere/index?date_debut_enchere=2023-01-31&archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>
+                <a class="optionnel-1" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Dernière chance</a>
+                <a class="optionnel-2" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">En solde</a>
+                <a class="optionnel-4" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Sélection Paques</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Pour vous</a>
             </div>
         </nav>
     </header>

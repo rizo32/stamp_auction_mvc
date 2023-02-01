@@ -412,77 +412,74 @@
             
         </section>
     </main>
+    <nav class="navigation-pages-catalogue">
 
-    <!-- <form id="navigation-page" action="{{ path }}enchere/index?archive=0" method="POST" class="navigation-pages-catalogue"> -->
         <div class="items-par-page">
-            <label id='item_page'>Items par page</label>
-            <input for='item_page' type="radio" name="item_page" value="20"
+            <span><label id='item_page'>Items par page</label></span>
+            <label>20<input for='item_page' type="radio" name="item_page" value="20"
             {% if nav_cat.item_page == 20 or nav_cat.nbr_items == 0 %}
             checked
             {% endif %}
-            >
-            <input for='item_page' type="radio" name="item_page" value="40"
+            ></label>
+            <label>40<input for='item_page' type="radio" name="item_page" value="40"
             {% if nav_cat.item_page == 40 %}
             checked
             {% endif %}
-            >
-            <input for='item_page' type="radio" name="item_page" value="60"
+            ></label>
+            <label>60<input for='item_page' type="radio" name="item_page" value="60"
             {% if nav_cat.item_page == 60 %}
             checked
             {% endif %}
-            >
+            ></label>
         </div>
 
         <div class="pages">
             <label id='page_catalogue'>Page</label>
 
             <!-- 1 -->
-            <span> 1<input for="page_catalogue" type="radio" name="page_catalogue" value="1"
+            <label> 1<input for="page_catalogue" type="radio" name="page_catalogue" value="1"
             {% if nav_cat.page_catalogue == 1 %}
             checked
             {% endif %}
-            ></span>
+            ></label>
 
             <!-- < -->
             {% if nav_cat.precedent %}
-            <span> <<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.precedent }}"
+            <label> <<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.precedent }}"
             {% if nav_cat.page_catalogue == nav_cat.precedent %}
             checked
             {% endif %}
-            ></span>
+            ></label>
             {% endif %}
 
             
             {% for i in nav_cat.debut_interval..nav_cat.fin_interval %}
-            <span> {{ i }}<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ i }}"
+            <label> {{ i }}<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ i }}"
             {% if nav_cat.page_catalogue == i %}
             checked
             {% endif %}
-            ></span>
+            ></label>
             {% endfor %}
 
             <!-- > -->
             {% if nav_cat.suivant %}
-            <span> ><input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.suivant }}"
+            <label> ><input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.suivant }}"
             {% if nav_cat.page_catalogue == nav_cat.suivant %}
             checked
             {% endif %}
-            ></span>
+            ></label>
             {% endif %}
 
 
             <!-- derniere -->
-            <span> {{ nav_cat.nombre_page }}<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.nombre_page }}"
+            <label> {{ nav_cat.nombre_page }}<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.nombre_page }}"
             {% if nav_cat.page_catalogue == nav_cat.nombre_page %}
             checked
             {% endif %}
-            ></span>
+            ></label>
 
-
-            <!-- <span><input type="text" placeholder="" id="catalogue-page" name="page_catalogue"><label for="catalogue-page">_</label></span> -->
-            <span>Suivant></span>
-            <span>Fin</span>
         </div>
-    </form>
+    </nav>
+</form>
 
 {{ include('footer.php') }}

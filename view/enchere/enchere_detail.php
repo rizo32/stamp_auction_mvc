@@ -4,7 +4,7 @@
         <div class="fil-arianne">
             <span><a href="{{ path }}home/index">Principale</a></span>
             <span class="material-icons">arrow_right</span>
-            <span><a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Catalogue</a></span>
+            <span><a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Catalogue</a></span>
             <span class="material-icons">arrow_right</span>
             <span><a href="{{ path }}enchere/detail/{{ enchere.id_timbre }}">{{ enchere.nom_timbre }}</a></span>
         </div>
@@ -463,81 +463,42 @@
                 </div>
 
                 <div class="carrousel">
-                    <a href="{{ path }}enchere/detail">
-        
-                        <article class="carte-produit flex-vertical">
-                            <div class="image-contenant">
-                                <span class="point-reference"><span class="watchlist"></span></span>
-                                <img class="produit" src="{{ path }}img/timbre-rouge.webp" alt="timbre rouge">
-                                <span class="point-reference"><span></span></span>
-                            </div>
-                            <header>
-                                <h5>GREAT BRITAIN 116 MINT FVF OG HR</h5>
-                            </header>
-                            <span class="prix">$159.87</span>
-                            <small>1j 4h | 23 mises</small>
-                        </article>
-                    </a>
-                    <a href="{{ path }}enchere/detail">
-        
-                        <article class="carte-produit flex-vertical">
-                            <div class="image-contenant">
-                                <span class="point-reference"><span class="watchlist"></span></span>
-                                <img class="produit" src="{{ path }}img/timbre-bleu2.webp" alt="timbre bleu">
-                                <span class="point-reference"><span class="coup-coeur"></span></span>
-                            </div>
-                            <header>
-                                <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                            </header>
-                            <span class="prix">$210.78</span>
-                            <small>1j 4h | 23 mises</small>
-                        </article>
-                    </a>
-                    <a href="{{ path }}enchere/detail">
-        
-                        <article class="carte-produit flex-vertical">
-                            <div class="image-contenant">
-                                <span class="point-reference"><span class="watchlist"></span></span>
-                                <img class="produit" src="{{ path }}img/timbre-bleu-fonce.webp" alt="timbre bleu">
-                                <span class="point-reference"><span></span></span>
-                            </div>
-                            <header>
-                                <h5>Great Britain #67 Plate 17 F-VF Used</h5>
-                            </header>
-                            <span class="prix">$188.87</span>
-                            <small><span class="alerte">4:12:09</span> | 23 mises</small>
-                        </article>
-                    </a>
-                    <a href="{{ path }}enchere/detail">
-        
-                        <article class="carte-produit flex-vertical">
-                            <div class="image-contenant">
-                                <span class="point-reference"><span class="watchlist"></span></span>
-                                <img class="produit" src="{{ path }}img/timbre-requin.webp" alt="timbre requin">
-                                <span class="point-reference"><span></span></span>
-                            </div>
-                            <header>
-                                <h5>GB SGN45t 1924 1/= BISTRE-BROWN IMPERF SPECIME..</h5>
-                            </header>
-                            <span class="prix">$188.87</span>
-                            <small>1j 4h | 23 mises</small>
-                        </article>
-                    </a>
-                    <a href="{{ path }}enchere/detail">
-        
-                        <article class="carte-produit flex-vertical">
-                            <div class="image-contenant">
-                                <span class="point-reference"><span class="watchlist"></span></span>
-                                <img class="produit" src="{{ path }}img/timbre-vert.webp" alt="timbre vert">
-                                <span class="point-reference"><span></span></span>
-                            </div>
-                            <header>
-                                <h5>GB SG429 N45(1) 1924 1/= BISTRE-</h5>
-                            </header>
-                            <span class="prix">$47.12</span>
-                            <small>1j 4h | 23 mises</small>
-                        </article>
-                    </a>
+
+                {% for enchere in enchCat|slice(0, 5) %}
+                <a href="{{ path }}enchere/detail/{{ enchere.id_timbre_enchere }}">
+
+                    <article class="carte-produit flex-vertical">
+                        <div class="image-contenant">
+                            <span class="point-reference"><span class="watchlist"></span></span>
+                            <img class="produit" src="{{ path }}uploads/{{ enchere.nom_image }}" alt="timbre rouge">
+                            <span class="point-reference">
+                                {% if enchere.coup_coeur_timbre %}
+                                <span class="coup-coeur"></span>
+                                {% else %}
+                                <span></span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <header>
+                            <h5>{{ enchere.nom_timbre }}</h5>
+                        </header>
+                        <span class="prix">
+                        {% if enchere.max_montant_mise %}    
+                        {{ enchere.max_montant_mise }}
+                        {% else %}
+                        {{ enchere.prix_initial_enchere }}
+                        {% endif %}
+                            
+                        $</span>
+                        <small>{{ enchere.delais | raw }} | {{ enchere.nombre_mises }}</small>
+                    </article>
+                </a>
+                
+                {% endfor %}
+
+
+
+
                 </div>
             </div>
 

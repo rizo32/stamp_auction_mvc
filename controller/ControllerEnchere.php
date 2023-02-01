@@ -314,13 +314,13 @@ class ControllerEnchere{
         }
         
         // données sur nombre d'enchères
-        $navigation_tableau['premier_item'] = ($navigation_tableau['page_catalogue'] ?? $navigation_tableau['page_catalogue'] = 0) * ($navigation_tableau['item_page'] ?? $navigation_tableau['item_page'] = 20);
+        $navigation_tableau['premier_item'] = (($navigation_tableau['page_catalogue'] - 1) * $navigation_tableau['item_page']);
 
         // debut interval
         $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
 
         // fin interval
-        $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page']);
+        $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page'] - 1);
         
         // page precedente
         $navigation_tableau['precedent'] = ($navigation_tableau['page_catalogue'] - 1);
@@ -465,7 +465,42 @@ class ControllerEnchere{
         $selectEnchere['date_fin_enchere'] = date('Y-m-d', $selectEnchere['date_fin_enchere']);
 
 
+
+
+        
+        // REQUÊTE SQL***************************
+        $enchere = new ModelEnchere;
+        $selectEnchereCat = $enchere->fetchAll(
+        // SELECT:
+            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER () AS nombre_enchere',
+
+        // JOIN(S):
+            'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
+                LEFT JOIN image ON id_timbre = id_timbre_image
+                LEFT JOIN mise ON id_enchere = id_enchere_mise
+                LEFT JOIN couleur ON id_couleur_timbre = id_couleur
+                LEFT JOIN provenance ON id_provenance_timbre = id_provenance',
+                        
+        // WHERE:
+            // => mettre de côtés les enchères sans timbre
+            'WHERE date_debut_enchere IS NOT NULL '.
+
+            // => Une image par timbre
+            ' AND id_image IN (SELECT
+            min(id_image) from image group by id_timbre_image)'.
+
+            // => filtres
+            $sqlString,
+            
+        // GROUP BY
+            'GROUP BY id_timbre',
+        
+        // HAVING
+            ''
+        );
+
+
         // RENDER *****************************/
-        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'images' => $selectImages, 'mises' => $selectMises]);
+        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'enchCat' => $selectEnchereCat, 'images' => $selectImages, 'mises' => $selectMises]);
     }
 }

@@ -141,8 +141,8 @@ main[id='page-catalogue'] {
     align-items: center;
 }
 
-.navigation-pages-catalogue>.items-par-page input,
-.navigation-pages-catalogue>.pages input {
+.navigation-pages-catalogue>.items-par-page label,
+.navigation-pages-catalogue>.pages label {
     text-align: center;
     padding: 2px 10px;
     box-shadow: 1px 0 var(--bordure), -1px -1px var(--bordure), 0 1px var(--ombre);
@@ -150,10 +150,10 @@ main[id='page-catalogue'] {
     font-size: 18px;
 }
 
-.navigation-pages-catalogue>.items-par-page span:hover,
-.navigation-pages-catalogue>.items-par-page span:nth-child(3),
-.navigation-pages-catalogue>.pages span:hover,
-.navigation-pages-catalogue>.pages span:first-child {
+.navigation-pages-catalogue>.items-par-page label:hover,
+.navigation-pages-catalogue>.items-par-page label:has(input:checked),
+.navigation-pages-catalogue>.pages label:hover,
+.navigation-pages-catalogue>.pages label:has(input:checked) {
     box-shadow: 1px 0 var(--bordure), -1px -1px var(--bordure), 0 1px 1px var(--ombre);
     cursor: pointer;
     background-color: var(--bleu-fonce);

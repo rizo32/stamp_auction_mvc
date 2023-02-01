@@ -212,3 +212,20 @@ label {
 .modal::backdrop {
     background: rgba(0, 0, 0, 0.5);
 }
+
+input[name='item_page'],
+input[name='page_catalogue']{
+    background-color: aquamarine;
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    border: 0px;
+    /* width: 100%; */
+    height: 1em;
+    border-radius: 0;
+}
+
+span:has(input[name='item_page']),
+span:has(input[name='page_catalogue']){
+    padding-left: 2em;
+}
