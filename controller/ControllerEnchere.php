@@ -6,9 +6,127 @@ RequirePage::requireModel('ModelEnchere');
 RequirePage::requireModel('ModelMise');
 
 class ControllerEnchere{
-    // On ne peut pas cocher plus qu'un filtre par catégorie parce qu'ils vont partager la même clé dans le tableau associatif. Il faudrait créer un tableau pour chaque clé
 
+    public function create(){
+        CheckSession::sessionAuth();
+
+        // Décortique URL pour accéder à l'id timbre
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $id_timbre = end($urlArray);
+
+        // FETCH POUR VUE *********************/
+        $enchere = new ModelEnchere;
+        $enchere_infos = $enchere->fetch(
+            
+        // propriétés:
+        '*',
+
+        // joins:
+            '',
+                        
+        // Conditions:
+            'WHERE id_timbre_enchere = '.$id_timbre,
+
+        // groupBy
+            '',
+
+        // having
+            '',
+
+        // order
+            '',
+        );
+            
+        // RENDER ******************/
+        twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos]);
+    }
+
+
+    // Pour insérer les enchères dans la base de données
+    public function store(){
+        CheckSession::sessionAuth();
+
+        extract($_POST);
+        $validation = new Validation;
+
+        $validation->name('date_debut_enchere')->value($date_debut_enchere)->pattern('date_ymd')->required();
+
+        $validation->name('date_fin_enchere')->value($date_fin_enchere)->pattern('date_ymd')->required();
+
+        $validation->name('prix_initial_enchere')->value($prix_initial_enchere)->pattern('float')->required();
+        
+        if($validation->isSuccess()){
+
+            $_POST['id_membre_proprietaire_enchere'] = $_SESSION['id_membre'];
+            
+            // Ajouter un jour pour inclure la dernière journée (ex. 23:59:59)
+            $_POST['date_fin_enchere'] = strtotime($_POST['date_fin_enchere']) + 86400;
+            // Format
+            $_POST['date_fin_enchere'] = date('Y-m-d', $_POST['date_fin_enchere']);
+
+            // UPDATE parce que l'enchère (vide) est créé lors de la création du timbre
+            $enchere = new ModelEnchere;
+            $update = $enchere->update($_POST);                
+
+            // Redirection
+            RequirePage::redirectPage('membre/show');
+
+        } else {
+            $errors = $validation->displayErrors();
+            twig::render('enchere/enchere_create.php', ['errors' => $errors, 'enchere' => $_POST]);
+        }
+    }
+
+
+    // Affiche les enchères créés par un membre
+    public function show(){
+        CheckSession::sessionAuth();
+
+        $enchere = new ModelEnchere;
+        $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere', 'image', 'id_timbre_image', 'id_timbre');
+
+        twig::render('enchere/enchere_show.php', ['encheres' => $selectEnchere]);
+    }
+    
+
+    
+    // Pour supprimer les information d'un enchère précis
+    public function delete(){
+        // Pour vérifier l'authentification
+        CheckSession::sessionAuth();
+
+        // Va chercher l'URL pour avoir l'ID de l'enchère
+        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+        $id_enchere = end($urlArray);
+
+        // va chercher les infos de l'enchère selon son ID
+        $enchere = new ModelEnchere;
+
+        // Vérifier si l'enchère' existe et..
+        if($enchere->checkAppartenance('id_enchere', $id_enchere) != null &&
+        
+        // ...appartient au membre
+        $enchere->checkAppartenance('id_enchere', $id_enchere)['id_membre_proprietaire_enchere'] == $_SESSION['id_membre']){
+            $delete = $enchere->delete($id_enchere);
+            // Redirection
+            RequirePage::redirectPage('enchere/show');
+
+        } else {
+            $errors = "L'enchère que vous souhaitez supprimer ne vous appartient pas";
+            twig::render('enchere/enchere_show.php', ['errors' => $errors]);
+        }
+    }
+
+
+    // VUE CATALOGUE
     public function index(){
+
+        // NOTES:
+
+        // On ne peut pas cocher plus d'un filtre par catégorie parce qu'ils vont partager la même clé dans le tableau associatif. Il faudrait créer un tableau pour chaque clé
+
+        // La recherche est en POST pour éviter qu'elle efface les filtres en GET. Ceci ne serait pas un problème s'ils faisaient partie du même formulaire, mais pour éviter des soucis de CSS, ils sont séparés. Cela peut causer problème lors des retours dans l'historique après une recherche (eg "resoumission de formulaire")
+
 
         // Va décortiquer la requête GET pour filtre/recherche/navigation
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
@@ -42,12 +160,6 @@ class ControllerEnchere{
                 $navigation_tableau['page_catalogue'] = implode("", array_splice($filtreTableauStr, $i, 1));
                 $navigation_tableau['page_catalogue'] = trim($navigation_tableau['page_catalogue'], 'page_catalogue=');
                 $i--;
-
-            // // Recherche
-            // } elseif(str_starts_with($filtreTableauStr[$i],'recherche')){
-            //     $recherche = implode("", array_splice($filtreTableauStr, $i, 1));
-            //     $recherche = trim($recherche, 'recherche=');
-            //     $i--;
             }
         }
 
@@ -99,12 +211,14 @@ class ControllerEnchere{
                     $sqlString.= " AND " . "date_fin_enchere" . " < '" . $maintenantChaine . "'";
                 }
             // Filtres checkbox catégoriels
-            } elseif($key == 'recherche') {
-                $sqlString.= " AND " . "nom_timbre" . " LIKE '%" . $value . "%'";
             } else {
                 $sqlString.= " AND " . $key . " = " . $value;
             }
         }       
+        // Recherche
+        if($_POST) {
+            $sqlString.= " AND (" . "nom_timbre" . " LIKE '%" . $_POST['recherche'] . "%' OR " . "nom_provenance" . " LIKE '%" . $_POST['recherche'] . "%' OR " . "annee_parution_timbre" . " LIKE '%" . $_POST['recherche'] . "%' OR " . "nom_couleur_principale" . " LIKE '%" . $_POST['recherche'] . "%')";
+        }
         
 
         // REQUÊTE SQL***************************
@@ -116,7 +230,9 @@ class ControllerEnchere{
         // JOIN(S):
             'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
              LEFT JOIN image ON id_timbre = id_timbre_image
-             LEFT JOIN mise ON id_enchere = id_enchere_mise',
+             LEFT JOIN mise ON id_enchere = id_enchere_mise
+             LEFT JOIN couleur ON id_couleur_timbre = id_couleur
+             LEFT JOIN provenance ON id_provenance_timbre = id_provenance',
                         
         // WHERE:
             // => mettre de côtés les enchères sans timbre
@@ -137,21 +253,17 @@ class ControllerEnchere{
         );
 
 
-
+        // FORMATTAGE **************
         foreach($selectEnchere as $enchere => $valeur){
-
             
-            // Format fin enchère
+            // Format compte à rebours
             $finEnchere = strtotime($selectEnchere[$enchere]['date_fin_enchere']);
-            // Je rajoute une journée parce que la fin serait à 23:59
             $delaisSec = $finEnchere - $maintenant;
-            // $delaisSec = $finEnchere - $maintenant + 86400;
 
             $jours = floor($delaisSec / 86400);
             $heures = floor(($delaisSec - $jours * 86400) / 3600);
             $minutes = floor(($delaisSec - $jours * 86400 - $heures * 3600) / 60);
             $class = "";
-
 
             if($jours > 0) {
                 $jours .= "j ";
@@ -169,19 +281,17 @@ class ControllerEnchere{
                 $class = " class = 'emphase'";
             }
 
-
-
             $selectEnchere[$enchere]['delais'] = "<span" . $class . ">" . $jours . $heures . $minutes . "</span>";
 
+            // Format mises
             $selectEnchere[$enchere]['nombre_mises'] = $selectEnchere[$enchere]['count(id_mise)'];
+            // (twig n'aime pas les parenthèses)
 
-            // NOMBRE DE MISES
             if($selectEnchere[$enchere]['nombre_mises'] > 1){
                 $selectEnchere[$enchere]['nombre_mises'] .= " mises";
             } else {
                 $selectEnchere[$enchere]['nombre_mises'] .= " mise";
             }
-
 
             // Format prix
             if($selectEnchere[$enchere]['id_mise']){
@@ -189,67 +299,66 @@ class ControllerEnchere{
             } else {   
                 $selectEnchere[$enchere]['prix_initial_enchere'] = number_format($selectEnchere[$enchere]['prix_initial_enchere'], 2);
             }
-            
-
         }
 
-        $navigation_catalogue = [];
+        // NAVIGATION CATALOGUE
 
-        $navigation_catalogue['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'] ?? 0;
+        // données sur nombre d'enchères
+        $navigation_tableau['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'] ?? 0;
+        
+        // Nombre de pages
+        $navigation_tableau['nombre_page'] = ceil($navigation_tableau['nombre_enchere'] / $navigation_tableau['item_page']);
+
+        if($navigation_tableau['page_catalogue'] > $navigation_tableau['nombre_page']){
+            $navigation_tableau['page_catalogue'] = $navigation_tableau['nombre_page'];
+        }
+        
+        // données sur nombre d'enchères
+        $navigation_tableau['premier_item'] = ($navigation_tableau['page_catalogue'] ?? $navigation_tableau['page_catalogue'] = 0) * ($navigation_tableau['item_page'] ?? $navigation_tableau['item_page'] = 20);
+
+        // debut interval
+        $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
+
+        // fin interval
+        $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page']);
+        
+        // page precedente
+        $navigation_tableau['precedent'] = ($navigation_tableau['page_catalogue'] - 1);
+
+        // page suivante
+        if($navigation_tableau['page_catalogue'] + 1 < $navigation_tableau['nombre_page']){
+            $navigation_tableau['suivant'] = ($navigation_tableau['page_catalogue'] + 1);
+        }
 
 
-        // if($_POST){
-
-            
-            // $navigation_tableau['item_page'] = (int)$_POST['item_page'];
-
-            // $navigation_tableau['page_catalogue'] = (int)$_POST['page_catalogue'];
 
 
-
-            $navigation_tableau['premier_item'] = ($navigation_tableau['page_catalogue'] ?? $navigation_tableau['page_catalogue'] = 0) * ($navigation_tableau['item_page'] ?? $navigation_tableau['item_page'] = 20);
-
-        // } else {
-        //     $navigation_tableau['item_page'] = 20;
-        //     $navigation_tableau['page_catalogue'] = 0;
-        //     $navigation_tableau['premier_item'] = 0;
-        // }
-
-
-
-
-
-        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'nav_cat' => $navigation_tableau]);
+        // RENDER ***********************
+        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'filtreChaine' => $filtre, 'nav_cat' => $navigation_tableau, 'recherche' => $_POST['recherche'] ?? ""]);
     }
 
 
-
+    // VUE DÉTAIL PRODUIT
     public function detail(){
 
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
         $id_timbre = end($urlArray);
 
-        $enchere = new ModelEnchere;
 
-
-
-
-
+        // REQUÊTE IMAGE *********************/
         $image = new ModelImage;
         $selectImages = $image->selectSingleJoin('nom_image',
         'timbre', 'id_timbre', 'id_timbre_image', 'id_timbre', $id_timbre);       
         
-    //////// DIFFICILE À LIRE, TRÈS PEU RÉUTILISABLE, LA LOGIQUE EST DIFFUSÉE ENTRE CONTROLLEUR ET MODÈLE...
-
-    // REQUÊTE PRINCIPALE ********************/
+        
+        // REQUÊTE PRINCIPALE VUE ********************/
+        $enchere = new ModelEnchere;
         $selectEnchere = $enchere->enchereDetail(
         // propriétés:
-            'max(montant_mise), count(id_mise), id_mise, prix_initial_enchere, certification_timbre, date_fin_enchere, nom_provenance, nom_etat, nom_couleur_principale, nom_evaluation, annee_parution_timbre, date_debut_enchere, nom_format, nom_alignement, id_enchere, id_timbre',
-            
+            'max(montant_mise), count(id_mise), timbre.*, enchere.*, mise.*, nom_provenance, nom_etat, nom_couleur_principale, nom_evaluation, nom_format, nom_alignement, id_enchere',
             
         // tables:
             'timbre', 'etat', 'provenance', 'alignement', 'format', 'couleur', 'evaluation', 'mise',
-            
             
         // clés liaisons:
             'id_timbre', 'id_timbre_enchere', 'id_etat', 'id_etat_timbre', 'id_provenance', 'id_provenance_timbre', 'id_alignement', 'id_alignement_timbre', 'id_format', 'id_format_timbre', 'id_couleur', 'id_couleur_timbre', 'id_evaluation', 'id_evaluation_timbre', 'id_enchere_mise', 'id_enchere',
@@ -260,66 +369,47 @@ class ControllerEnchere{
         // Group by
             'id_timbre_enchere');
 
-    // FIN REQUÊTE PRINCIPALE ********************/
+        // FIN REQUÊTE PRINCIPALE ********************/
 
 
-    $selectEnchere['nombre_mises'] = $selectEnchere['count(id_mise)'];
+        // Format mises
+        $selectEnchere['nombre_mises'] = $selectEnchere['count(id_mise)'];
+        // (twig n'aime pas les parenthèses)
 
-    if($selectEnchere['nombre_mises'] > 1){
-        $selectEnchere['nombre_mises'] .= " mises";
-    } else {
-        $selectEnchere['nombre_mises'] .= " mise";
-    }
-
-
-
+        if($selectEnchere['nombre_mises'] > 1){
+            $selectEnchere['nombre_mises'] .= " mises";
+        } else {
+            $selectEnchere['nombre_mises'] .= " mise";
+        }
        
+        // Format du prix
+        $selectEnchere['prix_initial_enchere'] = number_format($selectEnchere['prix_initial_enchere'], 2);
+
         if($selectEnchere['id_mise']){
             $selectEnchere['enchere_min'] = number_format(($selectEnchere['max(montant_mise)'] + 5), 2);
-            $selectEnchere['max_montant_mise'] = $selectEnchere['max(montant_mise)'];
+            $selectEnchere['max_montant_mise'] = number_format($selectEnchere['max(montant_mise)'], 2);
         } else {
             $selectEnchere['enchere_min'] = number_format(($selectEnchere['prix_initial_enchere'] + 5), 2);
         }
 
-
-        // Format du prix
-        if($selectEnchere['id_mise']){
-            $selectEnchere['max_montant_mise'] = number_format($selectEnchere['max(montant_mise)'], 2);
-        } else {   
-            $selectEnchere['prix_initial_enchere'] = number_format($selectEnchere['prix_initial_enchere'], 2);
-        }
-
+        // Format certification
         if($selectEnchere['certification_timbre'] == 1){
             $selectEnchere['certification_timbre'] = "Oui";
         } else {
             $selectEnchere['certification_timbre'] = "Non";
         }
+       
 
-
-
-        
-        // $aujourdhui = new DateTime($dt->format('Y-m-d'));
-        // $dateFinEnchere = new DateTime($selectEnchere['date_fin_enchere']);
-        
-        // $delais = $aujourdhui->diff($dateFinEnchere);
-        // $delaisString = $this->format_interval($delais);
-        // $selectEnchere['delais'] = $delaisString;
-        
-        
+        // Variable DÉLAIS        
         $tz = 'America/Toronto';
         $timestamp = time();
         $dt = new DateTime("now", new DateTimeZone($tz));
         $dt->setTimestamp($timestamp);
 
-        // Format fin enchère
         $maintenant = $dt->format('Y-m-d H:i:s');
-        $maintenant = strtotime($maintenant);
-
-        
+        $maintenant = strtotime($maintenant);        
         $finEnchere = strtotime($selectEnchere['date_fin_enchere']);
-        // Je rajoute une journée parce que la fin serait à 23:59
         $delaisSec = $finEnchere - $maintenant;
-        // $delaisSec = $finEnchere - $maintenant + 86400;
 
         $jours = floor($delaisSec / 86400);
         $heures = floor(($delaisSec - $jours * 86400) / 3600);
@@ -343,20 +433,12 @@ class ControllerEnchere{
             $selectEnchere['archive'] = 1;
         }
 
-        // print_r($selectEnchere['date_fin_enchere']);
-        // $livraison = $finEnchere + 5;
-        // $livraison = strtotime($livraison);
-
-
         $selectEnchere['delais'] = "<span" . $class . ">" . $jours . $heures . $minutes . "</span>";
 
-        $selectEnchere['livraison'] = $finEnchere;
 
+        // FETCH MISES***************************/
         $mise = new ModelMise();
-
-
-        // ALLER CHERCHER LES MISES
-        $selectMises = $mise->fetch(
+        $selectMises = $mise->fetchAll(
 
         // propriétés:
             '*',
@@ -375,205 +457,15 @@ class ControllerEnchere{
 
         // order
             'ORDER BY date_mise DESC',
-
         );
 
-
+        // On enlève une journée à l'affichage (avoir une fin enchère non inclus amenerait de la confusion)
         $selectEnchere['date_fin_enchere'] = strtotime($selectEnchere['date_fin_enchere']) - 86400;
-
+        // Format
         $selectEnchere['date_fin_enchere'] = date('Y-m-d', $selectEnchere['date_fin_enchere']);
 
 
-
+        // RENDER *****************************/
         twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'images' => $selectImages, 'mises' => $selectMises]);
     }
-
-    public function create(){
-
-        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
-        $id_timbre = end($urlArray);
-
-        $enchere = new ModelEnchere;
-        $enchere_infos = $enchere->fetch(
-            
-        // propriétés:
-        '*',
-
-        // joins:
-            '',
-                        
-        // Conditions:
-            'WHERE id_timbre_enchere = '.$id_timbre,
-
-        // groupBy
-            '',
-
-        // having
-            '',
-
-        // order
-            '',
-        );
-
-        // print_r($enchere_infos);
-            
-
-        twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos]);
-    }
-
-    // public function edit(){
-
-    //     $urlArray = explode('/', $_SERVER['REQUEST_URI']);
-    //     $id_timbre = end($urlArray);
-
-    //     // requirePage::redirectPage('enchere/create/'.$id_timbre_enchere);
-
-    //     $enchere = new ModelEnchere;
-    //     $enchere_infos = $enchere->checkAppartenance('id_timbre_enchere', $id_timbre);
-
-
-    //     twig::render('enchere/enchere_create.php', ['enchere' => $enchere_infos, 'id_timbre' => $id_timbre]);
-
-    // }
-
-
-    // Pour insérer les enchères dans la base de données
-    public function store(){
-
-        // $id_timbre = $_POST['id_timbre_enchere'];
-        // $countTimbre = $enchere->select('count(id_timbre_enchere)', 'id_timbre_enchere', $id_timbre);
-
-
-        $validation = new Validation;
-        extract($_POST);
-
-        $validation->name('date_debut_enchere')->value($date_debut_enchere)->pattern('date_ymd')->required();
-
-        $validation->name('date_fin_enchere')->value($date_fin_enchere)->pattern('date_ymd')->required();
-
-        $validation->name('prix_initial_enchere')->value($prix_initial_enchere)->pattern('float')->required();
-
-        $_POST['id_membre_proprietaire_enchere'] = $_SESSION['id_membre'];
-
-
-
-
-        // Ajouter un jour pour inclure la dernière journée (ex. 23:59:59)
-
-        // $maintenant = $dt->format('Y-m-d H:i:s');
-        // $maintenant = strtotime($maintenant);
-
-        $tz = 'America/Toronto';
-        $timestamp = time();
-
-
-
-
-
-
-        // $_POST['date_fin_enchere'] = strtotime($_POST['date_fin_enchere']) + 86400;
-
-        // $dt = new DateTime($_POST['date_fin_enchere'], new DateTimeZone($tz));
-        // $dt->setTimestamp($timestamp);
-
-        // $_POST['date_fin_enchere'] = $dt->format('Y-m-d');
-
-
-        $_POST['date_fin_enchere'] = strtotime($_POST['date_fin_enchere']) + 86400;
-
-        $_POST['date_fin_enchere'] = date('Y-m-d', $_POST['date_fin_enchere']);
-
-
-
-        // print_r($_POST['date_fin_enchere']);
-        // print_r(date_add($_POST['date_fin_enchere'], 1));
-
-
-
-
-
-
-        if($validation->isSuccess()){
-
-            // Vérifier si l'enchère du timbre existe déjà...
-            // if($countTimbre){
-                //... si oui, update
-                $enchere = new ModelEnchere;
-
-                // var_dump($_POST);
-
-                $update = $enchere->update($_POST);                
-            // } else {
-                // $insert = $enchere->insert($_POST);
-            // }
-            // Redirection
-            // RequirePage::redirectPage('membre/show');
-
-        } else {
-            $errors = $validation->displayErrors();
-            twig::render('enchere/enchere_create.php', ['errors' => $errors, 'enchere' => $_POST]);
-        }
-    }
-
-
-    public function show(){
-        $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere', 'image', 'id_timbre_image', 'id_timbre');
-
-        twig::render('enchere/enchere_show.php', ['encheres' => $selectEnchere]);
-    }
-    
-
-    
-    // Pour supprimer les information d'un enchère précis
-    public function delete(){
-        // Pour vérifier l'authentification
-        CheckSession::sessionAuth();
-
-        // Va chercher l'URL pour avoir l'ID de l'enchère
-        $urlArray = explode('/', $_SERVER['REQUEST_URI']);
-        $id_enchere = end($urlArray);
-
-        // va chercher les infos de l'enchère selon son ID
-        $enchere = new ModelTimbre;
-        $enchere_infos = $enchere->selectId($id_enchere);
-
-        // Vérifier si l'enchère' existe et..
-        $enchere = new ModelEnchere;
-        if($enchere->checkAppartenance('id_enchere', $id_enchere) != null &&
-        
-        // ...appartient au membre
-        $enchere->checkAppartenance('id_enchere', $id_enchere)['id_membre_proprietaire_enchere'] == $_SESSION['id_membre']){
-            $delete = $enchere->delete($id_enchere);
-            RequirePage::redirectPage('enchere/show');
-        } else {
-            $errors = "L'enchère que vous souhaitez supprimer nous vous appartient pas";
-            twig::render('enchere/enchere_show.php', ['errors' => $errors]);
-        }
-    }
-
-
-    /**
-     * Format an interval to show all existing components.
-     * If the interval doesn't have a time component (years, months, etc)
-     * That component won't be displayed.
-     *
-     * @param DateInterval $interval The interval
-     *
-     * @return string Formatted interval string.
-     * 
-     * Madara's Ghost
-     * https://stackoverflow.com/questions/676824/how-to-calculate-the-difference-between-two-dates-using-php
-     */
-    // function format_interval(DateInterval $interval) {
-    //     $result = "";
-    //     if ($interval->y) { $result .= $interval->format("%y annéees "); }
-    //     if ($interval->m) { $result .= $interval->format("%m mois "); }
-    //     if ($interval->d) { $result .= $interval->format("%d jours "); }
-    //     if ($interval->h) { $result .= $interval->format("%h heures "); }
-    //     if ($interval->i) { $result .= $interval->format("%i minutes "); }
-    //     if ($interval->s) { $result .= $interval->format("%s secondes "); }
-
-    //     return $result;
-    // }
 }
