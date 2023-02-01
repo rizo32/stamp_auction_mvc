@@ -43,9 +43,13 @@ export default class App {
 
             case 'page-catalogue':
                 let filtre = document.querySelector("form#page-catalogue");
-                console.log(filtre);
                 // let navigation_page = document.querySelector("form#navigation-page");
                 // let filtreCheckbox = document.querySelector('input[type="checkbox"]');
+
+                // if ( window.history.replaceState ) {
+                //     console.log("raplced");
+                //     window.history.replaceState( null, null, window.location.href );
+                //   }
 
                 // Ouvrir les filtres actifs
                 let checkboxes = document.querySelectorAll("aside input:checked");

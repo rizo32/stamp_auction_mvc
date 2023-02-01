@@ -34,9 +34,10 @@
                 <div class="supprime-image-contenant-grid">
                     {% for image in images_tableau %}
                     <div class="supprime-image-contenant">
-                        <img class="upload-image" src="{{ path }}uploads/{{ image }}">
+                        <img class="upload-image" src="{{ path }}uploads/{{ image.nom_image }}">
                         <div class="supprime-image">
-                            <a href="{{ path }}image/delete/{{ image }}">&#10006;</a>
+                            <a href="{{ path }}image/delete/{{ image.id_image }}">&#10006;</a>
+                            <!-- <a href="{{ path }}image/delete/{{ image }}">&#10006;</a> -->
                         </div>
                     </div>
                     {% endfor %}

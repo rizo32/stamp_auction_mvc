@@ -51,7 +51,7 @@ class ControllerMise{
         // BEAUCOUP PLUS FACILE À LIRE, LA LOGIQUE EST DANS LE CONTROLLEUR MAIS L'ÉXÉCUTION DANS LE MODÈLE
 
 
-        $selectMise = $mise->fetch(
+        $selectMise = $mise->fetchAll(
             
         // propriétés:
             '*',

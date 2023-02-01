@@ -84,7 +84,7 @@ abstract class Crud extends PDO {
         $sql = "SELECT $value FROM $this->table
         WHERE $prop = $wherevalue";
         $stmt = $this->query($sql);
-        return  $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        return  $stmt->fetchAll();
     }
 
     // safe??

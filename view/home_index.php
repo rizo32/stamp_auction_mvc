@@ -6,10 +6,10 @@
                 <img src="{{ path }}img/cover.webp" alt="icone-recherche">
                 <header class="flex-vertical">
                     <h1>Capturez l'histoire</h1>
-                    <span class="recherche">
-                        <input type="search" class="recherche-principale" name="recherche-principale" placeholder="Un timbre à la fois" data-recherche autofocus>
+                    <form action="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0" method="POST" class="recherche">
+                        <input type="search" class="recherche-principale" name="recherche" placeholder="Un timbre à la fois" value = "{{ recherche }}" autofocus>
                         <span class="point-reference"><img src="{{ path }}img/recherche.svg" alt="icone-recherche"></span>
-                    </span>
+                    </form>
     
                 </header>
             </article>

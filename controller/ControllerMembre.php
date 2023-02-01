@@ -56,6 +56,7 @@ class ControllerMembre{
 
                 $domaineCourriel = reset($domaineCourrielTableau);
 
+                // es email avec @admin sont admin
                 if($domaineCourriel=="admin"){
                     $_POST['id_privilege_membre'] = 1; 
                 } else {
@@ -122,12 +123,7 @@ class ControllerMembre{
         // Join pour afficher le nom du rôle
         $selectMembre = $membre->selectIdJoin($_SESSION['id_membre'], 'privilege', 'id_privilege_membre', 'id_privilege');
 
-        // infos du timbre pour mettre l'id du prochain timbre dans l'url de sa création
-        // $timbre = new ModelTimbre;
-        // $id_timbre = ($timbre->selectMax('id_timbre'))[0]+1;
-
         twig::render("membre/membre_show.php", ['membre' => $selectMembre]);
-        // twig::render("membre_show.php", ['membre' => $selectMembre, 'id_timbre' => $id_timbre]);
     }
 
 
@@ -200,20 +196,8 @@ class ControllerMembre{
     public function delete(){
         $membre = new ModelMembre;
         $delete = $membre->delete($_SESSION['id_membre']);
+        // log out
         session_destroy();
         RequirePage::redirectPage('membre/create');
     }
-
-
-
-    // Pour afficher le registre des membres
-    // public function index(){
-    //     CheckSession::sessionAuth();
-
-    //     // L'index fait intervenir des données de trois tables: membre, poste, ecole
-    //     // Méthode du modele membre
-    //     $membre = new ModelMembre;
-    //     $select = $membre->selectDoubleJoin('poste', 'ecole', 'membrePosteId', 'posteId', 'membreEcoleId', 'ecoleId', 'membreDateEmbauche');
-    //     twig::render("membre-index.php", ['membres' => $select]);
-    // }
 }

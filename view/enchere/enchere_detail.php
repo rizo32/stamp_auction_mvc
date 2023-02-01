@@ -4,9 +4,9 @@
         <div class="fil-arianne">
             <span><a href="{{ path }}home/index">Principale</a></span>
             <span class="material-icons">arrow_right</span>
-            <span><a href="{{ path }}enchere/index">Catalogue</a></span>
+            <span><a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Catalogue</a></span>
             <span class="material-icons">arrow_right</span>
-            <span>#2607c Imperf Pair Superb NH SCV</span>
+            <span><a href="{{ path }}enchere/detail/{{ enchere.id_timbre }}">{{ enchere.nom_timbre }}</a></span>
         </div>
     </nav>
 
@@ -14,8 +14,6 @@
         <article class="informations-principales flex-horizontal">
             <div class="images-produit flex-horizontal">
 
-                
-                
                 <div class="galerie flex-vertical">
                     {% for image in images %}
                     <img class="produit" src="{{ path }}uploads/{{ image.nom_image }}" alt="image produit">
@@ -23,7 +21,7 @@
                 </div>
 
                 <div class="image-contenant">
-                    <!-- <img class="produit" src="{{ path }}img/timbre-noir.webp" alt="timbre noir"> -->
+                    <!-- JS fills this up -->
                 </div>
 
             </div>
@@ -31,18 +29,20 @@
                 <header>
                     <small>{{ enchere.delais | raw }} | {{ enchere.nombre_mises }}</small>
                     <h1>{{ enchere.nom_timbre }}</h1>
+                    {% if enchere.archive == 0 %}
                     <small class="alerte">6 ajouts à des listes de suivi dans les 24 dernières heures</small>
+                    {% endif %}
                 </header>
                 <div class="information-prix">
                     <span class="prix">
                     {% if enchere.max_montant_mise %}    
-                    {{ enchere.max_montant_mise }}
+                    ${{ enchere.max_montant_mise }}
                     {% else %}
-                    {{ enchere.prix_initial_enchere }}
+                    ${{ enchere.prix_initial_enchere }}
                     {% endif %}
                     </span>
-                    <!-- <small>Approximativement 145.58CAD</small> -->
-                    <!-- <p>Ou acheter pour <b>$160.00</b></p> -->
+                    <small>Approximativement X.YZ CAD</small>
+                    <p>Ou acheter pour <b>$160.00</b></p>
                 </div>
                 <table>
                     <tr>
@@ -93,6 +93,10 @@
             </section>
             <div class="enchere flex-vertical">
                 <div class="prix-livraison">
+
+                    {% if enchere.archive %}
+                    <p class="alerte">Cette enchère s'est achevée</p>
+                    {% endif %}
                     
                     <span class="prix">
                     {% if enchere.max_montant_mise %}    
@@ -110,34 +114,32 @@
                     {% endif %}
                     </small>
                     
-                    
                     <p><small>Livraison au CANADA: <b>$3.99</b></small></p>
                     {{ enchere.dernier_miseur }}
                     {% if enchere.dernier_miseur == session.id_membre %}
                     <p>Vous êtes le dernier miseur</p>
                     {% endif %}
 
-
-                    <!-- <p><small>Livraison garantie pour le <b>{{ enchere.livraison }}</b></small></p> -->
                     <p><small>Livraison garantie pour le <b>jeu, 7 février 2023</b></small></p>
                 </div>
                 <form class="boutons-achat flex-vertical" action="{{ path }}mise/store/{{ enchere.id_timbre }}" method="POST">
-                    {{ enchere.archive }}
-                    {% if enchere.archive %}
-                    {{ "zup" }}
-                    {% endif %}
 
                     <input type="hidden" id="mise-rapide" name="montant_mise" value="{{ enchere.enchere_min }}">
                     <input type="hidden" id="mise-rapide" name="id_enchere_mise" value="{{ enchere.id_enchere }}">
                     <input type="hidden" id="mise-rapide" name="id_membre_mise" value="{{ session.id_membre }}">
 
-                    <input type="submit" id="mise-rapide" value="Mise rapide ({{ enchere.enchere_min }})">
+                    <input type="submit" id="mise-rapide" value="Mise rapide ({{ enchere.enchere_min }})"
+                    {% if enchere.archive %}
+                    disabled
+                    {% endif %}>
 
-                    <button data-etat="open" type="button" class="button">Miser</button>
+                    <input type="button" data-etat="open" type="button" class="button"
+                    {% if enchere.archive %}
+                    disabled
+                    {% endif %} value="Miser">
                 
                     <dialog class="modal" id="modal">
                         <h2>Entrez un montant</h2>
-                        <!-- <form method="dialog"> -->
                         <div class="flex-horizontal">
 
                             <label class="mise" for="mise">Mise: </label>
@@ -183,9 +185,8 @@
                 <section class="description-produit">
                     <h2>Description du produit</h2>
                     <p>{{ enchere.description_timbre }}</p>
-                    <!-- <p>Il s'agit d'un timbre de 1874 provenant du Canada et représentant la reine Victoria. La condition est excellente, gomme originale, évaluation de 95 (XF/Superbe). Alignement est bon (fine), petit offset à gauche</p>
-                    <p>Vendu à l'unité avec certification</p>
-                    <p>Pour plus d'information sur la livraison, consultez <a href="#">la politique de livraison et retours.</a></p> -->
+
+                    <p>Pour plus d'information sur la livraison, consultez <a href="#">la politique de livraison et retours.</a></p>
                 </section>
 
                 <section class="questions">
@@ -207,7 +208,6 @@
                         <p><i>"Il me semble que c'est plutôt l'édition de 1872 où la reine fait face à la droite..."</i></p>
                         <small>15 novembre 2022</small>
                     </div>
-
                 </section>
 
             </div>
@@ -236,21 +236,24 @@
 
                 <details>
 
-                    <summary class="flex-horizontal"><span>Voir toutes les mises</span><span class="material-icons">expand_more</span></summary>
+                    <summary class="flex-horizontal">
+                        <span>Voir toutes les mises</span>
+                        <span class="material-icons">expand_more</span>
+                    </summary>
 
-                    <table><tbody>
+                    <table>
+                        <tbody>
 
-                    {% for mise in mises|slice(5, 100) %}
-                        <tr>
-                            <td>{{ mise.nom_membre }}</td>
-                            <td class="insecable">{{ mise.montant_mise }}</td>
-                            <td>{{ mise.date_mise }}</td>
-                        </tr>
-                    {% endfor %}
+                            {% for mise in mises|slice(5, 100) %}
+                            <tr>
+                                <td>{{ mise.nom_membre }}</td>
+                                <td class="insecable">{{ mise.montant_mise }}</td>
+                                <td>{{ mise.date_mise }}</td>
+                            </tr>
+                            {% endfor %}
 
-</tbody></table>
-
-
+                        </tbody>
+                    </table>
 
                 </details>
             </section>
@@ -542,4 +545,3 @@
     </main>
 
 {{ include('footer.php') }}
-
