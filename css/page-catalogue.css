@@ -167,3 +167,10 @@ main[id='page-catalogue'] {
     text-align: center;
     font-size: 20px;
 }
+
+.resultats {
+    position: absolute;
+    top: 250px;
+    /* width: 100%;
+    text-align: end; */
+}

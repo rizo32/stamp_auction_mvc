@@ -376,7 +376,7 @@
             
         <section class="catalogue">
             
-            <p class="emphase">Affichage des enchères {{ nav_cat.premier_item + 1 }} à {{ nav_cat.premier_item + nav_cat.item_page }} ({{ nav_cat.nombre_enchere }} résultats)</p>
+            <p class="emphase resultats">Affichage des enchères {{ nav_cat.premier_item + 1 }} à {{ min(nav_cat.premier_item + nav_cat.item_page, nav_cat.nombre_enchere) }} ({{ nav_cat.nombre_enchere }} résultats)</p>
 
             {% for enchere in encheres|slice(nav_cat.premier_item, nav_cat.item_page) %}
             <a href="{{ path }}enchere/detail/{{ enchere.id_timbre_enchere }}">
@@ -452,7 +452,7 @@
             ></label>
             {% endif %}
 
-            
+            {% if nav_cat.debut_interval <= nav_cat.fin_interval %}
             {% for i in nav_cat.debut_interval..nav_cat.fin_interval %}
             <label> {{ i }}<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ i }}"
             {% if nav_cat.page_catalogue == i %}
@@ -460,6 +460,7 @@
             {% endif %}
             ></label>
             {% endfor %}
+            {% endif %}
 
             <!-- > -->
             {% if nav_cat.suivant %}
@@ -472,11 +473,13 @@
 
 
             <!-- derniere -->
+            {% if nav_cat.nombre_page > 1 %}
             <label> {{ nav_cat.nombre_page }}<input for="page_catalogue" type="radio" name="page_catalogue" value="{{ nav_cat.nombre_page }}"
             {% if nav_cat.page_catalogue == nav_cat.nombre_page %}
             checked
             {% endif %}
             ></label>
+            {% endif %}
 
         </div>
     </nav>

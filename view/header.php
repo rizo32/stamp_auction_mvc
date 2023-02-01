@@ -21,7 +21,7 @@
     <header id="haut">
         <nav class="menu-principal-contenant">
             <div class="menu-principal">
-                <a href="{{ path }}home/index" class="logo">Stampee</a>
+                <a href="{{ path }}enchere/home" class="logo">Stampee</a>
 
                 {% if filtreChaine %}
                 <form action="{{ path }}enchere/index?{{ filtreChaine }}"
@@ -63,7 +63,7 @@
                 <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1" class="selectionne">Trouver une enchère</a>
                 <a href="{{ path }}enchere/index?coup_coeur_timbre=1&archive=0&item_page=20&page_catalogue=1">Coups de coeur</a>
                 <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Enchères populaires</a>
-                <a class="optionnel-3" href="{{ path }}enchere/index?date_debut_enchere=2023-01-31&archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>
+                <a class="optionnel-3" href="{{ path }}enchere/index?&archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>
                 <a class="optionnel-1" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Dernière chance</a>
                 <a class="optionnel-2" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">En solde</a>
                 <a class="optionnel-4" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Sélection Paques</a>

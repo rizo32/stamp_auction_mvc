@@ -4,7 +4,14 @@ RequirePage::requireModel('Crud');
 class ControllerHome{
 
     public function index(){
-      twig::render("home_index.php");
+        require_once "controller/ControllerEnchere.php";
+
+        $enchere = new ControllerEnchere();
+        $selectEnchere = $enchere->enchere();
+    
+
+
+        twig::render("home_index.php", ['encheres' => $selectEnchere]);
     }
 
     public function error(){

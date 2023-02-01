@@ -7,6 +7,12 @@ RequirePage::requireModel('ModelMise');
 
 class ControllerEnchere{
 
+    public function home(){
+        $selectEnchere = $this->enchere(' AND date_fin_enchere > "2023-02-01"');
+    
+        twig::render("enchere/enchere_home.php", ['encheres' => $selectEnchere]);
+    }
+
     public function create(){
         CheckSession::sessionAuth();
 
@@ -176,6 +182,8 @@ class ControllerEnchere{
             array_push($filtreValues, end($value));
         }
 
+
+
         $filtreTableau = array_combine($filtreKeys, $filtreValues);
         
 
@@ -221,6 +229,64 @@ class ControllerEnchere{
         }
         
 
+        $selectEnchere = $this->enchere($sqlString);
+        
+
+
+
+        // NAVIGATION CATALOGUE
+
+        // données sur nombre d'enchères
+        $navigation_tableau['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'] ?? 0;
+        
+        // Nombre de pages
+        $navigation_tableau['nombre_page'] = ceil($navigation_tableau['nombre_enchere'] / $navigation_tableau['item_page']);
+
+        if($navigation_tableau['page_catalogue'] > $navigation_tableau['nombre_page']){
+            $navigation_tableau['page_catalogue'] = $navigation_tableau['nombre_page'];
+        }
+        
+        // données sur nombre d'enchères
+        $navigation_tableau['premier_item'] = (($navigation_tableau['page_catalogue'] - 1) * $navigation_tableau['item_page']);
+
+        // debut interval
+        $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
+
+        // if($navigation_tableau['nombre_page'] > 3){
+        //     $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
+        // } else {
+        //     $navigation_tableau['debut_interval'] = $navigation_tableau['page_catalogue'];
+        // }
+
+
+        // $navigation_tableau['debut_interval'] = min(max($navigation_tableau['page_catalogue'] - 2, 2), $navigation_tableau['nombre_page']);
+
+        // fin interval
+        $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page'] - 1);
+
+        // if($navigation_tableau['nombre_page'] > 3){
+        //     $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page'] - 1);
+        // } else {
+        //     $navigation_tableau['fin_interval'] = $navigation_tableau['page_catalogue'];
+        // }
+        
+        // page precedente
+        $navigation_tableau['precedent'] = ($navigation_tableau['page_catalogue'] - 1);
+
+        // page suivante
+        if($navigation_tableau['page_catalogue'] + 1 < $navigation_tableau['nombre_page']){
+            $navigation_tableau['suivant'] = ($navigation_tableau['page_catalogue'] + 1);
+        }
+
+
+
+
+        // RENDER ***********************
+        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'filtreChaine' => $filtre, 'nav_cat' => $navigation_tableau, 'recherche' => $_POST['recherche'] ?? ""]);
+    }
+
+
+    public function enchere($condition = null){
         // REQUÊTE SQL***************************
         $enchere = new ModelEnchere;
         $selectEnchere = $enchere->fetchAll(
@@ -229,10 +295,10 @@ class ControllerEnchere{
 
         // JOIN(S):
             'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
-             LEFT JOIN image ON id_timbre = id_timbre_image
-             LEFT JOIN mise ON id_enchere = id_enchere_mise
-             LEFT JOIN couleur ON id_couleur_timbre = id_couleur
-             LEFT JOIN provenance ON id_provenance_timbre = id_provenance',
+                LEFT JOIN image ON id_timbre = id_timbre_image
+                LEFT JOIN mise ON id_enchere = id_enchere_mise
+                LEFT JOIN couleur ON id_couleur_timbre = id_couleur
+                LEFT JOIN provenance ON id_provenance_timbre = id_provenance',
                         
         // WHERE:
             // => mettre de côtés les enchères sans timbre
@@ -243,7 +309,7 @@ class ControllerEnchere{
             min(id_image) from image group by id_timbre_image)'.
 
             // => filtres
-            $sqlString,
+            $condition,
             
         // GROUP BY
             'GROUP BY id_timbre',
@@ -254,6 +320,15 @@ class ControllerEnchere{
 
 
         // FORMATTAGE **************
+                // Gestion de date pour créer compte à rebours
+                $tz = 'America/Toronto';
+                $timestamp = time();
+                $dt = new DateTime("now", new DateTimeZone($tz));
+                $dt->setTimestamp($timestamp);
+                $maintenantChaine = $dt->format('Y-m-d H:i:s');
+                $maintenant = strtotime($maintenantChaine);
+
+
         foreach($selectEnchere as $enchere => $valeur){
             
             // Format compte à rebours
@@ -300,41 +375,7 @@ class ControllerEnchere{
                 $selectEnchere[$enchere]['prix_initial_enchere'] = number_format($selectEnchere[$enchere]['prix_initial_enchere'], 2);
             }
         }
-
-        // NAVIGATION CATALOGUE
-
-        // données sur nombre d'enchères
-        $navigation_tableau['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'] ?? 0;
-        
-        // Nombre de pages
-        $navigation_tableau['nombre_page'] = ceil($navigation_tableau['nombre_enchere'] / $navigation_tableau['item_page']);
-
-        if($navigation_tableau['page_catalogue'] > $navigation_tableau['nombre_page']){
-            $navigation_tableau['page_catalogue'] = $navigation_tableau['nombre_page'];
-        }
-        
-        // données sur nombre d'enchères
-        $navigation_tableau['premier_item'] = (($navigation_tableau['page_catalogue'] - 1) * $navigation_tableau['item_page']);
-
-        // debut interval
-        $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
-
-        // fin interval
-        $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page'] - 1);
-        
-        // page precedente
-        $navigation_tableau['precedent'] = ($navigation_tableau['page_catalogue'] - 1);
-
-        // page suivante
-        if($navigation_tableau['page_catalogue'] + 1 < $navigation_tableau['nombre_page']){
-            $navigation_tableau['suivant'] = ($navigation_tableau['page_catalogue'] + 1);
-        }
-
-
-
-
-        // RENDER ***********************
-        twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'filtreChaine' => $filtre, 'nav_cat' => $navigation_tableau, 'recherche' => $_POST['recherche'] ?? ""]);
+        return $selectEnchere;
     }
 
 
@@ -465,39 +506,8 @@ class ControllerEnchere{
         $selectEnchere['date_fin_enchere'] = date('Y-m-d', $selectEnchere['date_fin_enchere']);
 
 
+        $selectEnchereCat = $this->enchere(' AND date_fin_enchere > "2023-02-01"');
 
-
-        
-        // REQUÊTE SQL***************************
-        $enchere = new ModelEnchere;
-        $selectEnchereCat = $enchere->fetchAll(
-        // SELECT:
-            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER () AS nombre_enchere',
-
-        // JOIN(S):
-            'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
-                LEFT JOIN image ON id_timbre = id_timbre_image
-                LEFT JOIN mise ON id_enchere = id_enchere_mise
-                LEFT JOIN couleur ON id_couleur_timbre = id_couleur
-                LEFT JOIN provenance ON id_provenance_timbre = id_provenance',
-                        
-        // WHERE:
-            // => mettre de côtés les enchères sans timbre
-            'WHERE date_debut_enchere IS NOT NULL '.
-
-            // => Une image par timbre
-            ' AND id_image IN (SELECT
-            min(id_image) from image group by id_timbre_image)'.
-
-            // => filtres
-            $sqlString,
-            
-        // GROUP BY
-            'GROUP BY id_timbre',
-        
-        // HAVING
-            ''
-        );
 
 
         // RENDER *****************************/
