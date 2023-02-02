@@ -1,7 +1,5 @@
 {{ include('header.php', { title: "Creation"}) }}
 
-<!-- Pourquoi mettre des values si on sait qu'elles vont être vides? -->
-
 <main class="form">
    
     <form class="creation nouveau" action="{{ path }}membre/update" method="post">
@@ -13,28 +11,28 @@
         
         <div class="flex-vertical">           
             <label>Nom de famille</label>
-            <input type="text" name="nom_membre" value="{{ membre.nom_membre }}"/>
+            <input type="text" name="nom_membre" value="{{ membre.nom_membre }}">
         </div>
         
         <div class="flex-vertical">           
             <label>Prenom</label>
-            <input type="text" name="prenom_membre" value="{{ membre.prenom_membre }}"/>
+            <input type="text" name="prenom_membre" value="{{ membre.prenom_membre }}">
         </div>
         
         <div class="flex-vertical">           
             <label>Date de naissance</label>
-            <input type="date" name="date_naissance_membre" id="date_naissance_membre" value="{{ membre.date_naissance_membre }}"/>
+            <input type="date" name="date_naissance_membre" id="date_naissance_membre" value="{{ membre.date_naissance_membre }}">
         </div>
         
         <div class="flex-vertical">           
             <label>Courriel</label>
-            <input type="email" name="nom_utilisateur_membre" value="{{ membre.nom_utilisateur_membre }}"/>
+            <input type="email" name="nom_utilisateur_membre" value="{{ membre.nom_utilisateur_membre }}">
         </div>
         <details>
             <summary>Modifier le mot de passe</summary>
             <div class="flex-vertical">           
                 <label>Nouveau mot de passe</label>
-                <input type="password" name="mot_passe_membre"/>
+                <input type="password" name="mot_passe_membre">
                 <!-- <input type="password" name="mot_passe_membre"/> -->
             </div>
         </details>

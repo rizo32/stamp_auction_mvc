@@ -125,33 +125,62 @@ th {
     gap: 30px;
 }
 
-[id='page-produit'] .boutons-achat button {
-    padding: 10px 20px;
-    white-space: nowrap;
-    border-radius: var(--angle-de-bordure-normal);
-    font-size: 18px;
-    background-color: var(--bleu-fonce);
-    color: white;
-    border: 1px solid var(--bordure-fonce);
-    box-shadow:
-    inset 0 0 0 3px white,
-    inset 0 0 0 4px rgba(0, 0, 0, 0.2),
-    0 1px 1px var(--bordure-fonce);
+[id='page-produit'] .boutons-achat * {
     transition-duration: var(--transition-rapide);
     transition-timing-function: ease-out;
     cursor: pointer;
 }
 
-[id='page-produit'] button:hover {
+[id='page-produit'] .boutons-achat button,
+[id='page-produit'] .boutons-achat button input {
+    background-color: var(--bleu-fonce);
+}
+
+[id='page-produit'] .boutons-achat button {
+    padding: 10px 20px;
+    white-space: nowrap;
+    border-radius: var(--angle-de-bordure-normal);
+    border: 1px solid var(--bordure-fonce);
+    box-shadow:
+    inset 0 0 0 3px white,
+    inset 0 0 0 4px rgba(0, 0, 0, 0.2),
+    0 1px 1px var(--bordure-fonce);
+    color: white;
+    font-size: 18px;
+}
+
+[id='page-produit'] button:hover,
+[id='page-produit'] button:hover input {
     background-color: var(--bleu-tres-clair);
 }
 
-[id='page-produit'] button.mise-rapide {
+[id='page-produit'] button.mise-rapide,
+[id='page-produit'] button.mise-rapide input {
     background-color: var(--bleu-tres-clair);
 }
 
-[id='page-produit'] button.mise-rapide:hover {
+[id='page-produit'] button input {
+    background-color: var(--bleu-fonce);
+    border: none;
+    color: white;
+    height: inherit;
+    font-size: 18px;
+    white-space: break-spaces;
+    width: 100%;
+}
+
+
+[id='page-produit'] button.mise-rapide:hover,
+[id='page-produit'] button.mise-rapide:hover input {
     background-color: var(--bleu-tres-clair-sature);
+}
+
+[id='page-produit'] button:has(input:disabled), 
+[id='page-produit'] button input:disabled,
+[id='page-produit'] button.mise-rapide:hover input:disabled,
+[id='page-produit'] button.mise-rapide:hover:has(input:disabled){
+    background-color: var(--gris-fonce);
+    cursor: auto;
 }
 
 [id='page-produit'] .transaction {

@@ -155,7 +155,6 @@ abstract class Crud extends PDO {
         $stmt->bindValue(":$this->primaryKey", $id);
         if(!$stmt->execute()){
             twig::render('membre_edit.php', ['errors' => $stmt->errorInfo()]);
-            // print_r($stmt->errorInfo());
         }else{
             return true;
         }

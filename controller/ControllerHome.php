@@ -3,16 +3,7 @@ RequirePage::requireModel('Crud');
 
 class ControllerHome{
 
-    public function index(){
-        require_once "controller/ControllerEnchere.php";
-
-        $enchere = new ControllerEnchere();
-        $selectEnchere = $enchere->enchere();
-    
-
-
-        twig::render("home_index.php", ['encheres' => $selectEnchere]);
-    }
+    // J'ai mis l'index dans enchere/home parce qu'il nécéssite les données enchere
 
     public function error(){
         twig::render("home_error.php");

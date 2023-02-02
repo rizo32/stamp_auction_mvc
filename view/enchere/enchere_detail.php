@@ -2,7 +2,7 @@
 
     <nav class="navigation-catalogue">
         <div class="fil-arianne">
-            <span><a href="{{ path }}home/index">Principale</a></span>
+            <span><a href="{{ path }}enchere/home">Principale</a></span>
             <span class="material-icons">arrow_right</span>
             <span><a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Catalogue</a></span>
             <span class="material-icons">arrow_right</span>
@@ -92,6 +92,10 @@
                 </table>
             </section>
             <div class="enchere flex-vertical">
+                {% if erreur is defined %}
+                {{ erreur | raw }}
+                {% endif %}
+        
                 <div class="prix-livraison">
 
                     {% if enchere.archive %}
@@ -122,28 +126,33 @@
 
                     <p><small>Livraison garantie pour le <b>jeu, 7 février 2023</b></small></p>
                 </div>
+
+                {% if guest %}
+                <a class="bouton" href="{{ path }}membre/create">Connectez-vous pour miser!</a>
+                {% else %}
+
                 <form class="boutons-achat flex-vertical" action="{{ path }}mise/store/{{ enchere.id_timbre }}" method="POST">
 
                     <input type="hidden" id="mise-rapide" name="montant_mise" value="{{ enchere.enchere_min }}">
                     <input type="hidden" id="mise-rapide" name="id_enchere_mise" value="{{ enchere.id_enchere }}">
                     <input type="hidden" id="mise-rapide" name="id_membre_mise" value="{{ session.id_membre }}">
 
-                    <input type="submit" id="mise-rapide" value="Mise rapide ({{ enchere.enchere_min }})"
+                    <button class="mise-rapide"><input type="submit" id="mise-rapide" value="Mise rapide ({{ enchere.enchere_min }})"
                     {% if enchere.archive %}
                     disabled
-                    {% endif %}>
+                    {% endif %}></button>
 
-                    <input type="button" data-etat="open" type="button" class="button"
+                    <button class="mise" type="button"><input data-etat="open" type="button" class="button"
                     {% if enchere.archive %}
                     disabled
-                    {% endif %} value="Miser">
+                    {% endif %} value="Miser"></button>
                 
                     <dialog class="modal" id="modal">
                         <h2>Entrez un montant</h2>
                         <div class="flex-horizontal">
 
                             <label class="mise" for="mise">Mise: </label>
-                            <input type="number" id="mise" name="montant_mise" step=0.01 min="{{ enchere.enchere_min }}" value="{{ enchere.enchere_min }}">
+                            <input type="number" id="mise" name="montant_mise_manuelle" step=0.01 min="{{ enchere.enchere_min }}" value="{{ enchere.enchere_min }}">
                         </div>
                         <small>Mise minimale: {{ enchere.enchere_min }}</small>
 
@@ -160,9 +169,10 @@
                         <button data-etat="close" class="button" type="button">Fermer</button>
                         <input type="submit" class="button" value="Miser">
                     </dialog>
+                    <button type="button" class="liste-suivi">Ajouter à la liste<br>des suivis</button>
                 </form>
+                {% endif %}
                 
-                <button class="liste-suivi">Ajouter à la liste<br>des suivis</button>
 
                 <span class="transaction flex-horizontal">
                     <span class="transactions-secure flex-horizontal">
@@ -213,6 +223,12 @@
             </div>
             <section class="historique-enchere">
                 <h2>Historique des enchères</h2>
+                {% if mises|length == 0 %}
+                        <p>Soyez le premier à miser!</p>
+                        {% else %}
+
+
+
                 <table>
                     <thead>
                         <tr>
@@ -222,6 +238,8 @@
                         </tr>
                     </thead>
                     <tbody>
+
+
                         {% for mise in mises|slice(0, 5) %}
                         <tr>
                             <td>{{ mise.nom_membre }}</td>
@@ -231,15 +249,16 @@
                         
                         {% endfor %}
 
+
+
                     </tbody>
                 </table>
+                {% endif %}
+
+
+                {% if mises|length > 5 %}
 
                 <details>
-
-                    <summary class="flex-horizontal">
-                        <span>Voir toutes les mises</span>
-                        <span class="material-icons">expand_more</span>
-                    </summary>
 
                     <table>
                         <tbody>
@@ -255,7 +274,17 @@
                         </tbody>
                     </table>
 
+                    <summary class="flex-horizontal">
+                        <span>Voir toutes les mises</span>
+                        <span class="material-icons">expand_more</span>
+                    </summary>
+
                 </details>
+
+                {% endif %}
+
+
+
             </section>
         </article>
 

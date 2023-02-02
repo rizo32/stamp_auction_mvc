@@ -72,7 +72,7 @@ class ControllerMembre{
                 $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                 // Redirection
-                requirePage::redirectPage('home/index');
+                requirePage::redirectPage('enchere/home');
             }
         }else{    // Si la validation n'est pas réussite
             $errors = $validation->displayErrors();
@@ -110,7 +110,7 @@ class ControllerMembre{
     // log out
     public function logout(){
         session_destroy();
-        requirePage::redirectPage('home/index');
+        requirePage::redirectPage('enchere/home');
     }
 
 

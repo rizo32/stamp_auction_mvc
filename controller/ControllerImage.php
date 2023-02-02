@@ -17,8 +17,6 @@ class ControllerImage{
         $image = new ModelImage;
         $imagesTableau = $image->selectAll('id_timbre_image', $id_timbre, '*');
 
-        print_r($imagesTableau);
-
         twig::render('image/image_create.php', ['id_timbre' => $id_timbre, 'images_tableau'=>$imagesTableau]);
     }
 

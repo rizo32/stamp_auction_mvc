@@ -18,7 +18,7 @@
                 </div>
                 <div class="filler"></div>
                 <div class="logo-contenant">
-                    <a class="logo" href="{{ path }}home/index">Stampee</a>
+                    <a class="logo" href="{{ path }}enchere/home">Stampee</a>
                 </div>
 
             </section>

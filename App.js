@@ -24,6 +24,7 @@ export default class App {
                 this.Galerie.agrandir(this.imagesTimbres.querySelector("img"));
                 this.Loupe.magnify(".image-contenant>*", 1.8);
 
+                // Modal
                 this.modal = document.querySelector('.modal');
                 this.openModal = document.querySelector('[data-etat="open"]');
                 this.closeModal = document.querySelector('[data-etat="close"]');

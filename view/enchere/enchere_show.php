@@ -14,7 +14,7 @@
             </ul>
         </nav>
 
-        <div class="informations">
+        <div class="informations enchere-show">
             <h3>Vos enchères</h3>
 
             {% if errors is defined %}
@@ -30,22 +30,25 @@
                 <li class="pas-enchere">
                 {% endif %}
 
-                    <a href="{{ path }}timbre/edit/{{ enchere.id_timbre }}">
-                        <span><strong>Nom : </strong>{{ enchere.nom_timbre }}</span>
-                        <span><strong>Date début : </strong>{{ enchere.date_debut_enchere }}</span>
-                        <span><strong>Date fin : </strong>{{ enchere.date_fin_enchere }}</span>
-                        <span><strong>Nombre de mises : </strong>À venir</span>
-                        
-                        {% if enchere.nom_image %}
-                        <img class="small-img" src="{{ path }}uploads/{{ enchere.nom_image }}"></img>
-                        {% else %}
-                        <span class="error"><strong>Pas d'image</strong></span>
-                        {% endif %}
+                    <div class="enchere flex-horizontal" href="{{ path }}timbre/edit/{{ enchere.id_timbre }}">
+                        <div>
+                            <p><strong>Nom : </strong>{{ enchere.nom_timbre }}</p>
+                            <p><strong>Date début : </strong>{{ enchere.date_debut_enchere }}</p>
+                            <p><strong>Date fin : </strong>{{ enchere.date_fin_enchere }}</p>
+                            <p><strong>Nombre de mises : </strong>{{ enchere.nombre_mises }}</p>
+                            <a href="{{ path }}enchere/detail/{{ enchere.id_timbre_enchere }}" class="emphase">Visionner</a>
+                            <a href="{{ path }}timbre/edit/{{ enchere.id_timbre_enchere }}" class="emphase">Modifier</a>
+                            <a href="{{ path }}enchere/delete/{{ enchere.id_enchere }}" class="emphase">Supprimer</a>
+                        </div>
 
-                    </a>
-                    <div class="filler"></div>
-                    <a href="{{ path }}enchere/delete/{{ enchere.id_enchere }}" class="alerte">Supprimer</a>
-                    <a href="{{ path }}enchere/detail/{{ enchere.id_timbre_enchere }}" class="alerte">Visionner</a>
+                        <div class="contenant-image flex-horizontal">
+                            {% if enchere.nom_image %}
+                            <img src="{{ path }}uploads/{{ enchere.nom_image }}"></img>
+                            {% else %}
+                            <span class="error"><strong>Pas d'image</strong></span>
+                            {% endif %}
+                        </div>
+                    </div>
 
                 </li>
                 {% endfor %}

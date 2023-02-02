@@ -36,8 +36,6 @@
                 <label>Prix</label>
                 <input type="number" step="1" name="prix_initial_enchere" value="{{ enchere.prix_initial_enchere }}">
             </div>
-            {{ enchere.id_timbre_enchere }}
-            {{ enchere.id_enchere }}
 
             <input type="hidden" name="id_enchere" value= "{{ enchere.id_enchere }}">
             <input type="hidden" name="id_timbre_enchere" value= "{{ enchere.id_timbre_enchere }}">
@@ -45,7 +43,7 @@
 
             <div class="flex-horizontal">
 
-                <a href="{{ path }}image/edit/{{ enchere.id_timbre_enchere }}">Retour</a>
+                <a href="{{ path }}image/create/{{ enchere.id_timbre_enchere }}">Retour</a>
                 <button class="bouton" type="submit">Soumettre l'enchère</button>
             </div>
         </form>

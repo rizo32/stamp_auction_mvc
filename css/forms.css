@@ -207,6 +207,9 @@ label {
     margin: 0 auto;
     margin-top: 35vh;
     border-radius: 5px;
+    box-shadow: 1px 0 var(--bordure),
+    -1px -1px var(--bordure),
+    0 1px 1px var(--ombre);
 }
 
 .modal::backdrop {
@@ -228,4 +231,40 @@ input[name='page_catalogue']{
 span:has(input[name='item_page']),
 span:has(input[name='page_catalogue']){
     padding-left: 2em;
+}
+
+.enchere img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.enchere .contenant-image {
+    max-height: 110px;
+    max-width: 110px;
+}
+
+
+
+.enchere {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.enchere div:first-child{
+    flex-grow: 1;
+}
+
+.enchere a {
+    display: inline-block;
+    margin-top: 0.5em;
+    margin-right: 2em;
+}
+
+.enchere-show li{
+    padding: 20px 40px;
+}
+
+.enchere-show li:hover{
+    color: black;
+    background-color: var(--gris-tres-clair);
 }

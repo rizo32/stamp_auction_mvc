@@ -25,7 +25,7 @@ class ControllerEnchere{
         $enchere_infos = $enchere->fetch(
             
         // propriétés:
-        '*',
+            '*',
 
         // joins:
             '',
@@ -72,12 +72,13 @@ class ControllerEnchere{
 
             // UPDATE parce que l'enchère (vide) est créé lors de la création du timbre
             $enchere = new ModelEnchere;
-            $update = $enchere->update($_POST);                
-
+            $update = $enchere->update($_POST);        
+            
             // Redirection
             RequirePage::redirectPage('membre/show');
 
         } else {
+
             $errors = $validation->displayErrors();
             twig::render('enchere/enchere_create.php', ['errors' => $errors, 'enchere' => $_POST]);
         }
@@ -89,8 +90,34 @@ class ControllerEnchere{
         CheckSession::sessionAuth();
 
         $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->selectJoin('id_membre_proprietaire_enchere', $_SESSION['id_membre'], 'timbre', 'id_timbre_enchere', 'id_timbre', 'date_debut_enchere', 'image', 'id_timbre_image', 'id_timbre');
+        $selectEnchere = $enchere->enchereShow(
+            // SELECT
+            'enchere.*, timbre.*, image.*, count(id_mise)',
 
+            // JOIN
+            'timbre', /* ON */ 'id_timbre_enchere', 'id_timbre',
+
+            'image', /* ON */ 'id_timbre_image', 'id_timbre',
+
+            'mise', /* ON */ 'id_enchere_mise', 'id_enchere',
+
+            // WHERE
+            'id_membre_proprietaire_enchere', /* = */ $_SESSION['id_membre'],
+            'id_image', /* IN */ '(SELECT
+            min(id_image) from image group by id_timbre_image) OR id_image is null',
+
+            // GROUP BY
+            'id_enchere',
+
+            // ORDER BY
+            'date_fin_enchere'
+        );
+
+        // Formattage (twig n'aime pas les parenthèses)
+        foreach($selectEnchere as $enchere => $valeur){
+            $selectEnchere[$enchere]['nombre_mises'] = $selectEnchere[$enchere]['count(id_mise)'];
+        }
+            
         twig::render('enchere/enchere_show.php', ['encheres' => $selectEnchere]);
     }
     
@@ -229,10 +256,9 @@ class ControllerEnchere{
         }
         
 
+        // Données pour l'affichage de la vue
         $selectEnchere = $this->enchere($sqlString);
         
-
-
 
         // NAVIGATION CATALOGUE
 
@@ -252,23 +278,8 @@ class ControllerEnchere{
         // debut interval
         $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
 
-        // if($navigation_tableau['nombre_page'] > 3){
-        //     $navigation_tableau['debut_interval'] = max($navigation_tableau['page_catalogue'] - 2, 2);
-        // } else {
-        //     $navigation_tableau['debut_interval'] = $navigation_tableau['page_catalogue'];
-        // }
-
-
-        // $navigation_tableau['debut_interval'] = min(max($navigation_tableau['page_catalogue'] - 2, 2), $navigation_tableau['nombre_page']);
-
         // fin interval
         $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page'] - 1);
-
-        // if($navigation_tableau['nombre_page'] > 3){
-        //     $navigation_tableau['fin_interval'] = min($navigation_tableau['page_catalogue'] + 2, $navigation_tableau['nombre_page'] - 1);
-        // } else {
-        //     $navigation_tableau['fin_interval'] = $navigation_tableau['page_catalogue'];
-        // }
         
         // page precedente
         $navigation_tableau['precedent'] = ($navigation_tableau['page_catalogue'] - 1);
@@ -277,9 +288,6 @@ class ControllerEnchere{
         if($navigation_tableau['page_catalogue'] + 1 < $navigation_tableau['nombre_page']){
             $navigation_tableau['suivant'] = ($navigation_tableau['page_catalogue'] + 1);
         }
-
-
-
 
         // RENDER ***********************
         twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'filtreChaine' => $filtre, 'nav_cat' => $navigation_tableau, 'recherche' => $_POST['recherche'] ?? ""]);
@@ -383,6 +391,14 @@ class ControllerEnchere{
     public function detail(){
 
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
+
+        $erreur = '';
+        // Message erreur mise insuffisante
+        if(end($urlArray) == "error"){
+            $erreur = '<span class="error">Entrez un montant plus grand que la dernière mise</span>';
+            array_pop($urlArray);
+        }
+
         $id_timbre = end($urlArray);
 
 
@@ -511,6 +527,6 @@ class ControllerEnchere{
 
 
         // RENDER *****************************/
-        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'enchCat' => $selectEnchereCat, 'images' => $selectImages, 'mises' => $selectMises]);
+        twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'enchCat' => $selectEnchereCat, 'images' => $selectImages, 'mises' => $selectMises, 'erreur' => $erreur]);
     }
 }

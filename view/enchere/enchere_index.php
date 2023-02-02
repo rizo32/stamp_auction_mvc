@@ -2,7 +2,7 @@
 
     <nav class="navigation-catalogue">
         <div class="fil-arianne">
-            <span><a href="{{ path }}home/index">Principale</a></span>
+            <span><a href="{{ path }}enchere/home">Principale</a></span>
             <span class="material-icons">arrow_right</span>
             <span><a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=0">Catalogue</a></span>
         </div>

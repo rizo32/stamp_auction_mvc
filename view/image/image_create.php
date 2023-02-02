@@ -5,7 +5,8 @@
 
     <div class="compte">
         <nav>
-        <li><a href = "{{ path }}membre/show">Vos informations</a></li>
+            <ul class="flex-horizontal">
+                <li><a href = "{{ path }}membre/show">Vos informations</a></li>
                 <li><a href = "">Méthodes de paiement</a></li>
                 <li><a href = "{{ path }}enchere/show">Vos enchères</a></li>
                 <li class="selectionne"><a href = "{{ path }}timbre/create">Créer une enchère</a></li>
@@ -15,7 +16,6 @@
         </nav>
    
         <form class="creation" action="{{ path }}image/store" method="post" enctype="multipart/form-data">
-        <!-- <form class="creation" action="{{ path }}image/store/{{ id_timbre }}" method="post" enctype="multipart/form-data"> -->
             <h3>Ajout d'image(s)</h3>
             {% if message is defined %}
                 <span>{{ message | raw}}</span>
@@ -37,7 +37,6 @@
                         <img class="upload-image" src="{{ path }}uploads/{{ image.nom_image }}">
                         <div class="supprime-image">
                             <a href="{{ path }}image/delete/{{ image.id_image }}">&#10006;</a>
-                            <!-- <a href="{{ path }}image/delete/{{ image }}">&#10006;</a> -->
                         </div>
                     </div>
                     {% endfor %}

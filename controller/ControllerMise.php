@@ -8,36 +8,31 @@ class ControllerMise{
     public function store(){
         CheckSession::sessionAuth();
 
-
-
         $tz = 'America/Toronto';
         $timestamp = time();
         $dt = new DateTime("now", new DateTimeZone($tz));
         $dt->setTimestamp($timestamp);
 
-        // $aujourdhui = $dt->format('Y-m-d');
         $maintenant = $dt->format('Y-m-d H:i:s');
-
-
-
 
         $urlArray = explode('/', $_SERVER['REQUEST_URI']);
         $id_timbre = end($urlArray);
 
         $_POST['date_mise'] = $maintenant;
-        // print_r($mise);
-        // Validation
-        // if($mise < select(mise)){
-            // return("Entrez un montant plus grand que la dernière mise");
-        // } else if(){
-            // return("Vous avez déjà la mise la plus haute");
-        // } else {
+
+        // Validation montant mise
+        if($_POST['montant_mise_manuelle'] < $_POST['montant_mise']){
+            $erreur = "error";
+            // pas idéal que ça passe par l'url, mais je ne peux pas rendre la page sans refaire la requête SQL pour que l'info du timbre s'affiche
+            requirePage::redirectPage('enchere/detail/'.$id_timbre . '/' . $erreur);
+
+        } else {
+            $_POST['montant_mise'] = $_POST['montant_mise_manuelle'];
             $mise = new ModelMise;
             $nouvelleMise = $mise->insert($_POST);
-        // }
+            requirePage::redirectPage('enchere/detail/'.$id_timbre);
+        }
         
-        requirePage::redirectPage('enchere/detail/'.$id_timbre);
-        // twig::render('enchere/enchere_detail.php', ['enchere' => $selectEnchere, 'mise' => $mise]);
 
     }
 
@@ -47,9 +42,6 @@ class ControllerMise{
         CheckSession::sessionAuth();
 
         $mise = new ModelMise;
-
-        // BEAUCOUP PLUS FACILE À LIRE, LA LOGIQUE EST DANS LE CONTROLLEUR MAIS L'ÉXÉCUTION DANS LE MODÈLE
-
 
         $selectMise = $mise->fetchAll(
             

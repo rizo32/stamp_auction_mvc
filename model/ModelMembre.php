@@ -52,7 +52,7 @@ class ModelMembre extends Crud {
                 $_SESSION['id_privilege_membre'] = $info_membre['id_privilege_membre'];
                 $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
-                requirePage::redirectPage('home/index');
+                requirePage::redirectPage('enchere/home');
             }else{
             return "Vérifier le mot de passe";  
         }
