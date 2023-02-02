@@ -69,8 +69,6 @@ class ControllerMise{
 
 
         twig::render('mise/mise_show.php', ['mises' => $selectMise]);
-
-
     }
 
 }

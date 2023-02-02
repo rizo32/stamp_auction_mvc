@@ -11,8 +11,8 @@ require_once __DIR__.'/library/CheckSession.php';
 $url = isset($_GET["url"]) ? explode ('/', ltrim($_GET["url"], '/')) : '/';
 
 if($url == '/'){
-    require_once 'controller/ControllerHome.php';
-    $controller = new ControllerHome;
+    require_once 'controller/ControllerEnchere.php';
+    $controller = new ControllerEnchere;
     echo $controller->index();
 }else{
     $requestURL = $url[0];
@@ -42,10 +42,5 @@ if($url == '/'){
         requirePage::redirectPage('home/error');
     }
 }
-
-// if(!isset($_COOKIE['lang'])){
-//     $controller = new ControllerLangue;
-//     $controller->en();
-// }
 
 ?>

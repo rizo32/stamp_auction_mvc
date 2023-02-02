@@ -415,7 +415,7 @@
     <nav class="navigation-pages-catalogue">
 
         <div class="items-par-page">
-            <span><label id='item_page'>Items par page</label></span>
+            <label class="nav-cat" id='item_page'>Items par page</label>
             <label>20<input for='item_page' type="radio" name="item_page" value="20"
             {% if nav_cat.item_page == 20 or nav_cat.nbr_items == 0 %}
             checked
@@ -434,7 +434,7 @@
         </div>
 
         <div class="pages">
-            <label id='page_catalogue'>Page</label>
+            <label class="nav-cat" id='page_catalogue'>Page</label>
 
             <!-- 1 -->
             <label> 1<input for="page_catalogue" type="radio" name="page_catalogue" value="1"

@@ -160,6 +160,14 @@ main[id='page-catalogue'] {
     color: white;
 }
 
+.navigation-pages-catalogue>.items-par-page label.nav-cat:hover,
+.navigation-pages-catalogue>.pages label.nav-cat:hover{
+    cursor: default;
+    background-color: white;
+    color: black;
+}
+
+
 .navigation-pages-catalogue input[type='text'] {
     border: none;
     background-color: inherit;

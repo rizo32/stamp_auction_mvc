@@ -43,7 +43,15 @@
     <!-- À SUPPRIMER -->
 
                 <span class="flex-horizontal icones">
-                    <a href="{{ path }}mise/show"><img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère"></a>
+
+                    {% if guest %}
+                    <a href="{{ path }}membre/create">
+                    {% else %}
+                    <a href="{{ path }}mise/show">
+                    {% endif %}
+                        <img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère">
+                    </a>
+
                     <a href=""><img src="{{ path }}img/bookmark-orig.webp" alt="menu produits suivis"></a>
 
                     {% if guest %}

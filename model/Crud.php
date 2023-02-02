@@ -129,13 +129,10 @@ abstract class Crud extends PDO {
             $champRequete .= "$key = :$key, ";
         }
         $champRequete = rtrim($champRequete, ", ");
-
-        
         
         $sql = "UPDATE $this->table SET $champRequete WHERE $this->primaryKey = :$this->primaryKey";
         
         $stmt = $this->prepare($sql);
-        print_r($stmt);
         foreach($data as $key=>$value){
             $stmt->bindValue(":$key", $value);
         } 
@@ -192,26 +189,4 @@ abstract class Crud extends PDO {
             return $stmt->fetchAll();
         }
     }
-
-
-    // Pour créer un régistre
-    // public function select($champ='id_membre', $order='ASC'){
-    //     $sql = "SELECT * FROM $this->table ORDER BY $champ $order";
-    //     $stmt  = $this->query($sql);
-    //     return  $stmt->fetchAll();
-    // }
-
-    // Pour créer un régistre avec (double) join
-    // public function selectDoubleJoin($table2, $table3, $field1, $field2, $field3, $field4, $champOrdre, $ordre='ASC'){
-    //     $sql = "SELECT * FROM $this->table
-    //                         LEFT JOIN $table2 ON $field1 = $field2
-    //                         LEFT JOIN $table3 ON $field3 = $field4
-    //             ORDER BY $champOrdre $ordre";
-    //     $stmt  = $this->query($sql);
-    //     return  $stmt->fetchAll();
-    // }
-
 }
-
-
-?>

@@ -69,3 +69,8 @@ relativement au parent sans prendre l'espace */
 .desactive {
     opacity: 0;
 }
+
+.centre {
+    align-items: center;
+    justify-content: center;
+}

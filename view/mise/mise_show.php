@@ -14,7 +14,7 @@
             </ul>
         </nav>
 
-        <div class="informations">
+        <div class="informations enchere-show">
             <h3>Vos mises</h3>
 
             {% if errors is defined %}
@@ -24,12 +24,17 @@
             <ol>
                 {% for mise in mises %}
                 <li>
-                    <a href="{{ path }}timbre/edit/{{ enchere.id_timbre }}">
-                        <span><strong>Date de la mise : </strong>{{ mise.date_mise }}</span>
-                        <span><strong>Enchère : </strong>{{ mise.nom_timbre }}</span>
-                        <span><strong>Mise : </strong>{{ mise.montant_mise }}</span>
-                        <img class="small-img" src="{{ path }}uploads/{{ mise.nom_image }}"></img>
-                    </a>
+                    <div class="enchere flex-horizontal">
+                        <div>
+                            <p><strong>Date de la mise : </strong>{{ mise.date_mise }}</p>
+                            <p><strong>Enchère : </strong>{{ mise.nom_timbre }}</p>
+                            <p><strong>Mise : </strong>{{ mise.montant_mise }}$</p>
+                            <a href="{{ path }}enchere/detail/{{ mise.id_timbre }}" class="emphase">Visionner</a>
+                        </div>
+                        <div class="contenant-image flex-horizontal">
+                            <img src="{{ path }}uploads/{{ mise.nom_image }}"></img>
+                        </div>
+                    </div>
 
                 </li>
                 {% endfor %}

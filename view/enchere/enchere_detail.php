@@ -128,7 +128,9 @@
                 </div>
 
                 {% if guest %}
-                <a class="bouton" href="{{ path }}membre/create">Connectez-vous pour miser!</a>
+                <div class="flex-horizontal">
+                    <a class="bouton" href="{{ path }}membre/create">Connectez-vous pour miser!</a>
+                </div>
                 {% else %}
 
                 <form class="boutons-achat flex-vertical" action="{{ path }}mise/store/{{ enchere.id_timbre }}" method="POST">
@@ -148,26 +150,39 @@
                     {% endif %} value="Miser"></button>
                 
                     <dialog class="modal" id="modal">
-                        <h2>Entrez un montant</h2>
-                        <div class="flex-horizontal">
+                        <div class="flex-vertical">
 
-                            <label class="mise" for="mise">Mise: </label>
-                            <input type="number" id="mise" name="montant_mise_manuelle" step=0.01 min="{{ enchere.enchere_min }}" value="{{ enchere.enchere_min }}">
+                            <h2>Entrez un montant</h2>
+                            
+                            <div class="flex-vertical centre">
+                                <div class="flex-horizontal">
+                                    <label class="mise" for="mise">Mise: </label>
+                                    <input type="number" id="mise" name="montant_mise_manuelle" step=0.01 min="{{ enchere.enchere_min }}" value="{{ enchere.enchere_min }}">
+                                </div>
+                                <p><small class="emphase">Mise minimale: {{ enchere.enchere_min }}</small></p>
+                            </div>
+
+
+                            <div class="flex-vertical">
+
+                                <div class="flex-horizontal input">
+                                    <input type="radio" id="carte-dossier" name="carte" checked disabled>
+                                    <label for="carte-dossier">Utiliser la carte au dossier</label>
+                                </div>
+                                
+                                <div class="flex-horizontal input">
+                                    <input type="radio" id="nouvelle-carte" name="carte" disabled>
+                                    <label for="carte-dossier">Nouvelle carte</label>
+                                </div>
+                            </div>
+                            
+                            <div class="flex-horizontal centre boutons-mise">
+                                
+                                <button data-etat="close" class="button" type="button">Fermer</button>
+                                <button type="submit" class="button">Miser</button>
+                            </div>
                         </div>
-                        <small>Mise minimale: {{ enchere.enchere_min }}</small>
 
-                        <div class="flex-horizontal">
-                            <input type="radio" id="carte-dossier" name="carte" checked disabled>
-                            <label for="carte-dossier">Utiliser la carte au dossier</label>
-                        </div>
-
-                        <div class="flex-horizontal">
-                            <input type="radio" id="nouvelle-carte" name="carte" disabled>
-                            <label for="carte-dossier">Nouvelle carte</label>
-                        </div>
-
-                        <button data-etat="close" class="button" type="button">Fermer</button>
-                        <input type="submit" class="button" value="Miser">
                     </dialog>
                     <button type="button" class="liste-suivi">Ajouter à la liste<br>des suivis</button>
                 </form>

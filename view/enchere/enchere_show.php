@@ -30,7 +30,7 @@
                 <li class="pas-enchere">
                 {% endif %}
 
-                    <div class="enchere flex-horizontal" href="{{ path }}timbre/edit/{{ enchere.id_timbre }}">
+                    <div class="enchere flex-horizontal">
                         <div>
                             <p><strong>Nom : </strong>{{ enchere.nom_timbre }}</p>
                             <p><strong>Date début : </strong>{{ enchere.date_debut_enchere }}</p>
