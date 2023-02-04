@@ -1,4 +1,4 @@
- <?php
+<?php
 
 session_start();
 
@@ -11,8 +11,8 @@ require_once __DIR__.'/library/CheckSession.php';
 $url = isset($_GET["url"]) ? explode ('/', ltrim($_GET["url"], '/')) : '/';
 
 if($url == '/'){
-    require_once 'controller/ControllerEnchere.php';
-    $controller = new ControllerEnchere;
+    require_once 'controller/ControllerHome.php';
+    $controller = new ControllerHome;
     echo $controller->index();
 }else{
     $requestURL = $url[0];

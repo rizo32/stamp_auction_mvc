@@ -45,12 +45,12 @@ class ControllerImage{
 
             // fonction pour vérifier si le timbre appartient au membre connecté
             $enchere = new ModelEnchere();
-            $id_enchere = $enchere->fetch(
+            $id_enchere_array = $enchere->fetchId(
                 'id_enchere', // SELECT
-                '',
-                'WHERE id_timbre_enchere = '.$id_timbre. // WHERE
-                '', '', ''
+                'WHERE id_timbre_enchere = '.$id_timbre // WHERE
             );
+
+            $id_enchere = $id_enchere_array['id_enchere'];
             
             
             // GESTION DES ERREURS ***************/
@@ -94,7 +94,9 @@ class ControllerImage{
             }
         }
 
-        $imagesTableau = $image->selectAll('id_timbre_image', $id_timbre, 'nom_image');
+        $imagesTableau = $image->selectAll('id_timbre_image', $id_timbre, 'nom_image, id_image');
+
+        print_r($imagesTableau);
 
         twig::render('image/image_create.php', ['message'=>$message, 'id_timbre' => $id_timbre, 'images_tableau'=>$imagesTableau]);
     }

@@ -48,8 +48,41 @@ class ModelEnchere extends Crud {
                 ORDER BY $order_by $ordre
                 ";
         $stmt  = $this->query($sql);
-        // print_r($sql);
         return $stmt->fetchAll();
+    }
+    
+    // Pour acquérir des informations provenant d'une instance
+    public function enchereIndex($select,
+    
+    $join_table_2, $champ_table_2, $valeur_table_2, $join_table_3, $champ_table_3, $valeur_table_3, $join_table_4, $champ_table_4, $valeur_table_4, $join_table_5, $champ_table_5, $valeur_table_5, $join_table_6, $champ_table_6, $valeur_table_6,
+    
+    $where_prop, $where_prop2, $where_valeur2, $group_by, $conditions){
+        $sql = "SELECT $select
+                FROM $this->table
+
+                LEFT JOIN $join_table_2 ON $champ_table_2 = $valeur_table_2
+                LEFT JOIN $join_table_3 ON $champ_table_3 = $valeur_table_3
+                LEFT JOIN $join_table_4 ON $champ_table_4 = $valeur_table_4
+                LEFT JOIN $join_table_5 ON $champ_table_5 = $valeur_table_5
+                LEFT JOIN $join_table_6 ON $champ_table_6 = $valeur_table_6
+
+                WHERE $where_prop IS NOT NULL
+                AND $where_prop2 IN $where_valeur2
+
+                $conditions
+
+                GROUP BY $group_by
+                ";
+        $stmt = $this->query($sql);
+        return $stmt->fetchAll();
+    }
+
+    // Pour acquérir des informations provenant d'une instance
+    public function fetchId($select, $where){
+        $sql = "SELECT $select FROM $this->table
+                $where";
+        $stmt = $this->query($sql);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
 

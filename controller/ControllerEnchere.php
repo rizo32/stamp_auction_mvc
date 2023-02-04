@@ -7,8 +7,9 @@ RequirePage::requireModel('ModelMise');
 
 class ControllerEnchere{
 
+    // Affichage de l'accueil
     public function home(){
-        $selectEnchere = $this->enchere(' AND date_fin_enchere > "2023-02-01"');
+        $selectEnchere = $this->enchere(' AND date_fin_enchere > "2023-02-03"');
     
         twig::render("enchere/enchere_home.php", ['encheres' => $selectEnchere]);
     }
@@ -174,13 +175,15 @@ class ControllerEnchere{
         $filtreTableauStr = explode('&', $filtre);
 
 
+
         // Création d'un tableau associatif avec les données de NAVIGATION catalogue
         $navigation_tableau = [];
 
         for($i = 0; $i < count($filtreTableauStr); $i++){
 
             // clé item_page
-            if(str_starts_with($filtreTableauStr[$i], 'item_page')){
+            if(substr($filtreTableauStr[$i], 0, 9) == 'item_page'){
+
                 // On retire les données du tableau sous forme de chaines de caractères
                 $navigation_tableau['item_page'] = implode("", array_splice($filtreTableauStr, $i, 1));
                 // format clé -> valeur
@@ -189,7 +192,7 @@ class ControllerEnchere{
                 $i--;
 
             // clé page_catalogue
-            } elseif(str_starts_with($filtreTableauStr[$i],'page_catalogue')){
+            } elseif(substr($filtreTableauStr[$i], 0, 14) == 'page_catalogue'){
                 $navigation_tableau['page_catalogue'] = implode("", array_splice($filtreTableauStr, $i, 1));
                 $navigation_tableau['page_catalogue'] = trim($navigation_tableau['page_catalogue'], 'page_catalogue=');
                 $i--;
@@ -208,8 +211,6 @@ class ControllerEnchere{
             $value = explode('=', $filtreInd);
             array_push($filtreValues, end($value));
         }
-
-
 
         $filtreTableau = array_combine($filtreKeys, $filtreValues);
         
@@ -258,12 +259,12 @@ class ControllerEnchere{
 
         // Données pour l'affichage de la vue
         $selectEnchere = $this->enchere($sqlString);
-        
+
 
         // NAVIGATION CATALOGUE
 
         // données sur nombre d'enchères
-        $navigation_tableau['nombre_enchere'] = $selectEnchere[0]['nombre_enchere'] ?? 0;
+        $navigation_tableau['nombre_enchere'] = $selectEnchere[0]['count(*) OVER ()'] ?? 0;
         
         // Nombre de pages
         $navigation_tableau['nombre_page'] = ceil($navigation_tableau['nombre_enchere'] / $navigation_tableau['item_page']);
@@ -293,37 +294,34 @@ class ControllerEnchere{
         twig::render('enchere/enchere_index.php', ['encheres' => $selectEnchere, 'filtre' => $filtreTableau, 'filtreChaine' => $filtre, 'nav_cat' => $navigation_tableau, 'recherche' => $_POST['recherche'] ?? ""]);
     }
 
-
+    
     public function enchere($condition = null){
         // REQUÊTE SQL***************************
         $enchere = new ModelEnchere;
-        $selectEnchere = $enchere->fetchAll(
+        $selectEnchere = $enchere->enchereIndex(
         // SELECT:
-            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER () AS nombre_enchere',
+            'enchere.*, timbre.*, image.*, mise.*, max(montant_mise), count(id_mise), count(*) OVER ()',
 
-        // JOIN(S):
-            'LEFT JOIN timbre ON id_timbre = id_timbre_enchere
-                LEFT JOIN image ON id_timbre = id_timbre_image
-                LEFT JOIN mise ON id_enchere = id_enchere_mise
-                LEFT JOIN couleur ON id_couleur_timbre = id_couleur
-                LEFT JOIN provenance ON id_provenance_timbre = id_provenance',
+        // JOIN
+            'timbre', /* ON */ 'id_timbre', 'id_timbre_enchere',
+            'image', /* ON */ 'id_timbre', 'id_timbre_image',
+            'mise', /* ON */ 'id_enchere', 'id_enchere_mise',
+            'couleur', /* ON */ 'id_couleur_timbre', 'id_couleur',
+            'provenance', /* ON */ 'id_provenance_timbre', 'id_provenance',
                         
         // WHERE:
             // => mettre de côtés les enchères sans timbre
-            'WHERE date_debut_enchere IS NOT NULL '.
+            'date_debut_enchere',
 
             // => Une image par timbre
-            ' AND id_image IN (SELECT
-            min(id_image) from image group by id_timbre_image)'.
+            'id_image', '(SELECT
+            min(id_image) from image group by id_timbre_image)',
 
             // => filtres
-            $condition,
+            
             
         // GROUP BY
-            'GROUP BY id_timbre',
-        
-        // HAVING
-            ''
+            'id_timbre', $condition
         );
 
 

@@ -22,83 +22,83 @@
 
             <div class="flex-vertical">           
                 <label>Nom de l'enchère</label>
-                <input type="text" name="nom_timbre" value="{{ timbre.nom_timbre }}"/>
+                <input type="text" name="nom_timbre" value="{{ timbre.nom_timbre }}">
             </div>
 
             <div class="flex-vertical">           
                 <label>Année de parution</label>
-                <input type="number" name="annee_parution_timbre" value="{{ timbre.annee_parution_timbre }}"/>
+                <input type="number" name="annee_parution_timbre" value="{{ timbre.annee_parution_timbre }}" max="2025">
             </div>
 
             <div class="flex-vertical">           
                 <label>Provenance</label>
                 <select name="id_provenance_timbre">
-                    <option value=0
+                    <option value="0"
                         {% if timbre.id_provenance_timbre == "null" %}
                             selected
                         {% endif %}>
                     </option>
-                    <option value=1
+                    <option value="1"
                         {% if timbre.id_provenance_timbre == 1 %}
                             selected
                         {% endif %}>
                         Îles Britanniques
                     </option>
-                    <option value=2
+                    <option value="2"
                         {% if timbre.id_provenance_timbre == 2 %}
                             selected
                         {% endif %}>
                         États-Unis
                     </option>
-                    <option value=3
+                    <option value="3"
                         {% if timbre.id_provenance_timbre == 3 %}
                             selected
                         {% endif %}>
                         Afrique
                     </option>
-                    <option value=4
+                    <option value="4"
                         {% if timbre.id_provenance_timbre == 4 %}
                             selected
                         {% endif %}>
                         Asie
                     </option>
-                    <option value=5
+                    <option value="5"
                         {% if timbre.id_provenance_timbre == 5 %}
                             selected
                         {% endif %}>
                         Australie et Océanie
                     </option>
-                    <option value=6
+                    <option value="6"
                         {% if timbre.id_provenance_timbre == 6 %}
                             selected
                         {% endif %}>
                         Caraïbes
                     </option>
-                    <option value=7
+                    <option value="7"
                         {% if timbre.id_provenance_timbre == 7 %}
                         selected
                         {% endif %}>
                         Europe continentale
                     </option>
-                    <option value=8
+                    <option value="8"
                         {% if timbre.id_provenance_timbre == 8 %}
                             selected
                         {% endif %}>
                         Canada
                     </option>
-                    <option value=9
+                    <option value="9"
                         {% if timbre.id_provenance_timbre == 9 %}
                             selected
                         {% endif %}>
                         Amérique du Sud
                     </option>
-                    <option value=10
+                    <option value="10"
                         {% if timbre.id_provenance_timbre == 10 %}
                             selected
                         {% endif %}>
                         Amérique Centrale
                     </option>
-                    <option value=11
+                    <option value="11"
                         {% if timbre.id_provenance_timbre == 11 %}
                             selected
                         {% endif %}>
@@ -110,48 +110,48 @@
             <div class="flex-vertical">           
                 <label>État</label>
                 <select name="id_etat_timbre">
-                    <option value=0
+                    <option value="0"
                         {% if timbre.id_etat_timbre == "null" %}
                             selected
                         {% endif %}>
                     </option>
-                    <option value=1
+                    <option value="1"
                         {% if timbre.id_etat_timbre == 1 %}
                             selected
                         {% endif %}>
                         Parfaite
                     </option>
-                    <option value=2
+                    <option value="2"
                         {% if timbre.id_etat_timbre == 2 %}
                             selected
                         {% endif %}>
                         Excellente
                     </option>
-                    <option value=3
+                    <option value="3"
                         {% if timbre.id_etat_timbre == 3 %}
                             selected
                         {% endif %}>
                         Bonne
                     </option>
-                    <option value=4
+                    <option value="4"
                         {% if timbre.id_etat_timbre == 4 %}
                             selected
                         {% endif %}>
                         Moyenne
                     </option>
-                    <option value=5
+                    <option value="5"
                         {% if timbre.id_etat_timbre == 5 %}
                             selected
                         {% endif %}>
                         Endommagé
                     </option>
-                    <option value=6
+                    <option value="6"
                         {% if timbre.id_etat_timbre == 6 %}
                             selected
                         {% endif %}>
                         Envoi historique
                     </option>
-                    <option value=7
+                    <option value="7"
                         {% if timbre.id_etat_timbre == 7 %}
                             selected
                         {% endif %}>
@@ -163,13 +163,13 @@
             <div class="flex-vertical">           
                 <label>Certification</label>
                 <select name="certification_timbre">
-                    <option value=0
+                    <option value="0"
                         {% if timbre.certification_timbre == "null" %}
                             selected
                         {% endif %}>
                         Non
                     </option>
-                    <option value=1
+                    <option value="1"
                         {% if timbre.certification_timbre == 1 %}
                             selected
                         {% endif %}>
@@ -181,66 +181,66 @@
             <div class="flex-vertical">           
                 <label>Format</label>
                 <select name="id_format_timbre">
-                    <option value=0
+                    <option value="0"
                         {% if timbre.id_format_timbre == "null" %}
                             selected
                         {% endif %}>
                     </option>
-                    <option value=1
+                    <option value="1"
                         {% if timbre.id_format_timbre == 1 %}
                             selected
                         {% endif %}>
                         Simple
                     </option>
-                    <option value=2
+                    <option value="2"
                         {% if timbre.id_format_timbre == 2 %}
                             selected
                         {% endif %}>
                         Bloc
                     </option>
-                    <option value=3
+                    <option value="3"
                         {% if timbre.id_format_timbre == 3 %}
                             selected
                         {% endif %}>
                         Erreur
                     </option>
-                    <option value=4
+                    <option value="4"
                         {% if timbre.id_format_timbre == 4 %}
                             selected
                         {% endif %}>
                         Pleine page
                     </option>
-                    <option value=5
+                    <option value="5"
                         {% if timbre.id_format_timbre == 5 %}
                             selected
                         {% endif %}>
                         Page miniature
                     </option>
-                    <option value=6
+                    <option value="6"
                         {% if timbre.id_format_timbre == 6 %}
                             selected
                         {% endif %}>
                         Multiple
                     </option>
-                    <option value=7
+                    <option value="7"
                         {% if timbre.id_format_timbre == 7 %}
                             selected
                         {% endif %}>
                         Pair
                     </option>
-                    <option value=8
+                    <option value="8"
                         {% if timbre.id_format_timbre == 8 %}
                             selected
                         {% endif %}>
                         Plate block
                     </option>
-                    <option value=9
+                    <option value="9"
                         {% if timbre.id_format_timbre == 9 %}
                             selected
                         {% endif %}>
                         Plate number coil
                     </option>
-                    <option value=10
+                    <option value="10"
                         {% if timbre.id_format_timbre == 10 %}
                             selected
                         {% endif %}>
@@ -437,8 +437,8 @@
                 <textarea id="description-timbre" name="description_timbre" rows=4>{{ timbre.description_timbre }}</textarea>
             </div>
             
-            <input type="hidden" name="coup_coeur_timbre" value=0/>
-            <input type="hidden" name="id_timbre" value="{{ timbre.id_timbre }}"/>
+            <input type="hidden" name="coup_coeur_timbre" value="0">
+            <input type="hidden" name="id_timbre" value="{{ timbre.id_timbre }}">
 
             <div class="flex-horizontal">
                 <input class="bouton" name="retour" type="submit" value="Sauvegarder">

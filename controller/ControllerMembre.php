@@ -20,7 +20,7 @@ class ControllerMembre{
 
         $validation->name('nom_membre')->value($nom_membre)->pattern('alpha')->required()->max(45);
 
-        $validation->name('prenom_membre')->value($prenom_membre)->pattern('alpha')->required()->max(45);
+        $validation->name('prenom_membre')->value($prenom_membre)->pattern('words')->required()->max(45);
 
         $validation->name('nom_utilisateur_membre')->value($nom_utilisateur_membre)->pattern('email')->required()->max(50);
 

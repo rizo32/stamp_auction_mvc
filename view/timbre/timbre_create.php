@@ -23,12 +23,12 @@
 
             <div class="flex-vertical">           
                 <label>Nom de l'enchère</label>
-                <input type="text" name="nom_timbre" value="{{ timbre.nom_timbre }}"/>
+                <input type="text" name="nom_timbre" value="{{ timbre.nom_timbre }}">
             </div>
 
             <div class="flex-vertical">           
                 <label>Année de parution</label>
-                <input type="number" name="annee_parution_timbre" value="{{ timbre.annee_parution_timbre }}"/>
+                <input type="number" name="annee_parution_timbre" value="{{ timbre.annee_parution_timbre }}" max="2025">
             </div>
 
             <div class="flex-vertical">           

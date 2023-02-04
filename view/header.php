@@ -35,11 +35,11 @@
                 </form>
 
     <!-- À SUPPRIMER -->
-    <span class="filler alerte">
+    <!-- <span class="filler alerte">
         <p>timbre_id: {{ session.id_timbre }}</p>
         <p>session_id: {{ session.id_membre }}</p>
         <p>guest: {{ guest }}</p>
-    </span>
+    </span> -->
     <!-- À SUPPRIMER -->
 
                 <span class="flex-horizontal icones">
@@ -71,7 +71,7 @@
                 <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1" class="selectionne">Trouver une enchère</a>
                 <a href="{{ path }}enchere/index?coup_coeur_timbre=1&archive=0&item_page=20&page_catalogue=1">Coups de coeur</a>
                 <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Enchères populaires</a>
-                <a class="optionnel-3" href="{{ path }}enchere/index?&archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>
+                <a class="optionnel-3" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>
                 <a class="optionnel-1" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Dernière chance</a>
                 <a class="optionnel-2" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">En solde</a>
                 <a class="optionnel-4" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Sélection Paques</a>

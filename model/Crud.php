@@ -8,7 +8,7 @@ abstract class Crud extends PDO {
     }
 
     
-    // Pour acquérir des informations provenant d'une instance
+    // fetch all custom
     public function fetchAll($select, $join, $where, $groupBy, $having, $orderBy = null){
         $sql = "SELECT $select FROM $this->table
                 $join
@@ -16,14 +16,11 @@ abstract class Crud extends PDO {
                 $groupBy
                 $having
                 $orderBy";
-        // print_r($sql);
         $stmt = $this->query($sql);
-        $count = $stmt->rowCount();
-        // print_r($count);
         return $stmt->fetchAll();
     }
     
-    // Pour acquérir des informations provenant d'une instance
+    // fetch custom
     public function fetch($select, $join, $where, $groupBy, $having, $orderBy = null){
         $sql = "SELECT $select FROM $this->table
                 $join
@@ -31,19 +28,10 @@ abstract class Crud extends PDO {
                 $groupBy
                 $having
                 $orderBy";
-        // print_r($sql);
+        print_r($sql);
         $stmt = $this->query($sql);
         return $stmt->fetch();
     }
-
-    // Pour acquérir des informations provenant d'une instance
-    // public function select($listeProp, $prop, $value){
-    //     $sql = "SELECT $listeProp FROM $this->table
-    //             WHERE $prop = $value";
-    //     $stmt = $this->query($sql);
-    //     // print_r($stmt);
-    //     return $stmt->fetch();
-    // }
 
     // Pour acquérir des informations provenant d'une instance
     public function selectId($value){
@@ -59,7 +47,6 @@ abstract class Crud extends PDO {
             header("location: home/error");
         }
     }
-
 
 
     // Pour acquérir des informations provenant d'une instance
@@ -86,16 +73,6 @@ abstract class Crud extends PDO {
         $stmt = $this->query($sql);
         return  $stmt->fetchAll();
     }
-
-    // safe??
-    // public function selectAll($prop, $wherevalue, $value=null){
-    //     $sql = "SELECT $value FROM $this->table
-    //     WHERE $prop = :$wherevalue";
-    //     $stmt = $this->query($sql);
-    //     $stmt->bindValue(":$wherevalue", $wherevalue);
-    //     $stmt->execute();
-    //     return  $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-    // }
 
     public function selectMax($value){
         $sql = "SELECT max($value) FROM $this->table";

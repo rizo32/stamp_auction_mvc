@@ -104,15 +104,15 @@
                     
                     <span class="prix">
                     {% if enchere.max_montant_mise %}    
-                    {{ enchere.max_montant_mise }}
+                    ${{ enchere.max_montant_mise }}
                     {% else %}
-                    {{ enchere.prix_initial_enchere }}
+                    ${{ enchere.prix_initial_enchere }}
                     {% endif %}
                     </span>
 
                     <small>
                     {% if enchere.max_montant_mise %}    
-                    {{ enchere.max_montant_mise }}/timbre
+                    ${{ enchere.max_montant_mise }}/timbre
                     {% else %}
                     {{ enchere.prix_initial_enchere }}/timbre
                     {% endif %}
@@ -159,7 +159,7 @@
                                     <label class="mise" for="mise">Mise: </label>
                                     <input type="number" id="mise" name="montant_mise_manuelle" step=0.01 min="{{ enchere.enchere_min }}" value="{{ enchere.enchere_min }}">
                                 </div>
-                                <p><small class="emphase">Mise minimale: {{ enchere.enchere_min }}</small></p>
+                                <p><small class="emphase">Mise minimale: ${{ enchere.enchere_min }}</small></p>
                             </div>
 
 
@@ -258,7 +258,7 @@
                         {% for mise in mises|slice(0, 5) %}
                         <tr>
                             <td>{{ mise.nom_membre }}</td>
-                            <td class="insecable">{{ mise.montant_mise }}</td>
+                            <td class="insecable">${{ mise.montant_mise }}</td>
                             <td>{{ mise.date_mise }}</td>
                         </tr>
                         
@@ -281,7 +281,7 @@
                             {% for mise in mises|slice(5, 100) %}
                             <tr>
                                 <td>{{ mise.nom_membre }}</td>
-                                <td class="insecable">{{ mise.montant_mise }}</td>
+                                <td class="insecable">${{ mise.montant_mise }}</td>
                                 <td>{{ mise.date_mise }}</td>
                             </tr>
                             {% endfor %}
