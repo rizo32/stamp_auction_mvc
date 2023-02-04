@@ -9,18 +9,10 @@ export default class Loupe{
         let img, glass, w, h, bw;
         img = document.querySelector(imgID);
 
-      
-        /* Create magnifier glass: */
+        /* Création, insertion de l'objet */
         glass = document.createElement("DIV");
-
-        
         glass.setAttribute("class", "loupe desactive");
-
-        
-        
-        /* Insert magnifier glass: */
         img.parentElement.insertBefore(glass, img);
-
 
         // Pour faire apparaitre la loupe lors du mouseenter
         img.parentElement.addEventListener("mouseenter", () => {
@@ -33,7 +25,7 @@ export default class Loupe{
             glass.classList.add("desactive");
         });
       
-        /* Set background properties for the magnifier glass: */
+        /* Propriétés du background */
         glass.style.backgroundImage = "url('" + img.src + "')";
         glass.style.backgroundRepeat = "no-repeat";
         glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
@@ -41,14 +33,14 @@ export default class Loupe{
         w = glass.offsetWidth / 2;
         h = glass.offsetHeight / 2;
       
-        /* Execute a function when someone moves the magnifier glass over the image: */
+        /* Add event listeners */
         glass.addEventListener("mousemove", moveMagnifier);
         img.addEventListener("mousemove", moveMagnifier);
-      
-        /*and also for touch screens:*/
-        // glass.addEventListener("touchmove", moveMagnifier);
-        // img.addEventListener("touchmove", moveMagnifier);
-        
+
+
+        // fonction de mouvement
+        // RÉFÉRENCE: https://www.w3schools.com/howto/howto_js_image_magnifier_glass.asp
+
         function moveMagnifier(e) {
           var pos, x, y;
           /* Prevent any other actions that may occur when moving over the image */
@@ -68,7 +60,8 @@ export default class Loupe{
           /* Display what the magnifier glass "sees": */
           glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
         }
-      
+
+      // RÉFÉRENCE: https://www.w3schools.com/howto/howto_js_image_magnifier_glass.asp
         function getCursorPos(e) {
           var a, x = 0, y = 0;
           e = e || window.event;
@@ -85,4 +78,3 @@ export default class Loupe{
       }
 }
 
-// RÉFÉRENCE: https://www.w3schools.com/howto/howto_js_image_magnifier_glass.asp
