@@ -19,7 +19,7 @@
 
 <body>
     <header id="haut">
-        <nav class="menu-principal-contenant">
+        <nav id="nav-main" class="menu-principal-contenant">
             <div class="menu-principal">
                 <a href="{{ path }}enchere/home" class="logo">Stampee</a>
 
@@ -34,23 +34,13 @@
                     <span class="point-reference"><input class="envoi-recherche" type="submit" alt="icone-recherche" value=""></span>
                 </form>
 
-    <!-- À SUPPRIMER -->
-    <!-- <span class="filler alerte">
-        <p>timbre_id: {{ session.id_timbre }}</p>
-        <p>session_id: {{ session.id_membre }}</p>
-        <p>guest: {{ guest }}</p>
-    </span> -->
-    <!-- À SUPPRIMER -->
-
                 <span class="flex-horizontal icones">
 
-                    {% if guest %}
-                    <a href="{{ path }}membre/create">
-                    {% else %}
-                    <a href="{{ path }}mise/show">
-                    {% endif %}
+                    <a href="">
                         <img src="{{ path }}img/bid-thick.webp" alt="menu du panier d'enchère">
                     </a>
+
+                    
 
                     <a href=""><img src="{{ path }}img/bookmark-orig.webp" alt="menu produits suivis"></a>
 
@@ -65,10 +55,36 @@
                     <a href="#"><span class="langue">FR</span></a>
                 </span>
             </div>
+            <!-- menu HAMBURGER -->
+            <div class="hamburger-container">
+                <button type="button" class="hamburger" id="menu-btn">
+                    <span class="hamburger-top"></span>
+                    <span class="hamburger-middle"></span>
+                    <span class="hamburger-bottom"></span>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="mobile-menu hidden" id="menu">
+                {% if guest %}
+                <a href="{{ path }}membre/create">Mon compte</a>
+                {% else %}
+                <a href="{{ path }}mise/show">Mon compte</a>
+                {% endif %}
+                <a href="">Mes favoris</a>
+                <a href="">Mes enchères</a>
+
+                <a href="{{ path }}enchere/index?coup_coeur_timbre=1&archive=0&item_page=20&page_catalogue=1">Coups de coeur</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Enchères populaires</a>
+                <a class="optionnel-3" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>
+                <a class="optionnel-1" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Dernière chance</a>
+                <a class="optionnel-2" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">En solde</a>
+                <a class="optionnel-4" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Sélection Paques</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Pour vous</a>
+            </div>
         </nav>
         <nav class="menu-secondaire-contenant">
             <div class="menu-secondaire flex-horizontal">
-                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1" class="selectionne">Trouver une enchère</a>
+                <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Trouver une enchère</a>
                 <a href="{{ path }}enchere/index?coup_coeur_timbre=1&archive=0&item_page=20&page_catalogue=1">Coups de coeur</a>
                 <a href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Enchères populaires</a>
                 <a class="optionnel-3" href="{{ path }}enchere/index?archive=0&item_page=20&page_catalogue=1">Derniers arrivés</a>

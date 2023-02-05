@@ -22,6 +22,10 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* quick fix
+    pour éviter le défilement horizontal en format mobile,
+    mais change plusieurs autres aspects de l'interface.
+    Il faudrait spécifier les éléments réellement problématique */
 }
 
 a {

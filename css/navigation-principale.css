@@ -31,8 +31,6 @@ nav .icones {
     margin-top: 0;
 }
 
-/* filtre -> hsl(224, 65%, 55%) (bleu-clair)
-https://codepen.io/sosuke/pen/Pjoqqp */
 nav .icones img:hover {
     transform: scale(1.05);
     filter: invert(20%) sepia(27%) saturate(4833%) hue-rotate(210deg) brightness(107%) contrast(86%);
@@ -94,11 +92,11 @@ input[type="search"]:focus {
     padding-left: 19px;
 }
 
-@media only screen and (max-width: 800px) {
-    input[type="search"],
-    .recherche img {
+@media only screen and (max-width: 600px) {
+    .recherche input {
         display: none;
     }
+
 }
 
 .recherche {
@@ -107,6 +105,7 @@ input[type="search"]:focus {
     justify-content: start;
 }
 
+/* le bouton submit est la loupe */
 .recherche input[type='submit'] {
     position: absolute;
     right: clamp(50px, 6vw, 130px);
@@ -117,14 +116,159 @@ input[type="search"]:focus {
     border: none;
     background-color: rgba(0, 0, 0, 0);
 
-    /* max-width: 25px;
-    max-height: 30px; */
-
     width: 25px;
     height: 30px;
-    /* object-fit: contain;
-    overflow-clip-margin: content-box;
-    overflow: clip; */
     background-image: url("../img/recherche.svg");
     cursor: pointer;
 }
+
+
+
+    /*** HAMBURGER MENU ***/
+
+/* Right-sided container for accessibility */
+.hamburger-container{
+    display: block;
+    position: absolute;
+    right: 30px;
+    /* height nav minus height burger divided in 2 */
+    top: calc((80px - 30px) / 2);
+}
+  
+/* container for easier clicking */
+.hamburger{
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    background: none;
+    border: none;
+    transition: all 0.25s;
+    display: none;
+}
+  
+/* Hamburger bread and (vegan) meat */
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 30px;
+    height: 3px;
+    background: black;
+    transform: rotate(0);
+    transition: all 0.20s;
+    transition-timing-function: ease-out;
+  }
+  
+/* translations for separating the lines */
+.hamburger-middle{
+    transform: translateY(10px);
+}
+.hamburger-bottom{
+    transform: translateY(20px);
+}
+/* clicking animation */
+.open .hamburger-top {
+    transform: rotate(45deg) translateY(7px) translateX(7px);
+}
+.open .hamburger-middle {
+    opacity: 0;
+}  
+.open .hamburger-bottom {
+    transform: rotate(-45deg) translateY(7px) translateX(-7px);
+}
+  
+  
+  
+/*** MOBILE MENU ***/
+  
+.mobile-menu {
+    display: none;
+    line-height: 3rem;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: var(--gris-tres-clair-sature);
+    color: var(--bleu);
+    box-shadow: 0px 1px 1px 0px rgb(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    transition-timing-function: ease-out;
+    /* 10 elements * ((2 * padding) + line-space + border */
+    height: calc(10 * (2 * 24px + 2.5rem + 1px));
+    align-items: center;
+}
+  
+.mobile-menu a {
+    display: block;
+    margin-top: 0;
+    width: 100%;
+    line-height: 2.5rem;
+    padding: 24px;
+    font-size: 24px;
+    text-align: center;
+    border-bottom: 1px solid black;
+    text-decoration: none;
+    color: black;
+    box-sizing: border-box;
+}
+  
+.mobile-menu span {
+    font-size: 20px;
+    line-height: 3rem;
+}
+  
+.mobile-menu a:last-of-type{
+    border-bottom: none;
+}
+  
+.mobile-menu a:hover {
+    background-color: var(--bleu);
+    color: white;
+}
+  
+/* The mobile menu comes from the heavens */
+.hidden {
+    transform: translateY(-100%);
+}
+  
+/* Prevent scroll while mobile menu is present */
+.no-scroll {
+    overflow: hidden;
+}
+  
+
+@media all and (max-width: 600px){
+
+    .hamburger {
+        display: block;
+        z-index: 9;
+    }
+
+    .mobile-menu {
+        display: block;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .menu-principal-contenant {
+        display: block;
+    }
+
+    [id="nav-main"] {
+        height: 75px;
+        padding: 0;
+    }
+
+    /* Remove items from navbar */
+    nav.menu-principal-contenant div:first-child a:not(.logo), i, nav.menu-secondaire-contenant {
+        display: none;
+    }
+
+    nav.menu-principal-contenant {
+        border-bottom: 1px solid black;
+    }
+}
+
+  

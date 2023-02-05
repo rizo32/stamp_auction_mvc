@@ -375,6 +375,7 @@ th {
     .fond-perdu {
         gap: 60px;
         margin-bottom: 40px;
+        margin-top: 40px;
     }
     .fond-perdu h3 {
         margin-bottom: 1rem;

@@ -1,6 +1,6 @@
 {{ include('header.php', { title: "Creation"}) }}
 
-<main class="form">
+<main class="form creation-membre">
    
     <form class="creation nouveau" action="{{ path }}membre/store" method="post">
         <h3>Joignez la communauté!</h3>

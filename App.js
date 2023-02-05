@@ -13,6 +13,22 @@ export default class App {
         // Gestion des pages
         let page = document.querySelector("main").id;
 
+        const btn = document.getElementById('menu-btn');
+        const nav = document.getElementById('menu');
+
+        function navToggle() {
+            /* pour animer le bouton hamburger */
+            btn.classList.toggle('open');
+            /* pour cacher le menu mobile */
+            nav.classList.toggle('hidden');
+            /* pour éviter de pouvoir scroller le menu mobile */
+            document.body.classList.toggle('no-scroll');
+        }
+
+        btn.addEventListener('click', navToggle);
+
+
+
         switch(page){
             case 'page-produit':
                 this.Galerie = new Galerie();

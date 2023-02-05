@@ -76,11 +76,13 @@
 }
 
 .selectionne,
-.menu-secondaire a:hover {
+.menu-secondaire a:hover,
+.menu-secondaire a:first-child {
     background-color: var(--bleu);
     color: white;
 }
 
+.menu-secondaire a:first-child:hover,
 main .selectionne:hover {
     background-color: var(--bleu-clair);
     color: white;
